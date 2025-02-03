@@ -1,2 +1,2 @@
 # ctf-arsenal
-CTF tools, challenge solving strategies
+CTF tools, challenge solving strategies.
