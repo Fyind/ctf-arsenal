@@ -1,18 +1,25 @@
 <?xml version="1.0"?>
 <rss version="2.0">
     <channel>
-        <title>Hexo</title>
+        <title>Cr4zyp1x3l</title>
         <link>https://cr4zyp1x3l.netlify.app</link>
         <description></description>
         <language>en</language>
-        <pubDate>Tue, 04 Feb 2025 14:15:41 +0100</pubDate>
-        <lastBuildDate>Tue, 04 Feb 2025 14:15:41 +0100</lastBuildDate>
+        <pubDate>Tue, 04 Feb 2025 18:22:39 +0100</pubDate>
+        <lastBuildDate>Tue, 04 Feb 2025 18:22:39 +0100</lastBuildDate>
         <category>CTF文章</category>
+        <item>
+            <guid isPermalink="true">https://cr4zyp1x3l.netlify.app/E-CTF%E6%AF%94%E8%B5%9B-Write-Up-md/</guid>
+            <title>E-CTF比赛 Write Up.md</title>
+            <link>https://cr4zyp1x3l.netlify.app/E-CTF%E6%AF%94%E8%B5%9B-Write-Up-md/</link>
+            <pubDate>Tue, 04 Feb 2025 18:22:39 +0100</pubDate>
+            <description><![CDATA[  ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">https://cr4zyp1x3l.netlify.app/hello-world/</guid>
             <title>Hello World</title>
             <link>https://cr4zyp1x3l.netlify.app/hello-world/</link>
-            <pubDate>Tue, 04 Feb 2025 14:15:41 +0100</pubDate>
+            <pubDate>Tue, 04 Feb 2025 18:12:24 +0100</pubDate>
             <description><![CDATA[ &lt;p&gt;Welcome to &lt;a href=&#34;https://hexo.io/&#34;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&#34;https://hexo.io/docs/&#34;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&#34;https://hexo.io/docs/troubleshooting.html&#34;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&#34;https://github.com/hexojs/hexo/issues&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id=&#34;quick-start&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#quick-start&#34;&gt;#&lt;/a&gt; Quick Start&lt;/h2&gt;
 &lt;h3 id=&#34;create-a-new-post&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#create-a-new-post&#34;&gt;#&lt;/a&gt; Create a new post&lt;/h3&gt;

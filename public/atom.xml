@@ -1,10 +1,17 @@
 <?xml version="1.0"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://cr4zyp1x3l.netlify.app</id>
-    <title>Hexo</title>
+    <title>Cr4zyp1x3l</title>
     <link href="https://cr4zyp1x3l.netlify.app" />
-    <updated>2025-02-04T13:15:41.580Z</updated>
+    <updated>2025-02-04T17:22:39.000Z</updated>
     <category term="CTF文章" />
+    <entry>
+        <id>https://cr4zyp1x3l.netlify.app/E-CTF%E6%AF%94%E8%B5%9B-Write-Up-md/</id>
+        <title>E-CTF比赛 Write Up.md</title>
+        <link rel="alternate" href="https://cr4zyp1x3l.netlify.app/E-CTF%E6%AF%94%E8%B5%9B-Write-Up-md/"/>
+        <content type="html"></content>
+        <updated>2025-02-04T17:22:39.000Z</updated>
+    </entry>
     <entry>
         <id>https://cr4zyp1x3l.netlify.app/hello-world/</id>
         <title>Hello World</title>
@@ -20,7 +27,7 @@
 &lt;h3 id=&#34;deploy-to-remote-sites&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#deploy-to-remote-sites&#34;&gt;#&lt;/a&gt; Deploy to remote sites&lt;/h3&gt;
 &lt;figure class=&#34;highlight bash&#34;&gt;&lt;figcaption data-lang=&#34;bash&#34;&gt;&lt;span&gt;h&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;$ hexo deploy&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;More info: &lt;a href=&#34;https://hexo.io/docs/one-command-deployment.html&#34;&gt;Deployment&lt;/a&gt;&lt;/p&gt;
 </content>
-        <updated>2025-02-04T13:15:41.580Z</updated>
+        <updated>2025-02-04T17:12:24.645Z</updated>
     </entry>
     <entry>
         <id>https://cr4zyp1x3l.netlify.app/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/</id>
