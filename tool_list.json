@@ -1,0 +1,43 @@
+{
+  "PWN": [
+    
+  ],
+  "Crypto": [
+    {
+      "name": "CaptfEncoder",
+      "path": "tools/crypto/CaptfEncoder-win-x64-2.1.0/CaptfEncoder.exe"
+    },
+    {
+      "name": "CyberChef",
+      "path": "https://gchq.github.io/CyberChef/"
+    }
+  ],
+  "Reverse": [
+    {
+      "name": "IDA Pro 9.0",
+      "path": "tools/reverse/IDA_Pro_v9.0/ida64.exe"
+    },
+    {
+      "name": "Die",
+      "path": "tools/reverse/die_win64_portable_3.09_x64/die.exe"
+    },
+    {
+      "name": "x96dbg",
+      "path": "tools/reverse/x64dbg/release/x96dbg.exe"
+    },
+    {
+      "name": "Cheat Engine 7.5",
+      "path": "tools/reverse/Cheat Engine 7.5/Cheat Engine.exe"
+    }
+  ],
+  "Misc": [
+    {
+      "name": "MiscTool 1",
+      "path": "tools/crypto/CaptfEncoder-win-x64-2.1.0/CaptfEncoder.exe"
+    },
+    {
+      "name": "MiscTool 2",
+      "path": "tools/crypto/CaptfEncoder-win-x64-2.1.0/CaptfEncoder.exe"
+    }
+  ]
+}
