@@ -28,16 +28,51 @@
     {
       "name": "Cheat Engine 7.5",
       "path": "tools/reverse/Cheat Engine 7.5/Cheat Engine.exe"
+    },{
+      "name": "GDRE Tools",
+      "path": "tools/reverse/GDRE_tools-v0.8.3-windows/gdre_tools.exe"
+    },{
+      "name": "IL Spy",
+      "path": "tools/reverse/ILSpy/ILSpy.exe"
     }
   ],
-  "Misc": [
+  "Web" : [
     {
-      "name": "MiscTool 1",
-      "path": "tools/crypto/CaptfEncoder-win-x64-2.1.0/CaptfEncoder.exe"
+      "name": "蚁剑",
+      "path": "tools/web/AntSword-Loader-v4.0.3-win32-x64/AntSword.exe"
     },
     {
-      "name": "MiscTool 2",
-      "path": "tools/crypto/CaptfEncoder-win-x64-2.1.0/CaptfEncoder.exe"
+      "name": "御剑",
+      "path": "tools/web/御剑/御剑1.5.exe"
+    },
+    {
+      "name": "BurpSuite 2024 Pro",
+      "path": "tools/web/BurpSuite2024/start-cn.bat"
     }
+  ],
+  "Steganography": [
+    {
+      "name": "Stegsolve",
+      "path": "tools/steganography/stegsolve/Stegsolve.jar"
+    },
+    {
+      "name": "OpenStego",
+      "path": "tools/steganography/OpenStego/openstego.bat"
+    }
+  ],
+  "OSINT" : [
+    {
+      "name": "Google Earth",
+      "path": "https://earth.google.com/"
+    },{
+      "name": "Web Archive",
+      "path": "http://archive.org/"
+    }
+  ],
+  "Forensics" : [
+
+  ],
+  "Misc": [
+    
   ]
 }

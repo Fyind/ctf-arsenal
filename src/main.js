@@ -22,7 +22,7 @@ const windowInfo = {
 app.on('ready', () => {
 	mainWindow = new BrowserWindow(windowInfo);
 
-	mainWindow.loadFile('src/index.html');
+	mainWindow.loadFile('index.html');
 
 	mainWindow.on('closed', () => {
 		mainWindow = null;
@@ -40,7 +40,7 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
 	if (BrowserWindow.getAllWindows().length === 0) {
 		mainWindow = new BrowserWindow(windowInfo);
-		mainWindow.loadFile('src/index.html');
+		mainWindow.loadFile('index.html');
 	}
 });
 
@@ -66,16 +66,16 @@ ipcMain.on('open-exe', (event, exePath) => {
 
 ipcMain.on('run-cmd', (event, command) => {
     // 执行传入的 CMD 命令
-exec(command, (error, stdout, stderr) => {
-	if (error) {
-	event.reply('cmd-error', `Error: ${error.message}`);
-	return;
-	}
-	if (stderr) {
-	event.reply('cmd-error', `stderr: ${stderr}`);
-	return;
-	}
-	// 发送命令的输出回渲染进程
-	event.reply('cmd-output', `stdout: ${stdout}`);
-});
+	exec(`powershell.exe -NoProfile -ExecutionPolicy Bypass "${command}"`, (error, stdout, stderr) => {
+		if (error) {
+		event.reply('cmd-error', `Error: ${error.message}`);
+		return;
+		}
+		if (stderr) {
+		event.reply('cmd-error', `stderr: ${stderr}`);
+		return;
+		}
+		// 发送命令的输出回渲染进程
+		event.reply('cmd-output', `stdout: ${stdout}`);
+	});
 });
