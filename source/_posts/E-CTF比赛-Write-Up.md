@@ -186,7 +186,7 @@ c = 3938307058210838722644164849453795907439512093342516801405616299630839554351
 
 ```
 
-因为没有其他信息了，所以我们先用http://www.factordb.com/index.php试一下暴力分解n：
+因为没有其他信息了，所以我们先用 http://www.factordb.com/index.php 试一下暴力分解n：
 ![image-20250203131647064](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203131647064.png)
 
 成功得到n的其中一个因数为5054843。之后就只需要写一段代码解密就可以得到flag：
@@ -393,7 +393,7 @@ HMACSHA256(base64UrlEncode(header) + "." +base64UrlEncode(payload),密钥)
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIiLCJleHAiOjE3MzgzNTcwMDV9.0dmdQRyyCngN1JJTVoVVk5WYqz0I44yBvWHyUEMXTzM
 ```
 
-用https://jwt.io/分析一下：
+用 https://jwt.io/ 分析一下：
 
 ![image-20250203211406069](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203211406069.png)
 
@@ -453,7 +453,7 @@ ectf{JwT_T0keN_cR34t0r}
 
 ![image-20250203202025574](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203202025574.png)
 
-这道题比较明显地暗示了我们需要用xss攻击来获取flag。我们首先在https://pipedream.com/创建一个Request Bin（创建临时的 HTTP 端点，用于捕获和检查传入的 HTTP 请求。），
+这道题比较明显地暗示了我们需要用xss攻击来获取flag。我们首先在 https://pipedream.com/ 创建一个Request Bin（创建临时的 HTTP 端点，用于捕获和检查传入的 HTTP 请求。），
 
 然后在对话框里输入以下内容即可：
 
@@ -481,7 +481,7 @@ ECTF{Cook13_st0L3n_5ucc3ssfuLLy}
 
 将下载的压缩包解压会得到一份pdf文件：
 
-![world_flags](https://raw.githubusercontent.com/Lycorisby/Picture/main/world_flags.jpg)
+![world_flags](../../../../CTF-win/%25E6%25AF%2594%25E8%25B5%259B/ECTF%2520(2025.01.24-26)/Stega_-_Definitely_not_in_the_PDF/world_flags.jpg)
 
 并没有任何发现，再根据他一直说的“flag”不在这里，于是决定去看一开始的压缩包。果然在文件结尾发现flag：
 
@@ -511,7 +511,7 @@ ECTF{W3lL_d0nE_652651663616263}
 
 ![image-20250203215221250](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203215221250.png)
 
-![Bücking_Music_Cipher](https://raw.githubusercontent.com/Lycorisby/Picture/main/B%C3%BCcking_Music_Cipher.png)
+![Bücking_Music_Cipher](https://raw.githubusercontent.com/Lycorisby/Picture/main/B%25C3%25BCcking_Music_Cipher.png)
 
 根据这张密码表解码会得到：
 
@@ -641,7 +641,7 @@ This is just a dummyy, nice try
 h1dd3n1nth3d4rkn3ss
 ```
 
-
+(可以用这个网站翻译盲文内容：https://www.dcode.fr/alphabet-braille)
 
 根据题目的flag格式要求，我们确定flag为：
 
@@ -1042,7 +1042,7 @@ ectf{Île_du_Levant}
 
 这道题我们会得到这张图片：
 
-![PANO_20220408_134922](https://raw.githubusercontent.com/Lycorisby/Picture/main/PANO_20220408_134922.jpg)
+![PANO_20220408_134922](../../../../CTF-win/%25E6%25AF%2594%25E8%25B5%259B/ECTF%2520(2025.01.24-26)/OSINT_1_-_question-5/PANO_20220408_134922.jpg)
 
 这道题会碰到一个非常有意思的事情。我们拿到的图片的文件大小为29.8 MB，而谷歌识图的上限为20MB，所以我们首先需要压缩一下图片的大小才能使用谷歌识图。我这里是用微信来进行有损压缩的。
 
