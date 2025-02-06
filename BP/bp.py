@@ -33,13 +33,11 @@ class ZipCracker:
         self.status_label.pack(pady=5)
 
         # 设定字典路径
-        self.dict_file = os.path.join(os.path.dirname(__file__), "rockyou.txt")
-        if not os.path.exists(self.dict_file):
-            messagebox.showerror("错误", "字典文件 rockyou.txt 未找到！请确保它与脚本在同一目录。")
-            self.root.quit()
+        
 
     def on_drop(self, event):
-        file_path = event.data
+        file_path = event.data[1:-1]
+        print(file_path)
         self.zip_entry.insert(0, file_path)
 
     def select_zip(self):
@@ -48,6 +46,11 @@ class ZipCracker:
         self.zip_entry.insert(0, file_path)
 
     def crack_zip(self, zip_file):
+        self.dict_file = os.path.join(os.getcwd(), "rockyou.txt")
+        if not os.path.exists(self.dict_file):
+            messagebox.showerror("错误", "字典文件 rockyou.txt 未找到！请确保它与脚本在同一目录。")
+            self.root.quit()
+
         try:
             with zipfile.ZipFile(zip_file, 'r') as zf:
                 with open(self.dict_file, 'r', encoding='latin-1') as df:
