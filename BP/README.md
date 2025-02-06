@@ -8,7 +8,7 @@ https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.tx
 
 下载rockyou.txt。这是一个非常好用的爆破字典。
 
-如果bp.exe无法正常运行，可以将rockyou.txt复制到当前bp.py以及icon.ico所在的文件夹里，然后在命令行输入
+先将rockyou.txt复制到当前bp.py以及icon.ico所在的文件夹里，然后在命令行输入
 
 ```shell
 pyinstaller --onefile --windowed --icon=icon.ico bp.py
