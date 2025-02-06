@@ -58,6 +58,10 @@
     {
       "name": "OpenStego",
       "path": "tools/steganography/OpenStego/openstego.bat"
+    },
+    {
+      "name": "Audacity",
+      "path": "tools/steganography/Audacity/Audacity.exe"
     }
   ],
   "OSINT" : [
