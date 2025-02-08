@@ -2,6 +2,7 @@
 title: E-CTF比赛 Write Up
 date: 2025-02-04 18:22:39
 tags:
+  - writeups
 ---
 
 # E-CTF比赛 Write Up

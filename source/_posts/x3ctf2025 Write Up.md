@@ -2,7 +2,7 @@
 title: x3ctf2025 Write Up
 date: 2025-02-03 17:39:31
 tags:
-math: true
+  - writeups
 ---
 
 # x3ctf Write Up
