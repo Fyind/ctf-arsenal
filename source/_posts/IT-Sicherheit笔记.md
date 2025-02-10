@@ -134,9 +134,125 @@ Automatic Certificate Management Environment (ACME)
 
 Server经常没有TLS服务, 生成TLS-Server-Zertifikats 太贵了
 
-ACME-Protocoll 可以
+ACME-Protocoll 可以通过**自动化流程**为网站服务器颁发免费的TLS证书。
+
+> **Let’s Encrypt**：广泛使用的认证机构（CA），为网站提供免费TLS证书
+
+### 应用对象的安全保障
 
 
+
+Messenger即时信息服务
+
+> WhatsApp, Signal, Telegram, Threema, Matrix
+
+安全目标：
+
+* Vertraulichkeit机密性: 在数据传输过程中保证安全
+
+加密通信模式
+
+* E2E加密+TLS传输：服务器不能读取消息
+* 仅传输层层加密: 服务器可以读取消息
+
+### 案例：Singal
+
+以**隐私保护**和安全通信为核心设计, 开源软件，由**非盈利组织Signal Foundation**维护和运营。
+
+用户注册：
+
+* 需要电话号码
+* 电话号码只存hash值
+* Signal-Server 不存储用户数据
+
+通信安全：
+
+* AES-256加密, 通过用户PIN保护
+* TLS加密传输
+* 不保存元数据 Metadata
+
+### Signal Protokoll
+
+Signal协议被广泛用于 Whatsapp 等平台
+
+任务：
+
+* 双向身份验证
+* 支持离线模式
+* 每条信息用新的密钥加密
+* 音视频传输
+
+协议实现：
+
+* X3DH （Extended Triple Diffie-Hellman）主要用于**初始密钥协商**，在通信开始时确定共享密钥
+* Double Ratchet 用于即时消息的加密，动态更新加密密钥，确保消息安全。
+
+### Double Ratchet-Protokoll
+
+#### Symmetrisches Ratchet Protokoll
+
+基础是: A,B 直接共享密钥 CK
+
+任务：
+
+* 用 $A_i$ 作为第 $i$ 个消息的密钥
+* A,B 去中心化计算密钥
+* 对称加密
+
+过程：
+
+* A 计算 $(CK_{neu}, A_i) = KDF(\text{0x01},CK)$ 
+* B 用自己的 CK 计算 $A_i$ 
+* 下一个用 $CK_{neu}$ 作为基础
+
+<img src="IT-Sicherheit笔记/image-20250210221913557.png" alt="image-20250210221913557" style="zoom:50%;" />
+
+####  DH-Ratchet-Protokoll
+
+之前这个的问题是，没有PFS，所以需要DH-Ratchet
+
+第一步：A
+
+* A 生成新的 $(e_{A_{neu}},d_{A_{neu}})$ DH pair
+* A 计算 $DH\text{-}s=DH(d_{B_{neu}}, e_B)$ 作为新的 CK
+
+第二步：B
+
+* B 收到 $e_{A_{neu}}$ , 计算 $DH\text{-}s=DH(d_B, e_{A_{neu}})$
+* B 生成新的  $(e_{B_{neu}},d_{B_{neu}})$  , 使用新的进行下一轮
+
+![image-20250210224938728](IT-Sicherheit笔记/image-20250210224938728.png)
+
+### 例子说明
+
+首先，设B当前的DH密钥是 $(e_B^0, d_B^0)$
+
+#### A 给 B 发消息
+
+A先生成 $(e_A^1, d_A^1)$ , 然后用 B 当前的公钥得到 
+
+$DH^1 = ECDH(d_A^1, e_B^0)$ , 用这个作为 KDF 左侧的输入，和上一个 RK 导出新的 RK. 我们设上一个RK是 $RK^0$ (初始情况的 RK = SK, SK 是从X3DH-Protokoll 交换出来的), 这里就求了 $RK^1= KDF(DH^1, RK^0)$
+
+然后用这个 $RK^1$ 作为 Symmetrisches Ratchet Protokoll 的 CK , 推导出发送消息的 Message Key $A_1$ , 如果发送多条消息要重复推导，也就是 $A_2 = KDF(constant, CK_{last})$ 用上一个CK推到下一个CK和Message Key。
+
+此时B是离线状态 
+
+#### B 给 A 发消息
+
+此时B上线了，首先计算 $DH^1 = ECDH(d_B^0, e_A^1)$ , 用这个推导出A 的 Message Key来解密所有的消息 (过程和A一样)。
+
+然后 B 给 A 发消息:
+
+首先生成 $(e_B^1, d_B^1)$ , 计算 $DH^2=ECDH(d_B^1,e_A^1)$ , 推导 $RK^2=KDF(DH^2,RK^1)$, 然后用这个 $RK^2$ 作为新的 CK 推导出自己发送消息的 Message Key
+
+以此类推
+
+### Signal-Protokoll 的安全机制
+
+* PFS 
+* Backward Secrecy: 一条信息的密钥泄露不会影响之前的安全性
+* 通过 X3DH 协议双向认证
+* 群聊: E2E加密
 
 ## Systemsicherheit
 
