@@ -6,6 +6,125 @@ tags:
 
 # IT Sicherheit 笔记
 
+## Netzwerksicherheit
+
+#### 保护数据传输
+
+问题
+
+* 有不同的协议WLAN（无线局域网）、BT（蓝牙）、5G、以太网、IP/TCP协议
+* 不同的安全保障层次
+
+> 应用层：例如单独的即时消息、单独的电子邮件
+>
+> 传输层：例如TCP连接、TLS（传输层安全）加密的数据传输
+
+#### 分析端点的数据流量
+
+* 防火墙: 过滤进出网络的数据包
+* 入侵检测系统：检测可能的攻击痕迹（攻击者的“脚印”）
+
+### 传输层的安全
+
+保护目标：
+
+* Authentifikation: 每一个设备/用户的身份认证
+* Vertraulichkeit: 每次连接的数据加密
+* Integrität: 数据包的完整性
+
+问题：密钥交换
+
+使用的方法：**AES-128 GCM**（高级加密标准）、**SHA256**（安全哈希算法256位）、**X509证书**
+
+**静态预设的方法或动态“协商”**（即在通信过程中协商选择加密方法）
+
+### TLS 1.3
+
+通过HTTPS保障HTTP安全，通过 SMTP over TLS 保证SMTP安全
+
+* 加密算法：规定了5种密码套件（Cipher Suites）, 只允许AEAD模式的密码
+* 密钥交换：用 ECDH 密钥交换
+* 身份验证：CR, X.509
+* 数字签名：RSA 或者 ECDSA 
+
+### TLS-Protokollablauf
+
+
+
+目标：Clint A 安全地连接 Server B
+
+* 初始化：Handshake-Protokoll:
+  * 确定 Cipher-Suite
+  * 身份认证
+  * 去中心化生成共享密钥：$k_{a,b},k_{b,a}$ , 并且生成一个用于**握手消息的MAC密钥**（**kmac**）来确保消息的完整性和认证
+
+* 加密数据交换：Application Data Protokoll
+  * 客户端和服务器之间传输的**应用数据包**（如HTTP请求、邮件内容等）会进行**端到端加密**
+
+### TLS-Handshake-Protokoll
+
+广为流传的版本：Server B 对 A 验证自己，A不对Server B验证自己
+
+#### Msg1: A to B
+
+* A 随机生成 $R_A$
+* A 生成 DH-Paar $(DH\text{-}e_A, DH\text{-}d_A)$
+* 选择 Cipher-Suite $cs_A$ 
+
+生成第一个消息 $m1 = \text{ClientHello,ID,}R_A,DH\text{-}d_A,cs_A$   
+
+#### Msg 2: B生成，不发送
+
+* B 生成 $R_B$, 选择 $cs_A$ 作为 Cipher-Suite, (let $cs=cs_A$)
+* 生成  $(DH\text{-}e_B, DH\text{-}d_B)$ 
+
+第二个消息 $m2 =  R_B,cs,ID,DH\text{-}e_B, cert(e_B)$
+
+* 通过 $DH\text{-}e_A$ 和 $DH\text{-}d_B$ 生成 DH-Secret $s$
+* 通过 $KDF(s||R_A||R_B)$ 生成密钥 $k_{a,b},k_{b,a},k_{mac}$
+* 计算 $sig=Sig_{dB}(H(m1||m2))$
+* 计算 $c=E_{k_{b,a}}(ApplicationData)$
+
+#### Msg 3: B to A
+
+$Finish=E_{k_{b,a}}(HMAC_{k_{mac}}(m1||m2||sig)$
+
+$m3 = \text{ServerHello},m2,sig,Finish$ 
+
+#### HTTP Request: A to B
+
+* 验证签名 $Verify_{e_B}(Sig_{dB}(H(m1||m2))) == H(m1||m2)$
+* 从 $m2$ 提取 $DH\text{-}e_B$ 和 $DH\text{-}e_A$ 计算 $s$
+* 通过 $KDF(s||R_A||R_B)$ 生成密钥 $k_{a,b},k_{b,a},k_{mac}$
+* 验证 HMAC: $HMAC_{k_{mac}}(m1||m2||sig) == D_{k_{b,a}}(Finish)$
+* 生成结束 $Finish=E_{k_{a,b}}(HMAC_{k_{mac}}(m1||m3))$ 
+
+发送 $Finish,$ HTTP Request
+
+A之后用 $k_{a,b}$ 加密数据
+
+#### B验证Finish
+
+B验证 $Finish == E_{k_{a,b}}(HMAC_{k_{mac}}(m1||m3))$ 
+
+B之后用 $k_{b,a}$ 加密数据
+
+### TLS 1.3-Handshakes的种类
+
+之前说的是 1-RTT (Round Trip Time)
+
+#### 双方方互相验证的TLS1.3
+
+* B发送ServerHello 的时候同时发送一个 Certificate Request
+* A 会回复它的 Client-Certificate $cert(e_A)$ , 并且签名 $cert(e_A),D_{dA}(H(m1||m2))$
+* B 再验证这个签名
+
+#### 0-RTT
+
+A 发送
+
+
+
 ## Systemsicherheit
 
 ### 操作系统的任务
@@ -141,3 +260,13 @@ VMM/Hypervisor:
 * 将加密密钥存储在 CPU 的寄存器中
 * AMD SME,Intel MKTME技术可以在硬件级别进行加密操作
 * 使用受信执行环境，如 **Intel SGX** 或 **AMD SEV** 为加密操作提供一个安全的运行环境
+
+
+
+## 信息安全管理
+
+信息安全管理（ISM）是组织内部制定的一系列程序和规则，旨在确保信息安全的有效管理, 包括
+
+* **控制与管理**：对信息安全进行持续的控制和监督，以确保其有效性。
+* **保持与改进**：确保信息安全的管理措施能够长期有效运行，并通过持续的优化和改进保持高效性。
+
