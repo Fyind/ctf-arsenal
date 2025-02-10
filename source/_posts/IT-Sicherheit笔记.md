@@ -205,7 +205,7 @@ Signal协议被广泛用于 Whatsapp 等平台
 * B 用自己的 CK 计算 $A_i$ 
 * 下一个用 $CK_{neu}$ 作为基础
 
-<img src="IT-Sicherheit笔记/image-20250210221913557.png" alt="image-20250210221913557" style="zoom:50%;" />
+<img src="https://cr4zyp1x3l.netlify.app/IT-Sicherheit%E7%AC%94%E8%AE%B0/image-20250210221913557.png" alt="image-20250210221913557" style="zoom:50%;" />
 
 ####  DH-Ratchet-Protokoll
 
