@@ -33,7 +33,7 @@ tags:
 
 #### 进程地址空间
 
-![image-20250210170538424](D:\Fyind\CTF\ctf-arsenal\source\_posts\IT-Sicherheit笔记\image-20250210170538424.png)
+![image-20250210170538424](IT-Sicherheit笔记/image-20250210170538424-1739205784583-3.png)
 
 ### Buffer Overflow
 
@@ -49,7 +49,7 @@ void a() {
 
 这个时候，`is_admin` 在 msg 的上面，Buffer Overflow的时候是从低地址往高地址overflow，可以覆盖掉 `is_admin`
 
-![image-20250210171343432](D:\Fyind\CTF\ctf-arsenal\source\_posts\IT-Sicherheit笔记\image-20250210171343432.png)
+![image-20250210171343432](IT-Sicherheit笔记/image-20250210171343432-1739205779594-1.png)
 
 #### Return To ShellCode
 
@@ -63,7 +63,7 @@ void a() {
 
 这个保护措施通过GCC加的
 
-### ![image-20250210171726661](D:\Fyind\CTF\ctf-arsenal\source\_posts\IT-Sicherheit笔记\image-20250210171726661.png)Shadow Stack
+![image-20250210171726661](IT-Sicherheit笔记/image-20250210171726661-1739205788859-5.png)Shadow Stack
 
 Shadow-Stack 是一个独立且受保护的内存区域，用于安全存储函数调用的返回地址。它与常规栈相分离，以防止攻击者通过缓冲区溢出等手段篡改返回地址。
 
