@@ -72,7 +72,7 @@ math: true
 * A 生成 DH-Paar $(DH\text{-}e_A, DH\text{-}d_A)$
 * 选择 Cipher-Suite $cs_A$ 
 
-生成第一个消息 $m1 = \text{ClientHello,ID,}R_A,DH\text{-}d_A,cs_A$   
+生成第一个消息 $m1 = \text{ClientHello,ID,}R_A,DH\text{-}e_A,cs_A$   
 
 #### Msg 2: B生成，不发送
 
@@ -122,7 +122,19 @@ B之后用 $k_{b,a}$ 加密数据
 
 #### 0-RTT
 
-A 发送
+A 保存之前的 $k_{a,b}$ 并且用作之后的通讯
+
+A 在发送 Hello 之后，直接发送数据
+
+### ACME
+
+Automatic Certificate Management Environment (ACME) 
+
+问题：
+
+Server经常没有TLS服务, 生成TLS-Server-Zertifikats 太贵了
+
+ACME-Protocoll 可以
 
 
 
