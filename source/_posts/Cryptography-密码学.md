@@ -4,6 +4,7 @@ date: 2025-02-08 20:25:34
 tags:
  - CTF笔记
  - Cryptography
+math: true
 ---
 
 # Cryptography 密码学

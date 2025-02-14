@@ -297,19 +297,118 @@ print(long_to_bytes(m).decode())
 
 ### RSA Bummer
 
-TODO
+TODO: 没看懂
 
 https://github.com/IC3lemon/CTF-reports/tree/main/BITSCTF-2025/crypto/RSA%20Bummer
 
 solution:
 
-``` txt
-YGBgcHl0aG9uCiMhL3Vzci9iaW4vZW52IHB5dGhvbjMKZnJvbSBwd24gaW1wb3J0IHJlbW90ZSwgY29udGV4dCwgbG9nCmZyb20gbWF0aCBpbXBvcnQgZ2NkCmZyb20gQ3J5cHRvZG9tZS5VdGlsLm51bWJlciBpbXBvcnQgbG9uZ190b19ieXRlcywgaW52ZXJzZQpmcm9tIGdtcHkyIGltcG9ydCBpcm9vdAoKY29udGV4dC5sb2dfbGV2ZWwgPSAiZGVidWciCgpkZWYgcnNhX2RlY3J5cHRfbW9kcChjLCBlLCBwKToKICAgIGcgPSBnY2QoZSwgcCAtIDEpCiAgICBpZiBnID09IDE6CiAgICAgICAgZCA9IGludmVyc2UoZSwgcCAtIDEpCiAgICAgICAgcmV0dXJuIHBvdyhjLCBkLCBwKQogICAgZWxzZToKICAgICAgICBlX3ByaW1lID0gZSAvLyBnCiAgICAgICAgdCA9IChwIC0gMSkgLy8gZwogICAgICAgIGRfcHJpbWUgPSBpbnZlcnNlKGVfcHJpbWUsIHQpCiAgICAgICAgWCA9IHBvdyhjLCBkX3ByaW1lLCBwKQogICAgICAgIGxvZy5pbmZvKCJDb21wdXRlZCBYID0gbV5nIG1vZCBwOiB7fSIuZm9ybWF0KFgpKQogICAgICAgIHJvb3QsIGV4YWN0ID0gaXJvb3QoWCwgZykKICAgICAgICBpZiBleGFjdDoKICAgICAgICAgICAgbG9nLmluZm8oIlN1Y2Nlc3NmdWxseSBleHRyYWN0ZWQgaW50ZWdlciBnLXRoIHJvb3QgdXNpbmcgZ21weTIiKQogICAgICAgICAgCiAgICAgICAgICAgIHJldHVybiBpbnQocm9vdCkKICAgICAgICBlbHNlOgogICAgICAgICAgICByYWlzZSBFeGNlcHRpb24oIk5vIHZhbGlkIGctdGggcm9vdCBmb3VuZCIpCgpkZWYgcmVjdl91bnRpbF9rZXl3b3JkKHIsIGtleXdvcmQpOgoKICAgIHdoaWxlIFRydWU6CiAgICAgICAgbGluZSA9IHIucmVjdmxpbmUoKS5kZWNvZGUoKS5zdHJpcCgpCiAgICAgICAgbG9nLmRlYnVnKCJSZWNlaXZlZDogIiArIGxpbmUpCiAgICAgICAgaWYga2V5d29yZCBpbiBsaW5lOgogICAgICAgICAgICByZXR1cm4gbGluZQoKZGVmIGdldF9sdWNreV9vdXRwdXQociwgeCk6CgogICAgCiAgICByLnJlY3Z1bnRpbCgiRW50ZXIgeW91ciBsdWNreSBudW1iZXIgOiAiKQogICAgci5zZW5kbGluZShzdHIoeCkpCiAgICBsaW5lID0gci5yZWN2bGluZSgpLmRlY29kZSgpLnN0cmlwKCkKICAgIGlmICJZb3VyIGx1Y2t5IG91dHB1dCIgbm90IGluIGxpbmU6CiAgICAgICAgbGluZSA9IHIucmVjdmxpbmUoKS5kZWNvZGUoKS5zdHJpcCgpCiAgICB2YWwgPSBpbnQobGluZS5zcGxpdCgnOicpWy0xXS5zdHJpcCgpKQogICAgci5yZWN2bGluZSgpCiAgICByZXR1cm4gdmFsCgpkZWYgbWFpbigpOgogICAgSE9TVCA9ICJjaGFscy5iaXRza3JpZWcuaW4iCiAgICBQT1JUID0gNzAwMQoKICAgIHIgPSByZW1vdGUoSE9TVCwgUE9SVCkKICAgIAoKICAgIGxpbmUgPSByZWN2X3VudGlsX2tleXdvcmQociwgIlBzZXVkb19uIikKICAgIHBzZXVkb19uID0gaW50KGxpbmUuc3BsaXQoJz0nKVstMV0uc3RyaXAoKSkKICAgIGxvZy5pbmZvKCJQYXJzZWQgUHNldWRvX24gPSB7fSIuZm9ybWF0KHBzZXVkb19uKSkKICAgIAoKICAgIGxpbmUgPSByZWN2X3VudGlsX2tleXdvcmQociwgImUgPSIpCiAgICBlID0gaW50KGxpbmUuc3BsaXQoJz0nKVstMV0uc3RyaXAoKSkKICAgIGxvZy5pbmZvKCJQYXJzZWQgZSA9IHt9Ii5mb3JtYXQoZSkpCiAgICAKCiAgICBjdHMgPSBbXQogICAgZm9yIGkgaW4gcmFuZ2UoMyk6CiAgICAgICAgbGluZSA9IHJlY3ZfdW50aWxfa2V5d29yZChyLCAiQ2lwaGVydGV4dCIpCiAgICAgICAgY3QgPSBpbnQobGluZS5zcGxpdCgnPScpWy0xXS5zdHJpcCgpKQogICAgICAgIGN0cy5hcHBlbmQoY3QpCiAgICAgICAgbG9nLmluZm8oIlBhcnNlZCBDaXBoZXJ0ZXh0IHt9OiB7fSIuZm9ybWF0KGkrMSwgY3QpKQogICAgRjMgPSBnZXRfbHVja3lfb3V0cHV0KHIsIDMpCiAgICBsb2cuaW5mbygiRigzKSA9IHt9Ii5mb3JtYXQoRjMpKQogICAgRjQgPSBnZXRfbHVja3lfb3V0cHV0KHIsIDQpCiAgICBsb2cuaW5mbygiRig0KSA9IHt9Ii5mb3JtYXQoRjQpKQogICAgCiAgICBuX3ZhbCA9IEYzICsgNCAqIEY0CiAgICBsb2cuaW5mbygiUmVjb3ZlcmVkIG4gKHAgKiByKSA9IHt9Ii5mb3JtYXQobl92YWwpKQoKICAgIHJfdmFsID0gZ2NkKG5fdmFsLCBwc2V1ZG9fbikKICAgIGxvZy5pbmZvKCJSZWNvdmVyZWQgciA9IHt9Ii5mb3JtYXQocl92YWwpKQogICAgcF92YWwgPSBuX3ZhbCAvLyByX3ZhbAogICAgbG9nLmluZm8oIlJlY292ZXJlZCBwID0ge30iLmZvcm1hdChwX3ZhbCkpCgogICAgZmxhZ19wYXJ0cyA9IFtdCiAgICBmb3IgaWR4LCBjdCBpbiBlbnVtZXJhdGUoY3RzLCBzdGFydD0xKToKICAgICAgICBtX2ludCA9IHJzYV9kZWNyeXB0X21vZHAoY3QsIGUsIHBfdmFsKQogICAgICAgIHBhcnQgPSBsb25nX3RvX2J5dGVzKG1faW50KQogICAgICAgIGxvZy5pbmZvKCJEZWNyeXB0ZWQgcGFydCB7fToge30iLmZvcm1hdChpZHgsIHBhcnQpKQogICAgICAgIGZsYWdfcGFydHMuYXBwZW5kKHBhcnQpCiAgICAKICAgIGZsYWcgPSBiIiIuam9pbihmbGFnX3BhcnRzKQogICAgbG9nLnN1Y2Nlc3MoIkZsYWc6IHt9Ii5mb3JtYXQoZmxhZy5kZWNvZGUoKSkpCiAgICByLmNsb3NlKCkKCmlmIF9fbmFtZV9fID09ICJfX21haW5fXyI6CiAgICBtYWluKCkKCiNGKHgpIGlzIHRoZSBvdXRwdXQgb2YgdGhlIGZ1bmMgJ2xtYW8nIHlvdSBjYW4gZ2V0IHRoYXQgRih4KSsoeCsxKUYoeCsxKT1wKnIuIHNlbmQgMiBzbWFsbCB2YWx1ZXMgdG8gdGhlIHNlcnZlciBhbmQgdXNlIHRoZSBwcmludGVkIHZhbHVlIHdoaWNoIGlzIHBzdWRvX249KHIqKGVecCBtb2QgcSkpIHRoZW4gZ2NkKHBzdWRvX24sbikgeW91IGNhbiBnZXQgciB0aGVuIHA9bi9yICBkZWNyeXB0IG1vZCBwIHdpbGwgZ2l2ZSB0aGUgZmxhZwpgYGA=
+``` python
+#!/usr/bin/env python3
+from pwn import remote, context, log
+from math import gcd
+from Cryptodome.Util.number import long_to_bytes, inverse
+from gmpy2 import iroot
+
+context.log_level = "debug"
+
+def rsa_decrypt_modp(c, e, p):
+    g = gcd(e, p - 1)
+    if g == 1:
+        d = inverse(e, p - 1)
+        return pow(c, d, p)
+    else:
+        e_prime = e // g
+        t = (p - 1) // g
+        d_prime = inverse(e_prime, t)
+        X = pow(c, d_prime, p)
+        log.info("Computed X = m^g mod p: {}".format(X))
+        root, exact = iroot(X, g)
+        if exact:
+            log.info("Successfully extracted integer g-th root using gmpy2")
+          
+            return int(root)
+        else:
+            raise Exception("No valid g-th root found")
+
+def recv_until_keyword(r, keyword):
+
+    while True:
+        line = r.recvline().decode().strip()
+        log.debug("Received: " + line)
+        if keyword in line:
+            return line
+
+def get_lucky_output(r, x):
+
+    
+    r.recvuntil("Enter your lucky number : ")
+    r.sendline(str(x))
+    line = r.recvline().decode().strip()
+    if "Your lucky output" not in line:
+        line = r.recvline().decode().strip()
+    val = int(line.split(':')[-1].strip())
+    r.recvline()
+    return val
+
+def main():
+    HOST = "chals.bitskrieg.in"
+    PORT = 7001
+
+    r = remote(HOST, PORT)
+    
+
+    line = recv_until_keyword(r, "Pseudo_n")
+    pseudo_n = int(line.split('=')[-1].strip())
+    log.info("Parsed Pseudo_n = {}".format(pseudo_n))
+    
+
+    line = recv_until_keyword(r, "e =")
+    e = int(line.split('=')[-1].strip())
+    log.info("Parsed e = {}".format(e))
+    
+
+    cts = []
+    for i in range(3):
+        line = recv_until_keyword(r, "Ciphertext")
+        ct = int(line.split('=')[-1].strip())
+        cts.append(ct)
+        log.info("Parsed Ciphertext {}: {}".format(i+1, ct))
+    F3 = get_lucky_output(r, 3)
+    log.info("F(3) = {}".format(F3))
+    F4 = get_lucky_output(r, 4)
+    log.info("F(4) = {}".format(F4))
+    
+    n_val = F3 + 4 * F4
+    log.info("Recovered n (p * r) = {}".format(n_val))
+
+    r_val = gcd(n_val, pseudo_n)
+    log.info("Recovered r = {}".format(r_val))
+    p_val = n_val // r_val
+    log.info("Recovered p = {}".format(p_val))
+
+    flag_parts = []
+    for idx, ct in enumerate(cts, start=1):
+        m_int = rsa_decrypt_modp(ct, e, p_val)
+        part = long_to_bytes(m_int)
+        log.info("Decrypted part {}: {}".format(idx, part))
+        flag_parts.append(part)
+    
+    flag = b"".join(flag_parts)
+    log.success("Flag: {}".format(flag.decode()))
+    r.close()
+
+if __name__ == "__main__":
+    main()
+
+#F(x) is the output of the func 'lmao' you can get that F(x)+(x+1)F(x+1)=p*r. send 2 small values to the server and use the printed value which is psudo_n=(r*(e^p mod q)) then gcd(psudo_n,n) you can get r then p=n/r  decrypt mod p will give the flag
 ```
+
+
 
 ### Leaky Game
 
-TODO
+TODO 
 
 https://github.com/E-HAX/writeups/tree/main/2025/bitsctf/osint/leaky_game
 
@@ -429,15 +528,159 @@ assert random.getrandbits(32) == predictor.getrandbits(32)
 
 ### Reverse Mishap
 
-TODO
+用IDA打开，查找String
+
+``` text
+.rodata:0000000000094013	00000050	C	/rustc/051478957371ee0084a7c0913941d2a8c4757bb9/library/core/src/char/methods.rs
+```
+
+可以发现这是 Rust 的程序，`051478957371ee0084a7c0913941d2a8c4757bb9` 这个
+
+去rust 的 github里搜索这个，在pull request里发现是 `1.80.0 Release` 版本
+
+然后看依赖项
+
+![image-20250214223922490](BITSCTF2025-Write-Up/image-20250214223922490.png)
+
+发现依赖 `generic-array` 之类的依赖，建立 `Cargo.toml` 里面写
+
+``` toml
+[package]
+name = "demo"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rand_core = "0.6.4"
+rand_chacha = "0.3.1"
+generic-array = "0.14.7"
+cipher = "0.4.4"
+aes = "0.8.4"
+ppv-lite86 = "0.2.20"
+rand = "0.8"
+```
+
+这里要用一个IDA插件叫 [capa](https://github.com/mandiant/capa/)
+
+``` shell
+pip install capa
+pip install pip install flare-capa
+pip install pyqt5
+```
+
+然后把 `capa/ida/plugin/capa_explorer.py` 拷贝到IDA的plugin文件夹下。就可以在IDA里用 Edit, Plugin 里打开了
 
 https://blog.diefunction.io/ctf/bitsctf-reverse-mishap
 
+发现运行不了，我然后换一种方式：先下载capa的windows Release，拷贝到要分析的文件的同文件夹下
+
+然后运行cmd，首先clone rules
+
+``` shell
+git clone https://github.com/mandiant/capa-rules.git
+```
+
+然后运行
+
+``` shell
+capa -r capa-rules/ <my_rust_binary>
+```
+
+之前插件运行不了的原因是，这个capa有BUG!! 在IDA 9.0的时候 `bin_search` 被替换成了 `bin_search3` 所以报错了。首先进入
+
+``` shell
+C:\Users\<username>\AppData\Local\Programs\Python\Python313\Lib\site-packages\capa\features\extractors\ida
+```
+
+里面找到 `helpers.py` 把里面的 `bin_search` 替换成 `bin_search3` 就可以了
+
+ 然后安装Rust依赖，首先去Rust官网下载https://www.rust-lang.org/learn/get-started 
+
+使用 `rustc --version`  可以验证安装
+
+使用下面的生成一个demo
+
+``` shell
+cargo new demo
+cd demo
+```
+
+然后进去修改配置文件
+
+``` toml
+[package]
+name = "demo"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rand_core = "0.6.4"
+rand_chacha = "0.3.1"
+generic-array = "0.14.7"
+cipher = "0.4.4"
+aes = "0.8.4"
+ppv-lite86 = "0.2.20"
+rand = "0.8"
+```
+
+我发现需要用ubuntu来写rust，因为到手的不是windows的文件
+
+去ubuntu安装rust
+
+``` shell
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+安装完可以 `source $HOME/.cargo/env` 一下
+
+把这个编译出来后，用IDA生成SIG签名，然后在Load到我们要分析的程序，会发现有一些函数就可以被识别出来了。
+
+但是大部分还没被识别出来。之后再看。这个太难了。
+
 ### Appreciation of Art
 
-TODO
+用GDB调试一下，可以装pwngdb这个插件
 
-https://mindcrafters.xyz/writeups/rev-bitskrieg/#appreciation-of-art
+使用 `b *0x401001` 可以在某个地址下断点
+
+也用IDA试了一下，发现根本没办法调试，只有一个start函数，而且很大，IDA无法反编译
+
+先用 GDB打开，在运行时候dump meory，具体操作
+
+``` shell
+gdb a.art
+```
+
+然后输入 `r` 然程序跑起来等待输入。然后control+C打断程序，然后dump memory
+
+``` shell 
+vmmap
+```
+
+输出
+
+![image-20250214222512886](BITSCTF2025-Write-Up/image-20250214222512886.png)
+
+把Code 的那一段dump下来 `0x442000 - 0x4443000`
+
+``` shell
+dump memory pie.dmp 0x442000 0x4443000
+```
+
+然后退出，cat这个memory (VSCODE 里的hex editor打开，然后搜索也行)
+
+``` txt
+@���F��I��H���@�@�@no memory!
+
+
+
+␦123456789:;<=>?@abcdefghijklmnopqrstuvwxyz[\]^_`abcdefghijklmnopqrstuvwxyz{|}~������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������ in : unknown format!
+���What is the name of the character hiding in this binary (lowercase with underscores if needed): gg here's your flag %s
+Are you hallucinating?
+�J��E��`�J��"���J��#���`What is the name of the character hiding in this binary (lowercase with underscores if needed): ���N��VA���o���dBITSCTF{1_l0v3_0bfu5c4t1ng_thi1ng5_r4nd0mly_0e54826a}*?((#.2?*6;.#*/).shstrtab.text.data
+```
+
+在里面发现了flag.
 
 ## Hardware
 
@@ -509,3 +752,5 @@ https://mindcrafters.xyz/writeups/hardware-bitskrieg/
 https://github.com/rerrorctf/writeups/blob/main/2025_02_07_BITSCTF25/crypto/alice_n_bob_in_wonderland/writeup.md
 
 https://zwique.gitbook.io/zwique_notes/writeups/random-ctf-writeup/noob-rsa-returns
+
+https://mindcrafters.xyz/writeups/rev-bitskrieg/#appreciation-of-art
