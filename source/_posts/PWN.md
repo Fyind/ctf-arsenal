@@ -51,6 +51,7 @@ libc 直接运行可以显示出版本
 
 ``` python
 io = process("./vuln")
+io = process(["python3", "chall.py"]) # 如果运行python
 ```
 
 #### 返回可交互的界面

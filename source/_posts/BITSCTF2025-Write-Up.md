@@ -3,15 +3,10 @@ title: BITSCTF2025 Write Up
 date: 2025-02-09 15:39:08
 tags:
  - writeups
+math: true
 ---
 
 # BITSCTF2025 Write Up
-
-
-
-
-
-
 
 ## Cryptography
 
@@ -65,13 +60,240 @@ BITSCTF{f3rb_1_kn0w_wh47_w3_4r3_60nn4_d0_70d4y}
 
 ### Alice n bob in wonderland
 
-TODO
+一道ECDSA的题。首先Alice和Bob会互发消息，每条消息有密文和签名。
 
-https://github.com/rerrorctf/writeups/blob/main/2025_02_07_BITSCTF25/crypto/alice_n_bob_in_wonderland/writeup.md
+然后使用 IV作为 random 的种子, 使用ECDSA进行签名。
+
+``` python
+aes_key = shared_secret[:16]
+iv = shared_secret[16:]
+random.seed(int(iv.hex(),16))
+```
+
+然后我们是作为ManInTheMiddle的位置，可以转发Alice的消息给Bob, 也可以伪造消息给Bob. 但是注意它们会验证签名，并且在验证的时候给出 Ciphertext的解密，并且如果失败二次就停止了。也就是有一次解密Oracle的机会。
+
+首先我们可以拿到IV的值，通过构造 $C_1,C_2=\text{0x00},C_3=C_1$ 然后异或 $P_1,P_3$ 就可以得到 IV.
+
+另一个弱点
+``` python
+def sign(message, private_key:SigningKey):
+    message = message.encode()
+    k = random.randint(1, SECP256k1.order - 1)  
+    signature = private_key.sign(message,hashfunc=hashlib.sha256 ,k=k)
+    return signature
+```
+
+在签名message的时候，密钥是用random生成的，也就是如果我们拿到了种子，就可以掌握签名密钥.
+
+然后通过
+
+``` python
+def compute_shared_secret(private_key, public_key):
+    shared_point = private_key.privkey.secret_multiplier * public_key.pubkey.point
+    shared_secret_bytes = shared_point.to_bytes()
+    return hashlib.sha256(shared_secret_bytes).digest()
+
+shared_secret = compute_shared_secret(alice_private_key, bob_public_key)
+```
+
+这是计算 `shared_secret` 的方式，而AES密钥包含在 `shared_secret` 里面
+
+所以思路就是: 
+
+*  先拿到IV
+* 然后就有 k, 也就是 `private_key`
+* 然后可以知道 `shard_secret` ，知道AES的密钥
+
+最后给Alice发送消息
+
+``` python
+print(f"\nSend to Aice:")
+        ciphertext_forged = bytes.fromhex(input("Ciphertext (hex): "))
+        signature_forged = bytes.fromhex(input("Signature (hex): "))
+        
+        plaintext = decrypt(ciphertext_forged)
+        print("Debug: ",plaintext)
+        verified = verify(plaintext,signature_forged,bob_public_key)
+        
+        if verified and plaintext.decode() == "Can I have the key again, I think I forgot where I kept the key.":
+            print("Very good, now we wait.")
+            ciphertext = encrypt(secret)
+            signature = sign(secret,alice_private_key)
+            print(f"\nIntercepted from Alice:\nCiphertext: {ciphertext.hex()}\nSignature: {signature.hex()}\n")
+```
+
+这里的 secret 就是flag了
+
+完整代码：
+
+``` python
+from pwn import *
+import re
+from binascii import hexlify, unhexlify
+from hashlib import sha256
+import random
+from ecdsa import SigningKey, SECP256k1, VerifyingKey
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad, unpad
+
+def xor(a,b):
+    return bytearray([x^y for (x,y) in zip(a,b)])
+
+io = process(["py","chall.py"])
+msg = io.recvuntil(b"Ciphertext (hex): ").decode()
+print(msg)
+alice_public_key_hexstr = re.search(r"Alice's public key:\s*([0-9a-fA-F]+)", msg).group(1) 
+bos_public_key_hexstr = re.search(r"Bob's public key:\s*([0-9a-fA-F]+)", msg).group(1)
+
+alice_public_key = VerifyingKey.from_string(unhexlify(alice_public_key_hexstr), curve=SECP256k1)
+bob_public_key = VerifyingKey.from_string(unhexlify(bos_public_key_hexstr), curve=SECP256k1)
+
+alice_ciphertext_1 = re.search(r"Ciphertext:\s*([0-9a-fA-F]+)", msg).group(1)
+alice_signature_1 = re.search(r"Signature:\s*([0-9a-fA-F]+)", msg).group(1)
+
+c1 = b"1"*16 + b"\x00"*16 + b"1"*16
+c1_hex = hexlify(c1)
+io.sendline(c1_hex)
+print(io.recvuntil(b"Signature (hex): ").decode())
+
+io.sendline(c1_hex)
+msg = io.recvuntil(b"Ciphertext (hex): ").decode()
+print(msg)
+pt_hexstr = re.search(r"and this is what they found:\s*([0-9a-fA-F]+)", msg).group(1)
+
+pt_bytes = unhexlify(pt_hexstr)
+iv_bytes = xor(pt_bytes[:16], pt_bytes[32:48])
+print(iv_bytes)
+
+random.seed(int(iv_bytes.hex(),16))
+
+    # k = random.randint(1, SECP256k1.order - 1)  
+def sign(message, private_key:SigningKey, k):
+    signature = private_key.sign(message,hashfunc=hashlib.sha256 ,k=k)
+    return signature
+
+
+io.sendline(alice_ciphertext_1.encode())
+io.sendlineafter(b"Signature (hex): ", alice_signature_1.encode())
+
+# io.sendline(c1_hex)
+# print(io.recvuntil(b"Signature (hex): ").decode())
+k = random.randint(1, SECP256k1.order - 1)
+k = random.randint(1, SECP256k1.order - 1)
+
+# io.sendline(hexlify(sig_c1))
+io.recvuntil(b"Ciphertext: ")
+ciphertext = bytes.fromhex(io.readline().decode())
+io.recvuntil(b"Signature: ")
+signature = bytes.fromhex(io.readline().decode())
+bob_sigature = signature
+print("BEFORE")
+
+def compute_shared_secret(private_key, public_key):
+    shared_point = private_key.privkey.secret_multiplier * public_key.pubkey.point
+    shared_secret_bytes = shared_point.to_bytes()
+    return hashlib.sha256(shared_secret_bytes).digest()
+
+r = int.from_bytes(signature[:32])
+s = int.from_bytes(signature[32:])
+z = int.from_bytes(sha256(b"msg2").digest()) % SECP256k1.order
+print(r,s)
+
+io.sendlineafter(b"Ciphertext (hex): ", ciphertext.hex().encode())
+io.sendlineafter(b"Signature (hex): ", signature.hex().encode())
+
+maybe_d = (((s * k) - z) * pow(r, -1, SECP256k1.order)) % SECP256k1.order
+bob_private_key = SigningKey.from_secret_exponent(maybe_d, curve=SECP256k1)
+
+shared_secret = compute_shared_secret(bob_private_key, alice_public_key)
+assert(shared_secret[16:] == iv_bytes)
+aes_key = shared_secret[:16]
+# print(io.recv(512).decode())
+print(io.recvuntil(b"Send to Aice:").decode())
+chosen_plaintext = b"Can I have the key again, I think I forgot where I kept the key."
+
+cipher = AES.new(aes_key, AES.MODE_CBC, iv_bytes)
+ciphertext = cipher.encrypt(pad(chosen_plaintext, AES.block_size))
+k = random.randint(1, SECP256k1.order - 1)
+signature = bob_private_key.sign(chosen_plaintext,hashfunc=sha256 ,k=k)
+io.sendlineafter(b"Ciphertext (hex): ", ciphertext.hex().encode())
+io.sendlineafter(b"Signature (hex): ", signature.hex().encode())
+
+# then alice should send us the flag encrypted...
+# ... along with a signature that we can ignore
+# print(io.recv(512).decode())
+
+io.readuntil(b"Ciphertext: ")
+flag_ciphertext = bytes.fromhex(io.readline().decode())
+io.readuntil(b"Signature: ")
+flag_signature = bytes.fromhex(io.readline().decode())
+cipher = AES.new(aes_key, AES.MODE_CBC, iv_bytes)
+plaintext = unpad(cipher.decrypt(flag_ciphertext), AES.block_size)
+# flag = plaintext[59:].decode()
+print(plaintext.decode())
+# n = SECP256k1.order
+# s = pow(k,-1,n) * (z + r*d)
+```
 
 ### Noob RSA returns
 
-TODO
+在RSA加密完后，额外给了一个
+$$
+K=(A \cdot p^2 - C\cdot p+D) \cdot d
+$$
+第一个思路是质因数分解，但是不太可能，因为质因数很大。
+
+通过同于方程求解也不行，因为 $p$ 是高次方的
+
+但是RSA有个结论 
+$$
+e \cdot d \equiv 1 \bmod \Phi(n)
+$$
+它可以写成
+$$
+e\cdot d \equiv 1 + z\cdot \Phi(n)
+$$
+这里 $d$ 是关于 $\Phi(n)$ 的逆，通常很大 $e≈\Phi(n)$ 所以 $z≈e$ , 测试下来, $z$ 的值在 $[0,e]$ 直接可以枚举 $z$
+
+然后Python代码
+
+``` python
+from sympy import Eq, symbols, solve
+from tqdm import tqdm
+from Crypto.Util.number import long_to_bytes
+e = 65537
+n = 94391578028846794543970306963076155289398888845132329034244336898352288130614402434536624297683695128972774452047972797577299176726976054101512298009248486464357336027594075427866979990479026404794249095503495046303993475122649145761379383861274918580282133794104162177538259963029805672413580517485119968223
+ct = 39104570513649572073989733086496155533723794051858605899505397827989625611665929344072330992965609070817627613891751881019486310635360263164859429539044097039969287153948226763672953863052936937079161030077852648023719781006057880499973169570114083902285555659303311508836688226455433255342509705736365222119
+K = 20846957286553798859449981607534380028938425515469447720112802165918184044375264023823946177012518880630631981155207307372567493851397122661053548491580627249805353321445391571601385814438186661146844697737274273249806871709168307518276727937806212329164651501381607714573451433576078813716191884613278097774416977870414769368668977000867137595804897175325233583378535207450965916514442776136840826269286229146556626874736082105623962789881101475873449157946816513513532838149452759771630220014344325387486921028690085783785067988074331005737389865053848981113695310344572311901555735038842261745556925398852334383830822697851
+
+C = 0xbaaaaaad
+D = 0xdeadbeef
+A= 0xbaadf00d
+
+
+p = symbols("p",integer=True)
+START=42675
+# START=1
+flag = False
+for z in tqdm(range(START,e+1)):
+    equation = Eq(K*e, (A*p**2 - C*p + D)*(1+z*(n/p-1)*(p-1)))
+    solutions = solve(equation, p)
+
+    for sol in solutions:
+        if sol.is_integer:
+            print(sol)
+            flag = True
+            break
+    if flag:
+        break
+# p = 10406216443192169173533723167461845081683996237790486467542778667477564930803546070928131853072839096935544813786122096301171127932695303325352097678393621
+
+phi = (n//p-1)*(p-1)
+d = pow(e, -1, phi)
+m = pow(ct, d, n)
+
+print(long_to_bytes(m).decode())
+```
 
 ### RSA Bummer
 
@@ -221,11 +443,40 @@ https://mindcrafters.xyz/writeups/rev-bitskrieg/#appreciation-of-art
 
 ### oldSkool
 
-TODO
+这个题关于 Radio Signal Processing, 这里给了一个 `iq` 文件 TODO：没看懂
 
-https://github.com/Vatsallavari/BITSCTF/tree/main
+``` python
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.signal import hilbert
+from scipy.io import wavfile
 
+# 1. Wczytanie pliku IQ
+file_path = "modulated.iq"
+iq_data = np.fromfile(file_path, dtype=np.complex64)
 
+# 2. Parametry
+Fs = 24000  # Sampling rate 24kHz
+Fc = 1550000  # Przybliżona nośna (np. 1550 kHz)
+t = np.arange(len(iq_data)) / Fs
+
+# 3. Przemiana częstotliwości (mixing)
+demod_signal = iq_data * np.exp(-1j * 2 * np.pi * Fc * t)
+
+# 4. Demodulacja AM (obwiednia)
+audio_signal = np.abs(hilbert(demod_signal.real))
+
+# 5. Normalizacja i zapis do pliku WAV
+audio_signal = (audio_signal / np.max(np.abs(audio_signal)) * 32767).astype(np.int16)
+wavfile.write("output.wav", Fs, audio_signal)
+
+print("Demodulacja zakończona! Otwórz output.wav, aby odsłuchać.")
+
+```
+
+### %lution
+
+首先这是一个 `signal` 文件，我们用 [Universal Radio Hacker](https://github.com/jopohl/urh/releases) 打开这个文件，可以得到二进制码，在 Cyberchef 里用from binary拿到flag
 
 ## MISC
 
@@ -248,3 +499,13 @@ https://github.com/V1rg1lee/writeups/tree/main/2025-BITSkrieg/seed-fund
 TODO
 
 https://odintheprotector.github.io/2025/02/09/bitsctf2025-dfir.html
+
+## 其他Writeups链接
+
+https://github.com/Vatsallavari/BITSCTF/tree/main
+
+https://mindcrafters.xyz/writeups/hardware-bitskrieg/
+
+https://github.com/rerrorctf/writeups/blob/main/2025_02_07_BITSCTF25/crypto/alice_n_bob_in_wonderland/writeup.md
+
+https://zwique.gitbook.io/zwique_notes/writeups/random-ctf-writeup/noob-rsa-returns
