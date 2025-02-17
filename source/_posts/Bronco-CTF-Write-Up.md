@@ -583,3 +583,61 @@ print("Recovered flag:", flag)
 bronco{th1s_0n3_i5}
 ```
 
+
+
+### Uno
+
+![image-20250217102445644](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250217102445644.png)
+
+这道题我们会得到这样一张图片：
+
+![uno](https://raw.githubusercontent.com/Lycorisby/Picture/main/uno.jpg)
+
+根据题目描述（”a significant bit of the cards were left on the *plane* I was on.“）我们猜测这道题用的是LSB隐写了ASCII码，所以我们用StegSolve打开图片，利用其Data Extract模块进行查看。这个模块可以查看RGB三种颜色的每一个通道，并且按照（自选的）一定的排列顺序显示每个通道的Hex和ASCII码字符：
+
+![image-20250217102658148](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250217102658148.png)
+
+最后，根据题目描述中的 “the numbers really speak to me...” 这一句，尝试各种由 2、3、4、5 组成的组合，便可以得到 flag：
+
+![image-20250217102401676](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250217102401676.png)
+
+```
+bronco{no_un0_y3t}
+```
+
+
+
+
+
+### Wordlands
+
+![image-20250217110344089](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250217110344089.png)
+
+我们会得到这张图片：
+
+![wordlands](https://raw.githubusercontent.com/Lycorisby/Picture/main/wordlands.png)
+
+经过一番尝试后，当用StegSolve打开图片，利用其Data Extract模块进行查看时可以发现：
+
+![image-20250217110543579](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250217110543579.png)
+
+8BPS是标准的Photoshop 的.psd 文件有固定的文件头，所以我们点击“Save Bin”将其存为wordlands.psd，并用这个网站打开它：
+
+https://www.photopea.com/
+
+![image-20250217110726747](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250217110726747.png)
+
+可以发现这里有所有图片创作的信息（图层之类的）。最后根据line的图层的顺序进行拼接便可以得到flag：
+
+![image-20250217110900696](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250217110900696.png)
+
+比如说Shape1这个图层里的线连接了b和r，表示开头为br
+
+![image-20250217110917647](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250217110917647.png)
+
+然后是(b)ro，以此类推...
+
+```
+bronco{i_love_admiring_beautiful_winter_landscapes}
+```
+
