@@ -641,3 +641,59 @@ https://www.photopea.com/
 bronco{i_love_admiring_beautiful_winter_landscapes}
 ```
 
+
+
+
+
+
+
+## Misc
+
+
+
+### Tick Tock
+
+![image-20250218111657044](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250218111657044.png)
+
+这道题我们首先会得到这张图片：
+
+![tick_tock](https://raw.githubusercontent.com/Lycorisby/Picture/main/tick_tock.png)
+
+经过多次尝试可以在StegSolve的Data Extract模块里发现有一长串由“tick”和“tock”组成的内容：
+
+![image-20250218112313111](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250218112313111.png)
+
+```
+ticktocktocktockticktickticktock ticktocktocktickticktocktocktock ticktocktocktickticktockticktick ticktocktockticktickticktocktock ticktocktocktocktickticktocktick ticktocktocktickticktockticktick ticktocktocktocktockticktocktock ticktocktocktockticktockticktock ticktocktocktocktocktickticktick ticktocktockticktockticktocktock ticktocktocktockticktockticktick ticktockticktocktocktocktocktock ticktocktockticktickticktocktick ticktocktocktocktocktickticktick ticktocktockticktickticktocktock ticktocktockticktockticktocktick ticktocktockticktocktickticktock ticktocktocktockticktockticktick ticktocktockticktocktickticktick ticktockticktocktocktocktocktock ticktocktockticktockticktocktick ticktocktockticktickticktocktock ticktocktockticktocktickticktock ticktocktocktocktocktickticktick ticktocktocktickticktickticktock ticktockticktocktocktocktocktock ticktocktockticktickticktocktick ticktocktocktocktocktickticktick ticktocktocktocktickticktocktock ticktocktockticktickticktocktock ticktocktocktocktocktickticktick ticktocktocktockticktocktocktick ticktocktocktockticktocktocktock ticktocktockticktocktickticktock ticktocktocktocktocktockticktock
+```
+
+写一段python将tick替换成0，tock替换成1然后当成二进制内容进行解码会得到：
+
+```python
+def ticktock_to_binary(text):
+    return text.replace("tick", "0").replace("tock", "1")
+
+
+
+text = "ticktocktocktockticktickticktock ticktocktocktickticktocktocktock ticktocktocktickticktockticktick ticktocktockticktickticktocktock ticktocktocktocktickticktocktick ticktocktocktickticktockticktick ticktocktocktocktockticktocktock ticktocktocktockticktockticktock ticktocktocktocktocktickticktick ticktocktockticktockticktocktock ticktocktocktockticktockticktick ticktockticktocktocktocktocktock ticktocktockticktickticktocktick ticktocktocktocktocktickticktick ticktocktockticktickticktocktock ticktocktockticktockticktocktick ticktocktockticktocktickticktock ticktocktocktockticktockticktick ticktocktockticktocktickticktick ticktockticktocktocktocktocktock ticktocktockticktockticktocktick ticktocktockticktickticktocktock ticktocktockticktocktickticktock ticktocktocktocktocktickticktick ticktocktocktickticktickticktock ticktockticktocktocktocktocktock ticktocktockticktickticktocktick ticktocktocktocktocktickticktick ticktocktocktocktickticktocktock ticktocktockticktickticktocktock ticktocktocktocktocktickticktick ticktocktocktockticktocktocktick ticktocktocktockticktocktocktock ticktocktockticktocktickticktock ticktocktocktocktocktockticktock"
+text = text.replace(" ", "")
+
+binary = ticktock_to_binary(text)
+print(binary)
+
+# 01110001 01100111 01100100 01100011 01110010 01100100 01111011 01110101 01111000 01101011 01110100 01011111 01100010 01111000 01100011 01101010 01101001 01110100 01101000 01011111 01101010 01100011 01101001 01111000 01100001 01011111 01100010 01111000 01110011 01100011 01111000 01110110 01110111 01101001 01111101
+
+content = ''.join(chr(int(binary[i:i+8], 2)) for i in range(0, len(binary), 8))
+print(content)
+
+# qgdcrd{uxkt_bxcjith_jcixa_bxscxvwi}
+```
+
+最后通过遍历凯撒密码便可以得到flag：
+
+![image-20250218111604430](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250218111604430.png)
+
+```
+bronco{five_minutes_until_midnight}
+```
+
