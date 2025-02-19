@@ -118,6 +118,40 @@ bronco{emojis_express_my_emotions}
 
 
 
+
+
+### Straight Up Circular
+
+![image-20250219130136344](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250219130136344.png)
+
+这道题给出的加密字符串如下：
+
+```
+dvlby_otspnr{cobrnot450i1nm_e03}
+```
+
+首先，通过 `{}` 的位置，我们可以判断这并不是替换加密。其次，我们发现 `bronco{}`（该比赛的 flag 统一格式）中的每个字母和符号都出现在了这串字符串中，因此很可能是某种乱序加密。
+
+先确定 `b`、`r`、`o` 等字母在加密字符串中的具体位置，再根据题目名字（Straight Up **Circular**）不难发现这个用这个规律可以得到的flag开头：
+
+- 从字符串正中间的 `b` 出发
+- 先向右移动 1 位
+- 再向左移动 2 位
+- 接着向右移动 3 位
+- 依此类推……
+
+继续这个流程便可以成功获得flag：
+
+![b95329fa227adf7053eb582afd08bd0](https://raw.githubusercontent.com/Lycorisby/Picture/main/b95329fa227adf7053eb582afd08bd0.jpg)
+
+```
+bronco{tr4n5p0sit1on_my_bel0v3d}
+```
+
+
+
+
+
 ## Crypto
 
 
@@ -643,10 +677,6 @@ bronco{i_love_admiring_beautiful_winter_landscapes}
 
 
 
-
-
-
-
 ## Misc
 
 
@@ -697,3 +727,8 @@ print(content)
 bronco{five_minutes_until_midnight}
 ```
 
+
+
+## 比赛官方GitHub
+
+https://github.com/SCUBroncoSec/BroncoCTF-2025-Public
