@@ -26,6 +26,10 @@
     {
       "name": "词频分析",
       "path": "https://quipqiup.com/"
+    },
+    {
+      "name": "垃圾邮件加解密",
+      "path": "https://www.spammimic.com/encode.shtml#google_vignette"
     }
   ],
   "Reverse": [
@@ -64,7 +68,13 @@
     {
       "name": "BurpSuite 2024 Pro",
       "path": "tools/web/BurpSuite2024/start-cn.bat"
+    },
+    {
+      "name": "JWT",
+      "path": "https://jwt.io/"
     }
+
+    
   ],
   "Steganography": [
     {
@@ -91,6 +101,14 @@
     },{
       "name": "Web Archive",
       "path": "http://archive.org/"
+    },
+    {
+      "name": "OSINT开源情报与侦察工具",
+      "path": "https://start.me/p/GE7JQb/osint"
+    },
+    {
+      "name": "中国IP地理位置数据库",
+      "path": "https://cz88.net/"
     }
   ],
   "Hardware" : [
@@ -103,6 +121,9 @@
 
   ],
   "Misc": [
-    
+    {
+      "name": "Malbolge Debugger",
+      "path": "https://lutter.cc/malbolge/debugger.html"
+    }
   ]
 }
