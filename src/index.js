@@ -17,7 +17,7 @@ function showTools(category) {
 
                 if (tool.path.endsWith("bat")) {
                     toolItem.onclick = ()=> {
-                        ipcRenderer.send('run-cmd', "tools/web/BurpSuite2024/start-cn.bat")
+                        ipcRenderer.send('run-cmd', tool.path)
                     }
                 } else {
                     toolItem.onclick = ()=> {
