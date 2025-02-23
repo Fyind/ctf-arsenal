@@ -50,7 +50,7 @@
     {
       "name": "哈希",
       "path": "https://hashes.com/en/decrypt/hash"
-    }
+    },
     {
       "name": "质因数分解",
       "path": "http://www.factordb.com/index.php"
@@ -90,7 +90,7 @@
     {
       "name": "Python pyc文件编译与反编译",
       "path": "https://www.lddgo.net/string/pyc-compile-decompile"
-    },
+    }
   ],
   "Web" : [
     {
