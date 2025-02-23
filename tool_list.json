@@ -2,7 +2,35 @@
   "PWN": [
     
   ],
+  "古典密码": [
+    {
+      "name": "凯撒",
+      "path": "https://ctf.bugku.com/tool/caesar"
+    },
+    {
+      "name": "栅栏",
+      "path": "https://ctf.bugku.com/tool/railfence"
+    },
+    {
+      "name": "Vigenère cipher (维吉尼亚密码)",
+      "path": "https://planetcalc.com/2468/#google_vignette"
+    },
+    {
+      "name": "培根密码(Bacon)",
+      "path": "https://www.dcode.fr/bacon-cipher"
+    },
+    {
+      "name": "Binary 摩尔斯电码",
+      "path": "http://www.hiencode.com/morse.html"
+    }
+
+   
+  ],
   "Crypto": [
+    {
+      "name": "Base 64",
+      "path": "https://www.base64decode.org/"
+    },
     {
       "name": "CaptfEncoder",
       "path": "tools/crypto/CaptfEncoder-win-x64-2.1.0/CaptfEncoder.exe"
@@ -19,6 +47,10 @@
       "name": "CTF 在线工具 (BugKu)",
       "path": "https://ctf.bugku.com/tools"
     },
+    {
+      "name": "哈希",
+      "path": "https://hashes.com/en/decrypt/hash"
+    }
     {
       "name": "质因数分解",
       "path": "http://www.factordb.com/index.php"
@@ -54,7 +86,11 @@
     },{
       "name": "IL Spy",
       "path": "tools/reverse/ILSpy/ILSpy.exe"
-    }
+    },
+    {
+      "name": "Python pyc文件编译与反编译",
+      "path": "https://www.lddgo.net/string/pyc-compile-decompile"
+    },
   ],
   "Web" : [
     {
@@ -109,6 +145,10 @@
     {
       "name": "中国IP地理位置数据库",
       "path": "https://cz88.net/"
+    },
+    {
+      "name": "Internet Archive",
+      "path": "https://archive.org/"
     }
   ],
   "Hardware" : [
@@ -124,6 +164,10 @@
     {
       "name": "Malbolge Debugger",
       "path": "https://lutter.cc/malbolge/debugger.html"
+    },
+    {
+      "name": "二维码扫描",
+      "path": "https://scanqr.org/"
     }
   ]
 }
