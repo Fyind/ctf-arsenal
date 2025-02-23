@@ -1,2 +1,5 @@
 node_modules/
 tools/
+BP/build/
+BP/dist/bp.exe
+BP/rockyou.txt
