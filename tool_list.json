@@ -90,6 +90,10 @@
     {
       "name": "Python pyc文件编译与反编译",
       "path": "https://www.lddgo.net/string/pyc-compile-decompile"
+    },
+    {
+      "name": "Python Assembly to Code",
+      "path": "https://www.codeconvert.ai/assembly-to-python-converter"
     }
   ],
   "Web" : [
