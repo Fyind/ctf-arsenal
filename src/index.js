@@ -29,6 +29,10 @@ function showTools(category) {
                     const iconpath_tmp = path.join(path.dirname(tool.path), 'icon.png')
                     iconpath = iconpath_tmp
                 }
+                if (tool.path.startsWith('http')){
+                    // iconpath = new URL('/favicon.ico', tool.path).href; // 自动拼接 favicon.ico
+                    iconpath = `https://www.google.com/s2/favicons?domain=${new URL(tool.path).hostname}&sz=128`;
+                }
                 
                 toolItem.innerHTML = ` 
             <img src="${iconpath}" alt="${tool.name}" />
