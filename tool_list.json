@@ -130,6 +130,10 @@
       "path": "tools/steganography/Audacity/Audacity.exe"
     },
     {
+      "name": "silenteye",
+      "path": "tools/steganography/silenteye/silenteye.exe"
+    },
+    {
       "name" : "Aperi's Solve",
       "path" : "https://www.aperisolve.com/"
     }
@@ -162,7 +166,10 @@
     }
   ],
   "Forensics" : [
-
+    {
+      "name": "Wireshark",
+      "path": "tools/forensics/Wireshark/Wireshark.exe"
+    }
   ],
   "Misc": [
     {
