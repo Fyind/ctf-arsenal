@@ -19,7 +19,7 @@ tags:
 
 
 
-![image-20250202225828882](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250202225828882.png)
+![image-20250202225828882](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250202225828882.png)
 
 
 
@@ -39,7 +39,7 @@ Well done, but now do you know about the guy who got stabbed 23 times ?
 
 第三段的指的是凯撒大帝被刺杀的事件：
 
-![image-20250203124929054](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203124929054.png)
+![image-20250203124929054](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250203124929054.png)
 
 
 
@@ -50,7 +50,7 @@ Here is your key, good luck : KEYKEY
 ```
 
 可以得知密钥为：”HBVHBV“（我一开始以为密码就是KEYKEY）。由于第一段括号前的内容为4个字母，刚好对的上”ectf“，所以应该是单表或者多表替换加密。再因为密钥为重复的内容，不难猜测这应该是“Vigenere 维吉尼亚密码”。于是找个在线的解密网页（https://planetcalc.com/2468/#google_vignette）便可以得到flag：
-![image-20250203125756246](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203125756246.png)
+![image-20250203125756246](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250203125756246.png)
 
 ```
 ectf{th1s_i5_th3_w4y_0f_3ncrypti0n}
@@ -62,7 +62,7 @@ ectf{th1s_i5_th3_w4y_0f_3ncrypti0n}
 
 ### OIIAIOIIIAI 😼
 
-![image-20250202225852177](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250202225852177.png)
+![image-20250202225852177](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250202225852177.png)
 
 由于知道这次比赛的flag格式为ectf{}，所以不难发现这串字符的偶数位应该是flag的开头，也就是：
 
@@ -88,13 +88,13 @@ ectf{y0U_5p1N_M3_R1GhT_R0unD_B4bY}
 
 ### Hashes Binder
 
-![image-20250202225920609](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250202225920609.png)
+![image-20250202225920609](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250202225920609.png)
 
 
 
 首先会下载得到3个文件：
 
-![image-20250203194946028](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203194946028.png)
+![image-20250203194946028](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250203194946028.png)
 
 由于这份Excel文件被设置了密码保护，所以我们尝试用这个wordlist里的内容来爆破它：
 
@@ -154,7 +154,7 @@ digestive
 
 https://hashes.com/en/decrypt/hash
 
-![image-20250203152026422](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203152026422.png)
+![image-20250203152026422](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250203152026422.png)
 
 提示破解成功，原文为spooky，并且使用的算法是Gost Hash。（spooky其实也在这个wordlist.txt里，所以理论上来说这一步也可以用爆破得到。）
 
@@ -176,7 +176,7 @@ ECTF{J0nH_tH3_Cr4ck3R_95234826}
 
 ### RSA intro
 
-![image-20250202230145188](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250202230145188.png)
+![image-20250202230145188](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250202230145188.png)
 
 这道题我们会得到以下内容：
 
@@ -188,7 +188,7 @@ c = 3938307058210838722644164849453795907439512093342516801405616299630839554351
 ```
 
 因为没有其他信息了，所以我们先用 http://www.factordb.com/index.php 试一下暴力分解n：
-![image-20250203131647064](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203131647064.png)
+![image-20250203131647064](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250203131647064.png)
 
 成功得到n的其中一个因数为5054843。之后就只需要写一段代码解密就可以得到flag：
 
@@ -216,7 +216,7 @@ print("解密结果:", plaintext)
 
 ### Cracking the Vault
 
-![image-20250202230203405](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250202230203405.png)
+![image-20250202230203405](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250202230203405.png)
 
 这道题我们会得到2份文件，一份是python的代码，关于加密算法的，另一份文件则是加密后的结果。
 
@@ -310,7 +310,7 @@ print(decryption(encrypted_text))
 
 ### Never two without three
 
-![image-20250202230223555](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250202230223555.png)
+![image-20250202230223555](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250202230223555.png)
 
 我们首先会得到这些内容：
 
@@ -370,11 +370,11 @@ The flag is: ectf{D0_u_l0v3_t4e_crypt0grap413}
 
 ### Java Weak Token
 
-![image-20250203201915159](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203201915159.png)
+![image-20250203201915159](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250203201915159.png)
 
 先简单科普一下JWT：
 
-![image-20250204135903301](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204135903301.png)
+![image-20250204135903301](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204135903301.png)
 
 JWT是一串base64编码，被用.分成3部分。第一部分是header，里面会写使用的算法以及typ（一般都是JWT）。第二部分是Payload，是JWT的核心内容，通常会纪录当前JWT所有者的身份信息。第三部分则是签名，会计算
 
@@ -396,7 +396,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIiLCJleHAiOjE3MzgzNTc
 
 用 https://jwt.io/ 分析一下：
 
-![image-20250203211406069](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203211406069.png)
+![image-20250203211406069](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250203211406069.png)
 
 可以看到，Payload里有一个名为”username“的值当前被设置为“user”，我们猜测只需要将其改成“admin”并且用其再次访问网站即可获得flag。
 
@@ -436,7 +436,7 @@ brute_force_jwt(jwt_token)
 
 用这个网站将我们的JWT的payload改成“admin”
 
-![image-20250203212118532](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203212118532.png)
+![image-20250203212118532](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250203212118532.png)
 
 之后再用这个新的JWT访问网站即可得到flag：
 
@@ -452,7 +452,7 @@ ectf{JwT_T0keN_cR34t0r}
 
 
 
-![image-20250203202025574](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203202025574.png)
+![image-20250203202025574](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250203202025574.png)
 
 这道题比较明显地暗示了我们需要用xss攻击来获取flag。我们首先在 https://pipedream.com/ 创建一个Request Bin（创建临时的 HTTP 端点，用于捕获和检查传入的 HTTP 请求。），
 
@@ -478,7 +478,7 @@ ECTF{Cook13_st0L3n_5ucc3ssfuLLy}
 
 ### Definitely not in the PDF
 
-![image-20250203213912998](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203213912998.png)
+![image-20250203213912998](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250203213912998.png)
 
 将下载的压缩包解压会得到一份pdf文件：
 
@@ -486,7 +486,7 @@ ECTF{Cook13_st0L3n_5ucc3ssfuLLy}
 
 并没有任何发现，再根据他一直说的“flag”不在这里，于是决定去看一开始的压缩包。果然在文件结尾发现flag：
 
-![image-20250203214621938](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203214621938.png)
+![image-20250203214621938](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250203214621938.png)
 
 ```
 ECTF{W3lL_d0nE_652651663616263}
@@ -496,27 +496,27 @@ ECTF{W3lL_d0nE_652651663616263}
 
 ### JB1804
 
-![image-20250203214807229](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203214807229.png)
+![image-20250203214807229](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250203214807229.png)
 
 我们会得到一份乐谱：
 
-![Stega_4_-_JB1804](https://raw.githubusercontent.com/Lycorisby/Picture/main/Stega_4_-_JB1804.png)
+![Stega_4_-_JB1804](https://raw.githubusercontent.com/archer-baiyi/Picture/main/Stega_4_-_JB1804.png)
 
 通过检查发现它并没有隐写任何内容在hex文件里，抑或是LSB隐写。
 
 通过谷歌搜索“music Steganography 1804”可以发现这个维基词条：
 
-![image-20250203215121088](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203215121088.png)
+![image-20250203215121088](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250203215121088.png)
 
 点进去之后搜索“1804”会发现Johann Bücking在1804年发明了一种乐谱密码：
 
-![image-20250203215221250](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203215221250.png)
+![image-20250203215221250](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250203215221250.png)
 
-![Bücking_Music_Cipher](https://raw.githubusercontent.com/Lycorisby/Picture/main/B%25C3%25BCcking_Music_Cipher.png)
+![Bücking_Music_Cipher](https://raw.githubusercontent.com/archer-baiyi/Picture/main/B%25C3%25BCcking_Music_Cipher.png)
 
 根据这张密码表解码会得到：
 
-![cd0c1240e0a0120e05eb92e3e10f5a7](https://raw.githubusercontent.com/Lycorisby/Picture/main/cd0c1240e0a0120e05eb92e3e10f5a7.jpg)
+![cd0c1240e0a0120e05eb92e3e10f5a7](https://raw.githubusercontent.com/archer-baiyi/Picture/main/cd0c1240e0a0120e05eb92e3e10f5a7.jpg)
 
 ```
 ectf{steganomousiqueissuperswag}
@@ -530,15 +530,15 @@ ectf{steganomousiqueissuperswag}
 
 ### The island's treasure
 
-![image-20250202222812788](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250202222812788.png)
+![image-20250202222812788](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250202222812788.png)
 
 
 
 下载文件会得到2张图片：
 
-![island](https://raw.githubusercontent.com/Lycorisby/Picture/main/island.png)
+![island](https://raw.githubusercontent.com/archer-baiyi/Picture/main/island.png)
 
-![treasure](https://raw.githubusercontent.com/Lycorisby/Picture/main/treasure.png)
+![treasure](https://raw.githubusercontent.com/archer-baiyi/Picture/main/treasure.png)
 
 
 
@@ -546,7 +546,7 @@ ectf{steganomousiqueissuperswag}
 
 首先用010 Editor打开第一张图片会发现
 
-![image-20250202223215134](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250202223215134.png)
+![image-20250202223215134](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250202223215134.png)
 
 
 
@@ -575,10 +575,10 @@ Key: M3t4d4t4_15_n0t_5af3
 
 因为hex文件里面看起来找不到第二段key了，所以我们用Stegsolve.jar打开这张图片查看是否有用LSB隐写的内容。当调整到Red Plane 0时会得到
 
-![image-20250202223724687](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250202223724687.png)
+![image-20250202223724687](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250202223724687.png)
 
 我们将这张照片导出会得到第二部分的key（key2）：
-![solved](https://raw.githubusercontent.com/Lycorisby/Picture/main/solved.bmp)
+![solved](https://raw.githubusercontent.com/archer-baiyi/Picture/main/solved.bmp)
 
 
 
@@ -589,12 +589,12 @@ key = key1:key2 = M3t4d4t4_15_n0t_5af3:Hidd3n_p1ctur3
 ```
 
 然后我们现在来打开箱子：根据提示，支持加密隐写并且有GUI的软件并不多，所以我们来试一下OpenStego：
-![image-20250202224133450](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250202224133450.png)
+![image-20250202224133450](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250202224133450.png)
 
-![image-20250202224216072](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250202224216072.png)
+![image-20250202224216072](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250202224216072.png)
 
 提取出来的照片为：
-![flag](https://raw.githubusercontent.com/Lycorisby/Picture/main/flag.png)
+![flag](https://raw.githubusercontent.com/archer-baiyi/Picture/main/flag.png)
 
 成功找到flag：
 
@@ -606,21 +606,21 @@ ECTF{You_found_th3_tr3asur3}
 
 ### Silhouette in cyberpunk
 
-![image-20250203221019589](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203221019589.png)
+![image-20250203221019589](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250203221019589.png)
 
 这道题我们会得到一张图片：
 
-![Stega_5_-_Silhouette_in_cyberpunk](https://raw.githubusercontent.com/Lycorisby/Picture/main/Stega_5_-_Silhouette_in_cyberpunk.png)
+![Stega_5_-_Silhouette_in_cyberpunk](https://raw.githubusercontent.com/archer-baiyi/Picture/main/Stega_5_-_Silhouette_in_cyberpunk.png)
 
 非常赛博风。
 
 注意到这两个地方的点组的排列非常像我们日常生活中（比如说电梯里）会碰到的盲文：
 
-![Stega_5_-_Silhouette_in_cyberpunk1](https://raw.githubusercontent.com/Lycorisby/Picture/main/Stega_5_-_Silhouette_in_cyberpunk1.png)
+![Stega_5_-_Silhouette_in_cyberpunk1](https://raw.githubusercontent.com/archer-baiyi/Picture/main/Stega_5_-_Silhouette_in_cyberpunk1.png)
 
 （近点的那栋大楼）
 
-![Stega_5_-_Silhouette_in_cyberpunk2](https://raw.githubusercontent.com/Lycorisby/Picture/main/Stega_5_-_Silhouette_in_cyberpunk2.png)
+![Stega_5_-_Silhouette_in_cyberpunk2](https://raw.githubusercontent.com/archer-baiyi/Picture/main/Stega_5_-_Silhouette_in_cyberpunk2.png)
 
 （画面左边远处的那栋大楼）
 
@@ -660,7 +660,7 @@ ectf{h1dd3n_1n_th3_d4rkn3ss}
 
 ### Extraction Mission Heart of the vault
 
-![image-20250203232322334](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203232322334.png)
+![image-20250203232322334](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250203232322334.png)
 
 
 
@@ -827,11 +827,11 @@ print("flag:", "ectf{" + flag + "}")
 
 ### My dearest
 
-![image-20250203234217593](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203234217593.png)
+![image-20250203234217593](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250203234217593.png)
 
 我们会得到一份docx文件，也就是word文件。打开后在信息的作者处即可找到文件作者：
 
-![image-20250203234330717](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203234330717.png)
+![image-20250203234330717](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250203234330717.png)
 
 根据题目要求，flag为：
 
@@ -843,17 +843,17 @@ ectf{MichelTeller}
 
 ### Capture the hidden
 
-![image-20250203234518981](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203234518981.png)
+![image-20250203234518981](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250203234518981.png)
 
 这道题我们会得到一份.pcap文件，用Wireshark打开它。
 
-![image-20250204111238767](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204111238767.png)
+![image-20250204111238767](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204111238767.png)
 
 由于是要找一份文件，我们先点击“文件” -> “导出对象” -> “HTTP”：
 
-![image-20250204111326784](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204111326784.png)
+![image-20250204111326784](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204111326784.png)
 
-![image-20250204111406843](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204111406843.png)
+![image-20250204111406843](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204111406843.png)
 
 确实发现了一份上传的文件。可以点击保存它，但是打开会发现内容不不完整：
 
@@ -867,7 +867,7 @@ ectf{P05t_1s_v3ry_345y_T0_F1N
 
 于是我们找这份文件在纪录里的具体位置：
 
-![image-20250204111713246](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204111713246.png)
+![image-20250204111713246](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204111713246.png)
 
 可以看到我们保存的upload的文件内容只有蓝色部分，当我们将后续的内容也提出来，便会得到完整的flag：
 
@@ -885,11 +885,11 @@ ectf{P05t_1s_v3ry_345y_T0_F1ND}
 
 ### Just a PCAP
 
-![image-20250203234546652](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250203234546652.png)
+![image-20250203234546652](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250203234546652.png)
 
 这道题也是一份pcap文件，再次用Wireshark打开。
 
-![image-20250204112053442](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204112053442.png)
+![image-20250204112053442](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204112053442.png)
 
 但是用之前的操作：“文件” -> “导出对象” -> “HTTP”，并不会发现任何东西。（实际上是因为这段纪录里并没有任何HTTP传输的内容。）
 
@@ -915,7 +915,7 @@ with open("a.png","wb") as f:
 
 然后就会得到这张图片：
 
-![a](https://raw.githubusercontent.com/Lycorisby/Picture/main/a.png)
+![a](https://raw.githubusercontent.com/archer-baiyi/Picture/main/a.png)
 
 ```
 ectf{DN5_3xf1ltr@t10n_15_flnd3d}
@@ -931,15 +931,15 @@ ectf{DN5_3xf1ltr@t10n_15_flnd3d}
 
 ### Project-153-Q1
 
-![image-20250204113219584](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204113219584.png)
+![image-20250204113219584](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204113219584.png)
 
 这道题我们会得到这张图片：
 
-![OSINT_1_-_question-1](https://raw.githubusercontent.com/Lycorisby/Picture/main/OSINT_1_-_question-1.jpg)
+![OSINT_1_-_question-1](https://raw.githubusercontent.com/archer-baiyi/Picture/main/OSINT_1_-_question-1.jpg)
 
 通过谷歌识图可以很轻易地知道这个地方是：Falls Caramy, 法语原名为Chutes_du_Caramy。
 
-![image-20250204115324497](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204115324497.png)
+![image-20250204115324497](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204115324497.png)
 
 得到flag：
 
@@ -953,29 +953,29 @@ ectf{Chutes_du_Caramy}
 
 ### Project-153-Q2
 
-![image-20250204113324647](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204113324647.png)
+![image-20250204113324647](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204113324647.png)
 
 这道题我们会得到这张图片：
 
-![OSINT_1_-_question-2](https://raw.githubusercontent.com/Lycorisby/Picture/main/OSINT_1_-_question-2.jpg)
+![OSINT_1_-_question-2](https://raw.githubusercontent.com/archer-baiyi/Picture/main/OSINT_1_-_question-2.jpg)
 
 通过谷歌识图可以判断出来这张照片是在 Massif de l'Esterel 附近拍摄的。
 
-![image-20250204131332318](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204131332318.png)
+![image-20250204131332318](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204131332318.png)
 
 但由于题目要求的是拍摄时所处的具体位置，所以我们还需要找些其他的线索。
 
 注意到图片远处这里，有一座全是房子的半岛：
 
-![image-20250204131614306](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204131614306.png)
+![image-20250204131614306](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204131614306.png)
 
 于是我们打开Google Earth，查看Massif de l'Esterel附近的海岸线。可以发现这个地方非常想图中的半岛：
 
-![image-20250204131846773](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204131846773.png)
+![image-20250204131846773](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204131846773.png)
 
 并且点开 Calanque de l'Esterel, 83700 Saint-Raphaël, 法国 的相册可以看到这样一张图片：
 
-![image-20250204131937927](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204131937927.png)
+![image-20250204131937927](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204131937927.png)
 
 跟我们图片里的一模一样。沿着这个方向依次尝试带有名字的地点，便可以成功找到拍摄地：Pointe de l'Observatoire, D559, 83700 Saint-Raphaël, 法国。
 
@@ -989,23 +989,23 @@ ectf{Pointe_de_l'Observatoire}
 
 ### Project-153-Q3
 
-![image-20250204113338645](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204113338645.png)
+![image-20250204113338645](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204113338645.png)
 
 这道题我们会得到这张图片：
 
-![OSINT_1_-_question-3](https://raw.githubusercontent.com/Lycorisby/Picture/main/OSINT_1_-_question-3.jpg)
+![OSINT_1_-_question-3](https://raw.githubusercontent.com/archer-baiyi/Picture/main/OSINT_1_-_question-3.jpg)
 
 再次通过谷歌识图可以发现图片所在地是 Rocher de Roquebrune：
 
-![image-20250204132411711](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204132411711.png)
+![image-20250204132411711](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204132411711.png)
 
 在Google Earth找到这里
 
-![image-20250204132537218](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204132537218.png)
+![image-20250204132537218](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204132537218.png)
 
 便可以在相册里发现这张图片，大概率是题目所指的“monster：
 
-![image-20250204132638589](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204132638589.png)
+![image-20250204132638589](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204132638589.png)
 
 所以答案为左下角的作者名字。
 
@@ -1019,15 +1019,15 @@ ectf{Michael_DELAETER}
 
 ### Project-153-Q4
 
-![image-20250204113351088](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204113351088.png)
+![image-20250204113351088](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204113351088.png)
 
 首先通过谷歌识图判断出照片所在地应该是：Bormes-les-Mimosas
 
-![image-20250204133041579](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204133041579.png)
+![image-20250204133041579](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204133041579.png)
 
 在Google Earth找到这里：
 
-![image-20250204133137356](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204133137356.png)
+![image-20250204133137356](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204133137356.png)
 
 根据照片拍摄角度以及题目描述不难猜出远处的那座岛应该是 Île du Levant。
 
@@ -1039,7 +1039,7 @@ ectf{Île_du_Levant}
 
 ### Project-153-Q5
 
-![image-20250204113405376](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204113405376.png)
+![image-20250204113405376](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204113405376.png)
 
 这道题我们会得到这张图片：
 
@@ -1049,7 +1049,7 @@ ectf{Île_du_Levant}
 
 然后便可以用谷歌识图来确认地点：
 
-![image-20250204133815353](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204133815353.png)
+![image-20250204133815353](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204133815353.png)
 
 ```
 ectf{Gros_Cerveau}
@@ -1059,15 +1059,15 @@ ectf{Gros_Cerveau}
 
 ### Project-153-Q6
 
-![image-20250204113418057](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204113418057.png)
+![image-20250204113418057](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204113418057.png)
 
 这道题我们会得到这张图片：
 
-![OSINT_1_-_question-6](https://raw.githubusercontent.com/Lycorisby/Picture/main/OSINT_1_-_question-6.jpg)
+![OSINT_1_-_question-6](https://raw.githubusercontent.com/archer-baiyi/Picture/main/OSINT_1_-_question-6.jpg)
 
 再次通过谷歌识图我们可以找到这样一条Instergram：
 
-![ectf_o6](https://raw.githubusercontent.com/Lycorisby/Picture/main/ectf_o6.png)
+![ectf_o6](https://raw.githubusercontent.com/archer-baiyi/Picture/main/ectf_o6.png)
 
 （为了防止侵犯个人隐私我给图片打了个码。）
 
@@ -1075,7 +1075,7 @@ ectf{Gros_Cerveau}
 
 至于台阶数可以直接利用开了联网功能的ChatGPT所搜即可：
 
-![image-20250204134657214](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204134657214.png)
+![image-20250204134657214](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204134657214.png)
 
 最后的flag为：
 
@@ -1089,23 +1089,23 @@ ectf{262_04360}
 
 ### PNJ - 3 - Gouzou
 
-![image-20250204113429216](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204113429216.png)
+![image-20250204113429216](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204113429216.png)
 
 这道题我们会得到一个文件夹，里面有非常多的文件，它说的这个“the”属实是有点意义不明，所以我们先去搜索看一下GOUZOU是什么：
 
-![image-20250204113832122](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204113832122.png)
+![image-20250204113832122](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204113832122.png)
 
 发现是法国艺术家JACE创作一个没有五官的诙谐卡通形象。根据这条线索我们可以锁定这张图片（也就是说我们需要找的应该是这张图片的具体位置）：
 
-![1](https://raw.githubusercontent.com/Lycorisby/Picture/main/1.jpg)
+![1](https://raw.githubusercontent.com/archer-baiyi/Picture/main/1.jpg)
 
 根据谷歌识图可以发现这张照片在 “Île de Ré”（雷岛）：
 
-![image-20250204114154456](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204114154456.png)
+![image-20250204114154456](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204114154456.png)
 
 通过搜索“île de ré gouzou”可以找到这个网页：https://www.realahune.fr/les-murs-dexpression-de-latlantique/，并且发现：
 
-![image-20250204114831304](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250204114831304.png)
+![image-20250204114831304](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250204114831304.png)
 
 于是我们确定这幅画是在"la digue du Boutillon, île de Ré"(是一座防波堤)，得到flag：
 
