@@ -16,6 +16,10 @@
       "path": "https://planetcalc.com/2468/#google_vignette"
     },
     {
+      "name": "Vigenère cipher (维吉尼亚密码)--支持爆破密码",
+      "path": "https://www.dcode.fr/vigenere-cipher"
+    },
+    {
       "name": "培根密码(Bacon)",
       "path": "https://www.dcode.fr/bacon-cipher"
     },
@@ -103,7 +107,7 @@
     },
     {
       "name": "御剑",
-      "path": "tools/web/御剑/御剑1.5.exe"
+      "path": "tools/web/御剑/御剑后台扫描工具.exe"
     },
     {
       "name": "BurpSuite 2024 Pro",
