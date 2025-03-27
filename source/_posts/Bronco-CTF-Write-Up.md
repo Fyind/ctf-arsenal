@@ -18,14 +18,14 @@ tags:
 
 ### Break the Battalion
 
-![Break_the_Battalion](https://raw.githubusercontent.com/Lycorisby/Picture/main/Break_the_Battalion.png)
+![Break_the_Battalion](https://raw.githubusercontent.com/archer-baiyi/Picture/main/Break_the_Battalion.png)
 
 这道题我们会拿到一份ELF文件，我们用IDA打开它会看到
 
-![image-20250216231337295](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250216231337295.png)
+![image-20250216231337295](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250216231337295.png)
 
 可以发现，这个程序的核心内容是encrypt，所以我们查看一下它的内容：
-![image-20250216231507284](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250216231507284.png)
+![image-20250216231507284](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250216231507284.png)
 
 写一段python便可以简单得知输入什么内容最后会输出“brigade”：
 
@@ -52,16 +52,16 @@ bronco{2"97145}
 
 ### Simon Says
 
-![image-20250216231818653](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250216231818653.png)
+![image-20250216231818653](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250216231818653.png)
 
 这道题我们会拿到这样一张图片：
 
-![simon](https://raw.githubusercontent.com/Lycorisby/Picture/main/simon.png)
+![simon](https://raw.githubusercontent.com/archer-baiyi/Picture/main/simon.png)
 
 并没有任何有用的内容。根据题目描述我们猜测这道题用了LSB隐写，所以用Stegsolve打开图片便可得到：
 
 
-![simon](https://raw.githubusercontent.com/Lycorisby/Picture/main/simon.bmp)
+![simon](https://raw.githubusercontent.com/archer-baiyi/Picture/main/simon.bmp)
 
 flag为：
 
@@ -76,7 +76,7 @@ bronco{simon_says_submit_this_flag}
 ### Too Many Emojis
 
 这道题我们会得到一串emoji内容：
-![emojis](https://raw.githubusercontent.com/Lycorisby/Picture/main/emojis.png)
+![emojis](https://raw.githubusercontent.com/archer-baiyi/Picture/main/emojis.png)
 
 因为知道flag的格式为bronco{}，所以可以确定这个应该是单表加密，并且知道前6个emoji对应的明文。
 
@@ -84,29 +84,29 @@ bronco{simon_says_submit_this_flag}
 
 （用到的网站：https://unicode.org/emoji/charts/full-emoji-list.html）
 
-![e9b91f9004a900c2e4d7a34ce6a5862](https://raw.githubusercontent.com/Lycorisby/Picture/main/e9b91f9004a900c2e4d7a34ce6a5862.png)
+![e9b91f9004a900c2e4d7a34ce6a5862](https://raw.githubusercontent.com/archer-baiyi/Picture/main/e9b91f9004a900c2e4d7a34ce6a5862.png)
 
-![0931ce3f56bb2a321ba0f4fff03f4b2](https://raw.githubusercontent.com/Lycorisby/Picture/main/0931ce3f56bb2a321ba0f4fff03f4b2.png)
+![0931ce3f56bb2a321ba0f4fff03f4b2](https://raw.githubusercontent.com/archer-baiyi/Picture/main/0931ce3f56bb2a321ba0f4fff03f4b2.png)
 
-![9cd2886e404b3a12858ab96b92b478d](https://raw.githubusercontent.com/Lycorisby/Picture/main/9cd2886e404b3a12858ab96b92b478d.png)
+![9cd2886e404b3a12858ab96b92b478d](https://raw.githubusercontent.com/archer-baiyi/Picture/main/9cd2886e404b3a12858ab96b92b478d.png)
 
-![00189c6b43958a1524e193d50025b34](https://raw.githubusercontent.com/Lycorisby/Picture/main/00189c6b43958a1524e193d50025b34.png)
+![00189c6b43958a1524e193d50025b34](https://raw.githubusercontent.com/archer-baiyi/Picture/main/00189c6b43958a1524e193d50025b34.png)
 
-![547588949b4ceef18e8c752d9fdca67](https://raw.githubusercontent.com/Lycorisby/Picture/main/547588949b4ceef18e8c752d9fdca67.png)
+![547588949b4ceef18e8c752d9fdca67](https://raw.githubusercontent.com/archer-baiyi/Picture/main/547588949b4ceef18e8c752d9fdca67.png)
 
-![978715d5488adf92ad9f87db0a3cbee](https://raw.githubusercontent.com/Lycorisby/Picture/main/978715d5488adf92ad9f87db0a3cbee.png)
+![978715d5488adf92ad9f87db0a3cbee](https://raw.githubusercontent.com/archer-baiyi/Picture/main/978715d5488adf92ad9f87db0a3cbee.png)
 
-![b08cc26fa2123e3eb3e954be60c3c2c](https://raw.githubusercontent.com/Lycorisby/Picture/main/b08cc26fa2123e3eb3e954be60c3c2c.png)
+![b08cc26fa2123e3eb3e954be60c3c2c](https://raw.githubusercontent.com/archer-baiyi/Picture/main/b08cc26fa2123e3eb3e954be60c3c2c.png)
 
-![79fca2aa297cab3187b7aba9dd6951f](https://raw.githubusercontent.com/Lycorisby/Picture/main/79fca2aa297cab3187b7aba9dd6951f.png)
+![79fca2aa297cab3187b7aba9dd6951f](https://raw.githubusercontent.com/archer-baiyi/Picture/main/79fca2aa297cab3187b7aba9dd6951f.png)
 
-![a8740db264e5c8c07e9a7319bc2c477](https://raw.githubusercontent.com/Lycorisby/Picture/main/a8740db264e5c8c07e9a7319bc2c477.png)
+![a8740db264e5c8c07e9a7319bc2c477](https://raw.githubusercontent.com/archer-baiyi/Picture/main/a8740db264e5c8c07e9a7319bc2c477.png)
 
-![b0d298cd23920e18c9bae5935c7b5d7](https://raw.githubusercontent.com/Lycorisby/Picture/main/b0d298cd23920e18c9bae5935c7b5d7.png)
+![b0d298cd23920e18c9bae5935c7b5d7](https://raw.githubusercontent.com/archer-baiyi/Picture/main/b0d298cd23920e18c9bae5935c7b5d7.png)
 
 这里有一个小技巧：如果找不到想要的 emoji，可以描述给 ChatGPT 并询问其官方名称，再到网站上用名称（或部分名称）搜索，确认是否是我们需要的。
 
-![de8fa183dfa28abeb9e31ea0bc70027](https://raw.githubusercontent.com/Lycorisby/Picture/main/de8fa183dfa28abeb9e31ea0bc70027.jpg)
+![de8fa183dfa28abeb9e31ea0bc70027](https://raw.githubusercontent.com/archer-baiyi/Picture/main/de8fa183dfa28abeb9e31ea0bc70027.jpg)
 
 最后得到flag：
 
@@ -122,7 +122,7 @@ bronco{emojis_express_my_emotions}
 
 ### Straight Up Circular
 
-![image-20250219130136344](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250219130136344.png)
+![image-20250219130136344](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250219130136344.png)
 
 这道题给出的加密字符串如下：
 
@@ -142,7 +142,7 @@ dvlby_otspnr{cobrnot450i1nm_e03}
 
 继续这个流程便可以成功获得flag：
 
-![b95329fa227adf7053eb582afd08bd0](https://raw.githubusercontent.com/Lycorisby/Picture/main/b95329fa227adf7053eb582afd08bd0.jpg)
+![b95329fa227adf7053eb582afd08bd0](https://raw.githubusercontent.com/archer-baiyi/Picture/main/b95329fa227adf7053eb582afd08bd0.jpg)
 
 ```
 bronco{tr4n5p0sit1on_my_bel0v3d}
@@ -158,7 +158,7 @@ bronco{tr4n5p0sit1on_my_bel0v3d}
 
 ### Across the Tracks
 
-![image-20250216233604997](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250216233604997.png)
+![image-20250216233604997](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250216233604997.png)
 
 我们会得到一段内容：
 
@@ -168,7 +168,7 @@ Samddre··ath·dhf@_oesoere·ebun·yhot·no··oso·i·a·lr1rcm·iS·aruf·toi
 
 根据题目描述我们猜测这段内容使用了栅栏密码，并且key为题目描述中提到的“tenth”（10）。解密即可得到flag：
 
-![image-20250216233833884](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250216233833884.png)
+![image-20250216233833884](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250216233833884.png)
 
 ```
 bronco{r@1l_f3nc3_cip3rs_r_cool}
@@ -180,7 +180,7 @@ bronco{r@1l_f3nc3_cip3rs_r_cool}
 
 ### Rahhh-SA
 
-![image-20250216233937032](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250216233937032.png)
+![image-20250216233937032](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250216233937032.png)
 
 这道题我们会得到以下内容：
 
@@ -249,16 +249,16 @@ print(message)
 
 ### Grandma's Secret Recipe
 
-![image-20250216234904671](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250216234904671.png)
+![image-20250216234904671](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250216234904671.png)
 
 （因为这份食谱离婚了实在是有点抽象）
 
 点击网站可以看到：
 
-![image-20250216235137334](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250216235137334.png)
+![image-20250216235137334](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250216235137334.png)
 
 点开Cookie可以发现有2条内容：
-![image-20250216235220057](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250216235220057.png)
+![image-20250216235220057](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250216235220057.png)
 
 ```
 checksum: a223befb6660a23f9c3491f74ef84e43
@@ -267,11 +267,11 @@ role: "kitchen helper"
 
 结果检查发现checksum为role的md5结果：
 
-![image-20250216235434789](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250216235434789.png)
+![image-20250216235434789](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250216235434789.png)
 
 所以我们将role改为："grandma"，并且将checksum改为a5d19cdd5fd1a8f664c0ee2b5e293167（=md5(grandma))。点击“Grandma's Pantry“便可以看到：
 
-![image-20250216235705560](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250216235705560.png)
+![image-20250216235705560](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250216235705560.png)
 
 得到flag：
 
@@ -287,7 +287,7 @@ bronco{grandma-makes-b3tter-cookies-than-girl-scouts-and-i-w1ll-fight-you-over-t
 
 ### Reversing for Ophidiophiles
 
-![image-20250216235950245](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250216235950245.png)
+![image-20250216235950245](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250216235950245.png)
 
 这道题我们会得到以下内容：
 
@@ -336,7 +336,7 @@ print("".join(flag))
 
 ### theflagishere!
 
-![image-20250217000219950](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250217000219950.png)
+![image-20250217000219950](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250217000219950.png)
 
 这道题我们会得到一份Python 编译后的字节码文件 “theflagishere.pyc”，我们首先用这个网站将其反汇编：
 
@@ -596,22 +596,22 @@ print("Recovered flag:", flag)
 
 ### QR Coded
 
-![image-20250217001518466](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250217001518466.png)
+![image-20250217001518466](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250217001518466.png)
 
 这道题我们会得到一张二维码：
-![easy_scan](https://raw.githubusercontent.com/Lycorisby/Picture/main/easy_scan.png)
+![easy_scan](https://raw.githubusercontent.com/archer-baiyi/Picture/main/easy_scan.png)
 
 直接扫描（https://scanqr.org/）会得到一个fake flag：
 
-![image-20250217001643995](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250217001643995.png)
+![image-20250217001643995](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250217001643995.png)
 
 用Stegsolve打开并调整到Gray bits会得到另外一张二维码：
 
-![easy_scan_gray](https://raw.githubusercontent.com/Lycorisby/Picture/main/easy_scan_gray.bmp)
+![easy_scan_gray](https://raw.githubusercontent.com/archer-baiyi/Picture/main/easy_scan_gray.bmp)
 
 扫描后会得到真正的flag：
 
-![image-20250217001828549](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250217001828549.png)
+![image-20250217001828549](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250217001828549.png)
 
 ```
 bronco{th1s_0n3_i5}
@@ -621,19 +621,19 @@ bronco{th1s_0n3_i5}
 
 ### Uno
 
-![image-20250217102445644](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250217102445644.png)
+![image-20250217102445644](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250217102445644.png)
 
 这道题我们会得到这样一张图片：
 
-![uno](https://raw.githubusercontent.com/Lycorisby/Picture/main/uno.jpg)
+![uno](https://raw.githubusercontent.com/archer-baiyi/Picture/main/uno.jpg)
 
 根据题目描述（”a significant bit of the cards were left on the *plane* I was on.“）我们猜测这道题用的是LSB隐写了ASCII码，所以我们用StegSolve打开图片，利用其Data Extract模块进行查看。这个模块可以查看RGB三种颜色的每一个通道，并且按照（自选的）一定的排列顺序显示每个通道的Hex和ASCII码字符：
 
-![image-20250217102658148](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250217102658148.png)
+![image-20250217102658148](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250217102658148.png)
 
 最后，根据题目描述中的 “the numbers really speak to me...” 这一句，尝试各种由 2、3、4、5 组成的组合，便可以得到 flag：
 
-![image-20250217102401676](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250217102401676.png)
+![image-20250217102401676](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250217102401676.png)
 
 ```
 bronco{no_un0_y3t}
@@ -645,29 +645,29 @@ bronco{no_un0_y3t}
 
 ### Wordlands
 
-![image-20250217110344089](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250217110344089.png)
+![image-20250217110344089](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250217110344089.png)
 
 我们会得到这张图片：
 
-![wordlands](https://raw.githubusercontent.com/Lycorisby/Picture/main/wordlands.png)
+![wordlands](https://raw.githubusercontent.com/archer-baiyi/Picture/main/wordlands.png)
 
 经过一番尝试后，当用StegSolve打开图片，利用其Data Extract模块进行查看时可以发现：
 
-![image-20250217110543579](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250217110543579.png)
+![image-20250217110543579](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250217110543579.png)
 
 8BPS是标准的Photoshop 的.psd 文件有固定的文件头，所以我们点击“Save Bin”将其存为wordlands.psd，并用这个网站打开它：
 
 https://www.photopea.com/
 
-![image-20250217110726747](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250217110726747.png)
+![image-20250217110726747](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250217110726747.png)
 
 可以发现这里有所有图片创作的信息（图层之类的）。最后根据line的图层的顺序进行拼接便可以得到flag：
 
-![image-20250217110900696](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250217110900696.png)
+![image-20250217110900696](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250217110900696.png)
 
 比如说Shape1这个图层里的线连接了b和r，表示开头为br
 
-![image-20250217110917647](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250217110917647.png)
+![image-20250217110917647](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250217110917647.png)
 
 然后是(b)ro，以此类推...
 
@@ -683,15 +683,15 @@ bronco{i_love_admiring_beautiful_winter_landscapes}
 
 ### Tick Tock
 
-![image-20250218111657044](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250218111657044.png)
+![image-20250218111657044](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250218111657044.png)
 
 这道题我们首先会得到这张图片：
 
-![tick_tock](https://raw.githubusercontent.com/Lycorisby/Picture/main/tick_tock.png)
+![tick_tock](https://raw.githubusercontent.com/archer-baiyi/Picture/main/tick_tock.png)
 
 经过多次尝试可以在StegSolve的Data Extract模块里发现有一长串由“tick”和“tock”组成的内容：
 
-![image-20250218112313111](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250218112313111.png)
+![image-20250218112313111](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250218112313111.png)
 
 ```
 ticktocktocktockticktickticktock ticktocktocktickticktocktocktock ticktocktocktickticktockticktick ticktocktockticktickticktocktock ticktocktocktocktickticktocktick ticktocktocktickticktockticktick ticktocktocktocktockticktocktock ticktocktocktockticktockticktock ticktocktocktocktocktickticktick ticktocktockticktockticktocktock ticktocktocktockticktockticktick ticktockticktocktocktocktocktock ticktocktockticktickticktocktick ticktocktocktocktocktickticktick ticktocktockticktickticktocktock ticktocktockticktockticktocktick ticktocktockticktocktickticktock ticktocktocktockticktockticktick ticktocktockticktocktickticktick ticktockticktocktocktocktocktock ticktocktockticktockticktocktick ticktocktockticktickticktocktock ticktocktockticktocktickticktock ticktocktocktocktocktickticktick ticktocktocktickticktickticktock ticktockticktocktocktocktocktock ticktocktockticktickticktocktick ticktocktocktocktocktickticktick ticktocktocktocktickticktocktock ticktocktockticktickticktocktock ticktocktocktocktocktickticktick ticktocktocktockticktocktocktick ticktocktocktockticktocktocktock ticktocktockticktocktickticktock ticktocktocktocktocktockticktock
@@ -721,7 +721,7 @@ print(content)
 
 最后通过遍历凯撒密码便可以得到flag：
 
-![image-20250218111604430](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250218111604430.png)
+![image-20250218111604430](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250218111604430.png)
 
 ```
 bronco{five_minutes_until_midnight}

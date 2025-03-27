@@ -14,11 +14,11 @@ tags:
 ### p11n-trophy（签到题）:
 
 题目描述：
-![image-20250127165738440](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250127165738440.png)
+![image-20250127165738440](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250127165738440.png)
 
 我们首先会得到这样一份证书：
 
-![trophy](https://raw.githubusercontent.com/Lycorisby/Picture/main/trophy.png)
+![trophy](https://raw.githubusercontent.com/archer-baiyi/Picture/main/trophy.png)
 
 
 
@@ -28,15 +28,15 @@ tags:
 
 这两道目描述一模一样
 
-### ![image-20250127165834982](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250127165834982.png)
+### ![image-20250127165834982](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250127165834982.png)
 
-![](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250127165903642.png)
+![](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250127165903642.png)
 
 其中一个flag是藏在certificate周围一圈的位置：
 
-![image-20250127170254595](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250127170254595.png)
+![image-20250127170254595](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250127170254595.png)
 
-![image-20250127170344389](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250127170344389.png)
+![image-20250127170344389](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250127170344389.png)
 
 人工将这些内容识别，再翻译成二进制然后解码就会得到flag
 ```python
@@ -75,7 +75,7 @@ print(decode_binary(c_1, mapping2)+decode_binary(c_2, mapping2) + decode_binary(
 ```
 
 另外一个flag则是藏在右下角的勋章里：
-![屏幕截图 2025-01-25 210727](https://raw.githubusercontent.com/Lycorisby/Picture/main/屏幕截图 2025-01-25 210727.png)
+![屏幕截图 2025-01-25 210727](https://raw.githubusercontent.com/archer-baiyi/Picture/main/屏幕截图 2025-01-25 210727.png)
 
 人工将这些内容识别出来然后用base64进行解码即可。
 
@@ -120,20 +120,20 @@ u/J2amych3KP//D951/CdmiV5PKZqXWWdpaQZL+pbmsXRa8rM=
 
 题目描述：
 
-![image-20250127171132744](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250127171132744.png)
+![image-20250127171132744](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250127171132744.png)
 
 
 
 使用https://archive.org/来搜索这个比赛网站的历史纪录内容
 
-![image-20250127171253342](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250127171253342.png)
+![image-20250127171253342](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250127171253342.png)
 
 可以在这里发现最早的纪录是在2024年7月14日：
 
-![image-20250127171328034](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250127171328034.png)
+![image-20250127171328034](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250127171328034.png)
 
 点进去会发现：
-![image-20250127171419684](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250127171419684.png)
+![image-20250127171419684](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250127171419684.png)
 
 x3CTF{m4yb3_w3ll_m4ke_4_ch4ll3nge_0u7_0f_7h1s}
 
@@ -141,7 +141,7 @@ x3CTF{m4yb3_w3ll_m4ke_4_ch4ll3nge_0u7_0f_7h1s}
 
 ### mvm：
 
-![image-20250127171618699](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250127171618699.png)
+![image-20250127171618699](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250127171618699.png)
 
 打开下载文件会得到
 ```
@@ -158,7 +158,7 @@ MMVMVMVVMMVMVMVVMVMVVMVVMMVMVVMVMMVMVVMVMMVMVVMVMMVMVVMVMMVMVVMVMMVMVVMVMMVMVVMV
 很显然这是Brainfuck,所以找个在线的intepreter运行一下就可以得到flag：
 
 
-![image-20250127172039130](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250127172039130.png)
+![image-20250127172039130](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250127172039130.png)
 
 MVM{MVM_BRAIN_IS_FUCKED_MVM}
 
@@ -217,7 +217,7 @@ print("finish")
 
 题目描述：
 
-![image-20250127172638257](https://raw.githubusercontent.com/Lycorisby/Picture/main/image-20250127172638257.png)
+![image-20250127172638257](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250127172638257.png)
 
 打开下载文件会看到：
 
