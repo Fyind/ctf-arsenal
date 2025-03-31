@@ -680,6 +680,8 @@ base64 -d xx_base64.txt
 md5sum xx.sh
 ```
 
+看看是否相同
+
 
 
 
@@ -870,6 +872,34 @@ sessions -i 2
 ```
 
 打开第二个session交互
+
+
+
+## 安全工具
+
+### SEClists
+
+保护wordlist
+
+``` shell
+apt -y install seclists
+```
+
+在web里
+
+``` shell
+/usr/share/seclists/Discovery/Web-Content/common.txt
+```
+
+### gobuster
+
+网络路径枚举
+
+``` shell
+gobuster dir -u http://10.10.10.75/nibbleblog/ --wordlist /usr/share/seclists/Discovery/Web-Content/common.txt
+```
+
+
 
 
 

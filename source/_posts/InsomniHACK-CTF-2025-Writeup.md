@@ -7,6 +7,12 @@ math: true
 ---
 # InsomniHACK CTF 2025 Writeup
 
+其他题解：
+
+https://dev.to/kkrypt0nn/insomnihack-2025-ctf-write-up-1boo
+
+https://romainlanz.com/articles/write-up-ctf-insomnihack-2025-unchained
+
 ## Forensics
 
 ### v0l4til3
@@ -18,3 +24,4 @@ math: true
 首先windows的密码是存在 `windows32\config\SAM` 这里以加密的形式存在的。密钥是 `windows32\config\SYSTEM` 里面的
 
 提取这两个文件后，可以用 mimikatz 这个工具来提取
+
