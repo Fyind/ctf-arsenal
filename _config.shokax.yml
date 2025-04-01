@@ -185,9 +185,9 @@ menu:
   #   admiration: /admiration/ || coffee
   # posts:
   #   default: / || feather
-  #   archives: /archives/ || list-alt
-  #   categories: /categories/ || th
-  #   tags: /tags/ || tags
+  archives: /archives/ || list-alt
+  categories: /categories/ || th
+  tags: /tags/ || tags
   # friends: /friends/ || heart
 
 # https://twikoo.js.org
