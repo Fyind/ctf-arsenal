@@ -1,7 +1,7 @@
 ---
 title: 如何在wsl里安装sage
 date: 2025-03-31 13:58:38
-tags:[wsl,sage,vscode]
+tags: [wsl,sage,vscode]
 ---
 
 
