@@ -2,8 +2,7 @@
 title: GBS 7 Dateisystem 文件系统
 date: 2025-04-01 23:46:40
 categories: 
-  - TUM课程笔记
-  - GBS 操作系统
+  - [TUM课程笔记,GBS 操作系统]
 tags: [Betriebssysteme, Operating System, 操作系统, 文件系统]
 excerpt: "操作系统基础相关笔记"
 ---
@@ -108,7 +107,7 @@ excerpt: "操作系统基础相关笔记"
 
   包含用户数据的文件，比如说：
 
-  - 文本文件（Text-Dateien）： Bestehen aus Zeilen, die durch carriage return （回车符，{% kbd \r %}）und/oder  linefeed Zeichen（换行符，{% kbd \n %}） abgeschlossen sind.
+  - 文本文件（Text-Dateien）： Bestehen aus Zeilen, die durch carriage return （回车符，`\r`und/oder  linefeed Zeichen（换行符，`\n` abgeschlossen sind.
   - 二进制文件（Binärdateien）：具有特定格式，比如说可执行文件、压缩包等。
 
 - **目录（Verzeichnisse，directories）**：
@@ -119,7 +118,7 @@ excerpt: "操作系统基础相关笔记"
 
 - **字符设备文件（Character Special Files）**
 
-在linux种可以用 {% kbd ls -l %} 来查看文件类型：
+在linux种可以用 `ls -l`来查看文件类型：
 
 | 第一位字符 | 文件类型     |
 | ---------- | ------------ |
@@ -161,7 +160,7 @@ brw-rw---- 1 root disk 8, 0 Mar 26  /dev/sda
 
 进程可以按**任意顺序**读取文件中的字节（或记录），在数据库系统中尤其重要（快速定位记录）。
 
-UNIX 系统中，{% kbd lseek %} 系统调用可以改变“读写指针”位置：
+UNIX 系统中，`lseek`系统调用可以改变“读写指针”位置：
 
 ```bash
 lseek(fd, 1024, SEEK_SET);
@@ -247,29 +246,29 @@ int main(int argc, char *argv[]) {
 
 - 创建和删除文件
 
-  - {% kbd open %} （**打开**）:
+  - `open`（**打开**）:
 
-    在访问一个文件之前，必须先打开它。这会让操作系统把文件属性和其他信息加载到内存中，方便快速处理。{% kbd open() %} 系统调用**返回一个文件描述符（file descriptor）**，这是一个小的整数，用来标识这个打开的文件。
+    在访问一个文件之前，必须先打开它。这会让操作系统把文件属性和其他信息加载到内存中，方便快速处理。`open()`系统调用**返回一个文件描述符（file descriptor）**，这是一个小的整数，用来标识这个打开的文件。
 
-  - {% kbd unlink %} （**删除**）
+  - `unlink`（**删除**）
 
 - 后续对文件的访问（通过文件描述符）
 
-  - {% kbd close %} （**关闭**）
+  - `close`（**关闭**）
 
     使用文件描述符来关闭文件，释放内部数据结构资源。
 
-  - {% kbd read %} （**读取**）
+  - `read`（**读取**）
 
     **指定要读取的数据以及一个缓冲区（buffer）**，读取的内容将被放入该缓冲区。
 
     一定要提前创建一个缓冲区！
 
-  - {% kbd write %} （**写入**）
+  - `write`（**写入**）
 
     将数据写入到当前文件指针所在的位置，注意原有数据可能会被覆盖。
 
-  - {% kbd seek %} （**定位**）
+  - `seek`（**定位**）
 
     移动文件指针到指定位置（之后可以从该位置读取或写入）。（见上面随机访问那里的例子）
 
@@ -346,7 +345,7 @@ int main (int argc, char *argv[]) {
 
 路径从**根目录**（Root-Verzeichnis）开始，一直到目标文件。
 
-注意：UNIX/Linux 中用 {% kbd / %} ，Windows 中用 {% kbd \ %} 。
+注意：UNIX/Linux 中用 `/`，Windows 中用 `\`。
 
 例子：
 
@@ -373,7 +372,7 @@ c-files/mem.c
 
 3\. **特殊路径**
 
-{% kbd . %} 表示当前目录，{% kbd .. %} 表示上一级目录。
+`.`表示当前目录，`..`表示上一级目录。
 
 例子：
 
@@ -690,7 +689,7 @@ Windows会将每个文件系统会被分配一个独立的盘符（如 C:、D:�
 
 Unix的这个整合是便通过**`虚拟文件系统（Virtual File System，VFS）`**实现的。
 
-VFS负责提供一个（遵循 POSIX 标准的）统一的接口（比如 {% kbd open%}、{% kbd read %}、{% kbd write %}、{% kbd lseek %}等），用于支持在一个本地系统中接入多种不同的文件系统。
+VFS负责提供一个（遵循 POSIX 标准的）统一的接口（比如 `open``read``write``lseek`），用于支持在一个本地系统中接入多种不同的文件系统。
 
 图示：
 
@@ -718,7 +717,7 @@ VFS负责提供一个（遵循 POSIX 标准的）统一的接口（比如 {% kbd
 
 
 
-进行写的操作时数据会先写入缓存区，不一定立刻写入磁盘。在Unix中可以使用 {% kbd sync %} 命令手动将缓存区内容写入磁盘，不过系统自己也会会周期性自动执行（例如每30秒由 update 守护进程（daemon）完成）。Windows采用的则是 **Write-thru Cache**，即写操作会立即同步到磁盘。
+进行写的操作时数据会先写入缓存区，不一定立刻写入磁盘。在Unix中可以使用 `sync`命令手动将缓存区内容写入磁盘，不过系统自己也会会周期性自动执行（例如每30秒由 update 守护进程（daemon）完成）。Windows采用的则是 **Write-thru Cache**，即写操作会立即同步到磁盘。
 
 
 
@@ -826,7 +825,7 @@ JBD中支持以下几种数据结构：
 
   会将一组相关的日志记录组合在一起，并原子性地执行。（Gruppiert mehrere zusammengehörige Log-Einträge und führt sie atomar aus）
 
-  比如说 {% kbd write %} 一般会涉及修改i-node、数据块、空闲块列表等信息，而这些操作应当作为一个整体 原子性执行（atomar als Einheit ausgeführt werden）。
+  比如说 `write`一般会涉及修改i-node、数据块、空闲块列表等信息，而这些操作应当作为一个整体 原子性执行（atomar als Einheit ausgeführt werden）。
 
 - **事务（Transaktionen）**
 
