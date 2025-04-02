@@ -1,10 +1,10 @@
 ---
-title: HTB-Full-Stack-Conf
+title: HTB-Full-Stack-Conf Writeup
 date: 2025-04-02 13:17:31
 categories: 
   - CTF
   - Web
-tags: [Web,HTB,Injection,JavaScript,注入]
+tags: [Web,HTB,Writeup,Injection,JavaScript,注入]
 excerpt: ""
 ---
 

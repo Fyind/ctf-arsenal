@@ -1,10 +1,10 @@
 ---
-title: HTB-baby-auth
+title: HTB-baby-auth Writeup
 date: 2025-04-02 13:17:38
 categories: 
   - CTF
   - Web
-tags: [Web,HTB,Cookie]
+tags: [Web,HTB,Writeup,Cookie]
 excerpt: ""
 ---
 

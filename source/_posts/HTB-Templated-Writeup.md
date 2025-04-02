@@ -1,10 +1,10 @@
 ---
-title: HTB-Templated
+title: HTB-Templated Writeup
 date: 2025-04-02 13:16:48
 categories: 
   - CTF
   - Web
-tags: [Web,HTB,Injection,Template Injection,模板注入,Jinja2]
+tags: [Web,HTB,Writeup,Injection,Template Injection,模板注入,Jinja2]
 excerpt: ""
 mathjax: true
 ---

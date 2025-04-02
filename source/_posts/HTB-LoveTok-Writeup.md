@@ -1,10 +1,10 @@
 ---
-title: HTB-LoveTok
+title: HTB-LoveTok Writeup
 date: 2025-04-02 13:17:21
 categories: 
   - CTF
   - Web
-tags: [Web,HTB,Injection,PHP 代码注入,PHP]
+tags: [Web,HTB,Writeup,Injection,PHP 代码注入,PHP]
 excerpt: ""
 ---
 

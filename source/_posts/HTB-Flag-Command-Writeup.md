@@ -1,10 +1,10 @@
 ---
-title: HTB Flag Command
+title: HTB Flag Command Writeup
 date: 2025-04-02 13:49:15
 categories:
   - [CTF, Web]
 tags:
-  - [开发者工具, javascript]
+  - [开发者工具, javascript,Writeup]
 ---
 
 # HTB Flag command

@@ -1,10 +1,10 @@
 ---
-title: HTB-Spookifier
+title: HTB-Spookifier Writeup
 date: 2025-04-02 13:16:57
 categories: 
   - CTF
   - Web
-tags: [Web,HTB,Injection,Template Injection,模板注入,Mako]
+tags: [Web,HTB,Writeup,Injection,Template Injection,模板注入,Mako]
 excerpt: ""
 mathjax: true
 ---

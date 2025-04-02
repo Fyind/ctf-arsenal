@@ -1,10 +1,10 @@
 ---
-title: HTB-sanitize
+title: HTB-sanitize Writeup
 date: 2025-04-02 13:17:04
 categories: 
   - CTF
   - Web
-tags: [Web,HTB,Injection, SQL Injection, SQL]
+tags: [Web,HTB,Writeup,Injection, SQL Injection, SQL]
 excerpt: ""
 ---
 
