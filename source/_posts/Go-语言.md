@@ -1,6 +1,8 @@
 ---
 title: Go 语言
 date: 2025-03-29 14:59:29
+categories:
+  - 编程语言
 tags:
 ---
 

@@ -1,6 +1,8 @@
 ---
 title: Steganography 隐写
 date: 2025-02-08 02:42:27
+categories:
+  - [CTF, 知识点]
 tags:
  - CTF笔记
 ---

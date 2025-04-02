@@ -1,6 +1,8 @@
 ---
 title: HTB渗透测试
 date: 2025-02-25 11:35:57
+categories:
+  - 安全学习笔记
 tags:
   - 渗透测试
 math: true

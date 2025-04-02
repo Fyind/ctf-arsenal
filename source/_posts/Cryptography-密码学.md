@@ -1,9 +1,8 @@
 ---
 title: Cryptography 密码学
 date: 2025-02-08 20:25:34
-tags:
- - CTF笔记
- - Cryptography
+categories:
+  - [CTF, 知识点]
 math: true
 ---
 

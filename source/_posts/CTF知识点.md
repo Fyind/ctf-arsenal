@@ -1,6 +1,8 @@
 ---
 title: CTF知识点
 date: 2024-05-15 00:06:29
+categories:
+  - [CTF, 知识点]
 tags:
 ---
 

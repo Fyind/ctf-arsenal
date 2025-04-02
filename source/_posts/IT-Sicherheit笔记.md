@@ -1,6 +1,8 @@
 ---
 title: IT Sicherheit笔记
 date: 2025-02-10 16:39:14
+categories:
+  - [TUM课程笔记]
 tags:
 math: true
 ---

@@ -1,6 +1,8 @@
 ---
 title: PWN
 date: 2025-02-07 00:05:38
+categories:
+  - [CTF, 知识点]
 tags:
   - CTF笔记
   - PWN
