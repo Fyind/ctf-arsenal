@@ -2,8 +2,7 @@
 title: GBS 8 Ein/Ausgabe 输入输出
 date: 2025-04-01 23:46:22
 categories: 
-  - TUM课程笔记
-  - GBS 操作系统
+  - [TUM课程笔记,GBS 操作系统]
 tags: [Betriebssysteme, Operating System, 操作系统, 输入/输出]
 excerpt: "操作系统基础相关笔记"
 ---
@@ -355,23 +354,23 @@ return_from_interrupt();
 
 比如说：
 
-- {% kbd open() %}：
+- `open()`
 
   打开设备的逻辑通道，返回一个 文件描述符（Descriptor 或 Handle），供后续操作使用。
 
-- {% kbd read() %}：
+- `read()`
 
   从设备读取数据，返回指定数量的字节流（Bytestream）。
 
-- {% kbd close() %}：
+- `close()`
 
   关闭先前打开的通道，释放相关的系统资源。
 
-- {% kbd write() %}：
+- `write()`
 
   向设备写入数据，发送指定数量的字节到设备。
 
-- {% kbd ioctl() %}：
+- `ioctl()`
 
   改变设备的操作模式，比如调整串行端口的传输速率或者是修改设备的控制参数
 
@@ -397,27 +396,27 @@ return_from_interrupt();
 
 在UNIX/Linux里，我们需要通过文件系统访问 I/O 设备（因为“Everything is a file"）：
 
-- 在访问设备前，必须先打开它 {% kbd open %}。
+- 在访问设备前，必须先打开它 `open`
 - 不同设备支持额外的文件系统操作，如读写、状态查询等。
-- **设备管理位于 {% kbd /dev %} 目录**，所有设备文件都存放在这里。
-- **设备状态查询和配置可能位于 {% kbd /proc %}  目录。**
+- **设备管理位于 `/dev`目录**，所有设备文件都存放在这里。
+- **设备状态查询和配置可能位于 `/proc` 目录。**
 
 
 
 设备文件名称指示设备类型，比如说：
 
-- {% kbd /dev/tty0 %}：物理串行接口（终端）。
-- {% kbd /dev/USBtty1 %}：抽象串行接口（USB 串口设备）。
-- {% kbd /dev/sd0 %}：硬盘设备（`sd` 代表 SCSI 磁盘）。
-- {% kbd /dev/null %}：伪设备，写入的数据会被丢弃。
-- {% kbd /dev/zero %}：伪设备，读取时返回无限的 0 字节。
+- `/dev/tty0`物理串行接口（终端）。
+- `/dev/USBtty1`抽象串行接口（USB 串口设备）。
+- `/dev/sd0`硬盘设备（`sd` 代表 SCSI 磁盘）。
+- `/dev/null`伪设备，写入的数据会被丢弃。
+- `/dev/zero`伪设备，读取时返回无限的 0 字节。
 
-Spooling 任务存储在 {% kbd /var/spool %} 目录下，其中
+Spooling 任务存储在 `/var/spool`目录下，其中
 
-- {% kbd lpq %}：打印任务队列（打印机 Spooling）。
-- {% kbd mqueue %}：邮件服务器的发送队列（邮件 Spooling）。
-- {% kbd news %}：新闻系统消息队列（新闻 Spooling）。
-- {% kbd cron %}：定时任务执行队列（任务调度 Spooling）。
+- `lpq`打印任务队列（打印机 Spooling）。
+- `mqueue`邮件服务器的发送队列（邮件 Spooling）。
+- `news`新闻系统消息队列（新闻 Spooling）。
+- `cron`定时任务执行队列（任务调度 Spooling）。
 
 
 

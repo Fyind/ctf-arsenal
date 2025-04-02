@@ -2,8 +2,7 @@
 title: RISC-V 汇编语言入门
 date: 2025-04-01 23:49:21
 categories: 
-  - TUM课程笔记
-  - ERA 计算机体系结构
+  - [TUM课程笔记,ERA 计算机体系结构]
 tags: [Rechnerarchitektur, 计算机体系结构, 汇编语言, RISC-V]
 excerpt: "计算机体系结构基础相关笔记"
 ---
@@ -18,7 +17,7 @@ excerpt: "计算机体系结构基础相关笔记"
 
 在 RISC-V 中，所有操作数（Operanden）都存储在寄存器中。
 
-RISC-V ISA 拥有 32 或 33 个（可见）寄存器，其中{% kbd x0 %}永远为零，而{% kbd x1 %} 到 {% kbd x31 %} 是通用**整数寄存器**，{% kbd f1 %} 到 {% kbd f31 %} 是 **浮点寄存器**：
+RISC-V ISA 拥有 32 或 33 个（可见）寄存器，其中`x0`远为零，而`x1`到 `x31`是通用**整数寄存器**，`f1`到 `f31`是 **浮点寄存器**：
 
 | Register   | ABI Name  | Description                        | Saver   |
 |------------|-----------|------------------------------------|---------|
@@ -295,7 +294,7 @@ t0 = 1111 1111 1111 1111 1111 1111 1111 1110 = -2 (负数)
 
 
 
-左移本质上就是乘法。无论有符号数还是无符号数，左移的行为都是相同的，所以 RISC-V 没有 {% kbd sla%}指令。
+左移本质上就是乘法。无论有符号数还是无符号数，左移的行为都是相同的，所以 RISC-V 没有 `sla`令。
 
 ![image-20250320181125434](https://raw.githubusercontent.com/archer-baiyi/Picture/main/image-20250320181125434.png)
 
@@ -585,7 +584,7 @@ int factorial(int n) {
 
 
 
-由于每次计算 {% kbd factorial(n) %} 的值时需要先等 {% kbd factorial(n-1) %}的计算结果先出来，所以等待期间需要将所有的 {% kbd n %} 都给存在stack里，也就是说：
+由于每次计算 `factorial(n)`的值时需要先等 `factorial(n-1)`计算结果先出来，所以等待期间需要将所有的 `n`都给存在stack里，也就是说：
 
 ```scss
 factorial(4)
@@ -744,7 +743,7 @@ factorial(3, 1)
 → return 6
 ```
 
-不再需要存储所有中间的 {% kbd n %} 的值。相当于是直接跳转而不是等待。
+不再需要存储所有中间的 `n`的值。相当于是直接跳转而不是等待。
 
 
 
@@ -782,9 +781,9 @@ subi a,b,x是等价于addi a,b,-x的（这里的x是一个立即数/常数）。
 
 需要用到 load upper immediate (**lui**) 和 addi
 
-{% kbd lui%} 的作用是将一个常数加载到目标寄存器的高 20 位（也就是5Bytes），并将低 12 位（4Bytes）填充为 0。
+`lui`的作用是将一个常数加载到目标寄存器的高 20 位（也就是5Bytes），并将低 12 位（4Bytes）填充为 0。
 
-而{% kbd addi %}则负责将低 12 位（4Bytes）的数值加到目标寄存器中。
+而`addi`负责将低 12 位（4Bytes）的数值加到目标寄存器中。
 
 例子：
 

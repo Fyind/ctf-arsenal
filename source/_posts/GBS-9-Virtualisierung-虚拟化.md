@@ -2,8 +2,7 @@
 title: GBS 9 Virtualisierung 虚拟化
 date: 2025-04-01 23:41:12
 categories: 
-  - TUM课程笔记
-  - GBS 操作系统
+  - [TUM课程笔记,GBS 操作系统]
 tags: [Betriebssysteme, Operating System, 操作系统, 虚拟化, 虚拟机, container]
 excerpt: "操作系统基础相关笔记"
 ---
