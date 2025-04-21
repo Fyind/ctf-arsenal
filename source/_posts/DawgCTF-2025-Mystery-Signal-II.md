@@ -2,7 +2,7 @@
 title: DawgCTF 2025 Mystery Signal II
 date: 2025-04-21 15:36:33
 categories: [CTF, Steganography]
-tags: [音频隐写, MMSSTV]
+tags: [音频隐写, MMSSTV, Writeup]
 ---
 
 # Mystery Signal II

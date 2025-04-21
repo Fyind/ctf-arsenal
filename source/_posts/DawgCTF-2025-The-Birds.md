@@ -2,7 +2,7 @@
 title: DawgCTF 2025 The Birds
 date: 2025-04-21 06:23:11
 categories: [CTF, Crypto]
-tags: [古典密码,Crypto]
+tags: [古典密码,Crypto, Writeup]
 ---
 
 # The Bird

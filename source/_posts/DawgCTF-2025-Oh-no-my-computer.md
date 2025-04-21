@@ -2,7 +2,7 @@
 title: DawgCTF 2025 Oh no,my computer!
 date: 2025-04-21 12:38:06
 categories: [CTF, Forensics]
-tags: [Forensics, Vodatility, dnSpy]
+tags: [Forensics, Vodatility, dnSpy, Writeup]
 ---
 
 # Oh no, my computer!

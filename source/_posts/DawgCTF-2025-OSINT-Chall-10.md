@@ -2,7 +2,7 @@
 title: DawgCTF 2025 OSINT Chall 10
 date: 2025-04-21 17:17:20
 categories: [CTF, OSINT]
-tags: [OSINT, street view]
+tags: [OSINT, street view, Writeup]
 ---
 
 # Chall 10

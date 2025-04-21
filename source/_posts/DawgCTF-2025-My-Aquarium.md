@@ -2,7 +2,7 @@
 title: DawgCTF 2025 My Aquarium
 date: 2025-04-21 15:13:02
 categories: [CTF, Web]
-tags: [Web, Azure Web]
+tags: [Web, Azure Web, Writeup]
 ---
 
 # My Aquarium

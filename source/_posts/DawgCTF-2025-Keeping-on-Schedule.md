@@ -2,7 +2,7 @@
 title: DawgCTF 2025 Keeping on Schedule
 date: 2025-04-21 17:05:42
 categories: [CTF, Forensics]
-tags: [Forensics, 注册表]
+tags: [Forensics, 注册表, Writeup]
 ---
 
 # Keeping on Schedule

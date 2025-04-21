@@ -2,7 +2,8 @@
 title: DawgCTF 2025 The Fractalist
 date: 2025-04-21 06:28:17
 categories: [CTF, Crypto]
-tags: [Crypto, Math, Mandbrot]
+tags: [Crypto, Math, Mandbrot, Writeup]
+math: true
 ---
 
 # The Fractalist
