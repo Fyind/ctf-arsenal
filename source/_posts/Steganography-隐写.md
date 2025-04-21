@@ -39,9 +39,33 @@ binwalk --dd=".*" xx.png
 
 
 
+### zsteg
+
+``` shell
+sudo gem install zsteg
+```
+
+检测所有
+
+``` shell
+zsteg -a x.png
+```
+
+
+
+
+
 ### 010Editor
 
-#### 
+官方下载
+
+破解：https://github.com/garfield-ts/010Keygen
+
+
+
+
+
+
 
 #### dd 导出
 
