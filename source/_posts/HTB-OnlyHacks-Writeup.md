@@ -1,8 +1,8 @@
 ---
-title: HTB-OnlyHacks
+title: HTB-OnlyHacks Writeup
 date: 2025-04-02 13:17:12
 categories: [CTF,Web]
-tags: [Web,HTB,XSS]
+tags: [Web,HTB,Writeup,XSS]
 excerpt: ""
 ---
 
