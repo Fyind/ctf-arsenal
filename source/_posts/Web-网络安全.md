@@ -7,28 +7,6 @@ tags: Web
 
 # Web  Writeups
 
-
-
-## 解题路径
-
-查看开发者工具
-
-
-
-### Server Side Template Injection (SSTI)
-
-https://www.cobalt.io/blog/a-pentesters-guide-to-server-side-template-injection-ssti
-
-
-
-## javascript
-
-从开发者工具里面
-
-
-
-# Writeups
-
 ### 学习他人的writeup
 
 https://mqcybersec.org/writeups/
@@ -102,6 +80,8 @@ request bin: https://requestbin.whapi.cloud/
 noMatchMessage.innerHTML = `No results for "${searchInput}".`;
 ```
 
+Nginx: `add_header Content-Type text/html always;`  使得
+
 #### javascript
 
 * `trim()` 删除首尾空格
@@ -156,6 +136,8 @@ srcdoc 支持html endocing, 所以可以绕过
 
 
 ## SSTI
+
+https://www.cobalt.io/blog/a-pentesters-guide-to-server-side-template-injection-ssti
 
 * [SSTI1 (without RCE..?)](https://mqcybersec.org/writeups/picoctf-ssti1/)
 
@@ -291,4 +273,108 @@ HTB{d0nt_trust_str4ng3r5_bl1ndly}
 ```
 
 
+
+# Knowledge
+
+## Web Framework
+
+### Express
+
+Express 是基于 Node.js 的一种**轻量级 Web 服务器框架**，用来快速搭建网站或 API。
+
+``` js
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+  res.send('Hello World');
+});
+
+app.listen(3000, () => {
+  console.log('App listening on port 3000');
+});
+
+```
+
+### Puppeteer
+
+Puppeteer 是 Node.js 下的一个库，可以**自动控制 Chrome 浏览器**。
+ 相当于用代码远程开了个浏览器去访问网页，比如：
+
+- 自动填写表单并提交
+- 自动点击网页按钮
+- 自动截图
+- 自动访问用户提交的链接
+
+**在 CTF Web 中的应用**： 出题人为了模拟**管理员访问用户提交的恶意链接**，常常用 Puppeteer 自动开启一个无头浏览器（headless browser），去打开选手提交的 URL。
+
+例子：
+
+``` js
+const puppeteer = require('puppeteer');
+(async () => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto('http://example.com');
+  await page.screenshot({ path: 'example.png' });
+  await browser.close();
+})();
+```
+
+#### 启动参数
+
+``` js
+ const browser = await puppeteer.launch({
+    headless: 'new',
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+});
+```
+
+* headless: **CTF场景**：有时候页面会检测是不是无头浏览器（反爬虫、反XSS payload），用 `headless: 'new'` 可以更逼真地模拟真实用户.
+* `--no-sandbox` : 禁用 Chrome 沙盒（sandbox）安全机制. 为了让浏览器在某些服务器上能正常运行（比如容器、低权限环境）
+* `--disable-setuid-sandbox` 禁用 setuid 沙盒（Linux特有的更严格沙盒）,为了兼容某些没有完整沙盒支持的服务器
+
+#### 功能
+
+* set cookie：
+
+  ``` js
+  await page.setCookie({
+      name: 'flag',
+      value: FLAG,
+      domain: new URL(DOMAIN).hostname,
+  });
+  ```
+
+### Nginx
+
+**Nginx**（读作 "Engine-X"）是一个**高性能的 Web 服务器**和**反向代理服务器**。
+ 最初是为了处理**高并发、高负载的网站请求**而开发的，现在已经非常流行，尤其在大中型网站中几乎必用。
+
+``` nginx
+events {
+  worker_connections 1024;
+}
+
+http {
+  server {
+    listen 80;
+        
+    location / {
+      proxy_pass https://dns.google;
+      add_header Content-Type text/html always;
+    }
+    
+    location /report {
+      proxy_pass http://adminbot:3000;
+    }
+  }
+}
+```
+
+* worker connection: 每个 worker（工作进程）最多可以同时处理 1024 个连接。提高并法能力。
+* http: 这是 **HTTP 服务的配置**区块。里面可以配置多个 `server {}`，每个 `server {}` 相当于一个虚拟主机
+* server: 这是一个具体的服务器配置。`listen 80;` → 监听 80 端口（标准 HTTP 端口）。
+
+* location: 当用户访问根路径 `/`（比如 `http://your-server.com/`）时，Nginx 会把请求 **转发（代理）到 `https://dns.google`**（Google 的公共 DNS over HTTPS 接口）。然后强制给响应加一个头部.`always` 表示无论响应结果是什么（成功、失败、4xx、5xx），都加上这个头 **注意**：这里本质是让 Nginx 作为一个**反向代理**，访问 `dns.google`，然后把结果返回给用户。加上 `Content-Type: text/html` 是为了让浏览器按照网页方式解释内容（哪怕原本是 JSON）。
 
