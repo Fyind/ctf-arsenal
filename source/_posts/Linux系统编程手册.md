@@ -211,5 +211,84 @@ telnet或者ssh
 
 ### 系统调用
 
+* 将处理器从用户态切换到内核态，以便CPU访问受保护的内核内存
+* 每个系统调用有唯一的标识
 
+> 例子：
+>
+> 1. 程序调用C函数Wrapper，把syscall的编号复制到eax里
+> 2. 执行 `int0x80` 切换到内核态，执行中断矢量的代码，（或者sysenter)
+> 3. 响应中断，调用 `system_call()` , in `arch/i386.entry.S`
+>    1. 在stack保存寄存器
+>    2. 查找 `sys_call_table` , 执行服务例程 (`(arch/x86/kernel/proccess_32.c)`)，返回给 `system_call()` 
+>    3. 返回到外壳函数
+
+### 标准C语言库函数glibc
+
+GNU C 是Linux上最常用的实现
+
+#### 确定系统的glibc版本 
+
+``` shell
+/lib/libc.so.6
+```
+
+(在自己linux上没有成功)：有些linux路径不一样，查找方式是，对与glibc动态连接的可执行文件用ldd程序查找
+
+``` shell
+ldd myprog | grep libc
+```
+
+> libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007943ccc00000)
+
+或者在程序里用常量 `__GLIBC__, __GLIBC_MINOR__` , or `gnu_get_libc_version() `返回指向版本号的指针.
+
+### 处理函数错误
+
+系统调用和库函数有返回值的话一定要检查
+
+syscall失败会设置 `errno` 全局变量， 在 `<errno.h>` 有对错误编号的定义。
+
+``` c
+cnt = read(fd, buf, numbytes);
+if (cnt == -1) {
+	if (errno == EINTER) {
+        fprintf(stderr, "read was interrupted by a signal.\n");
+    } else {
+		//...
+    }
+}
+```
+
+如果调用成功 errno 不会重置为0. `perror` 可以输出syscall的错误信息
+
+``` c 
+fd = open(pathname, flags, mode);
+if (fd == -1) {
+    perror("open")
+    exit(EXIT_FAILURE);
+}
+```
+
+### 命令行选项
+
+可以用 `getopt()` 解析命令行选项。
+
+### 系统数据类型
+
+在 `<sys/types.h>` 里面
+
+## 文件IO
+
+标准文件描述符
+
+* `0` stdin
+* `1` stdout
+* `2` stderr
+
+## 深入文件IO
+
+### 原子操作
+
+syscall是原子操作，不会被其他进程打断。
 
