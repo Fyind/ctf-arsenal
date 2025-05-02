@@ -292,3 +292,33 @@ if (fd == -1) {
 
 syscall是原子操作，不会被其他进程打断。
 
+
+
+
+
+# SELinux 系统管理
+
+## SELinux基本概念
+
+Security Enhanced Linux(SELinux) 为了加强Linux的安全性能
+
+原始Linux使用DAC (discretionary access control) 基于用户和组来管理访问控制。在SE Linux里，在DAC上层提供了MAC(mandatory access control) , 它是系统强制的访问控制。他的Policy是被security manager管理的，而不是被用户管理。
+
+在特定设置下，甚至root也不能修改shadow文件（比如说）
+
+通过 LSM (Linux Security Modules) SELinux可以轻易的集成到Linux内核里。
+
+LSM在Linux kernel 2.6 之后有，他是一个框架framework, 在Linux 内核里提供hooks，使得安全函数可以通过hooks被调用。LSM本身不提供安全功能。除了SELinux使用LSM外，还有 AppArmor, Smack, TOMOYO Linux, Yama之类的
+
+### 用SELinux扩展DAC
+
+SELinux不能覆盖 Linux DAC的permission deny. 因为它是在DAC决定之后进行决定的。
+
+`setfacl` 可以设置权限
+
+``` shell
+setfacl -m u:lisa:rw /path/to/file
+```
+
+
+
