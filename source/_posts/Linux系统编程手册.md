@@ -211,5 +211,114 @@ telnet或者ssh
 
 ### 系统调用
 
+* 将处理器从用户态切换到内核态，以便CPU访问受保护的内核内存
+* 每个系统调用有唯一的标识
+
+> 例子：
+>
+> 1. 程序调用C函数Wrapper，把syscall的编号复制到eax里
+> 2. 执行 `int0x80` 切换到内核态，执行中断矢量的代码，（或者sysenter)
+> 3. 响应中断，调用 `system_call()` , in `arch/i386.entry.S`
+>    1. 在stack保存寄存器
+>    2. 查找 `sys_call_table` , 执行服务例程 (`(arch/x86/kernel/proccess_32.c)`)，返回给 `system_call()` 
+>    3. 返回到外壳函数
+
+### 标准C语言库函数glibc
+
+GNU C 是Linux上最常用的实现
+
+#### 确定系统的glibc版本 
+
+``` shell
+/lib/libc.so.6
+```
+
+(在自己linux上没有成功)：有些linux路径不一样，查找方式是，对与glibc动态连接的可执行文件用ldd程序查找
+
+``` shell
+ldd myprog | grep libc
+```
+
+> libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007943ccc00000)
+
+或者在程序里用常量 `__GLIBC__, __GLIBC_MINOR__` , or `gnu_get_libc_version() `返回指向版本号的指针.
+
+### 处理函数错误
+
+系统调用和库函数有返回值的话一定要检查
+
+syscall失败会设置 `errno` 全局变量， 在 `<errno.h>` 有对错误编号的定义。
+
+``` c
+cnt = read(fd, buf, numbytes);
+if (cnt == -1) {
+	if (errno == EINTER) {
+        fprintf(stderr, "read was interrupted by a signal.\n");
+    } else {
+		//...
+    }
+}
+```
+
+如果调用成功 errno 不会重置为0. `perror` 可以输出syscall的错误信息
+
+``` c 
+fd = open(pathname, flags, mode);
+if (fd == -1) {
+    perror("open")
+    exit(EXIT_FAILURE);
+}
+```
+
+### 命令行选项
+
+可以用 `getopt()` 解析命令行选项。
+
+### 系统数据类型
+
+在 `<sys/types.h>` 里面
+
+## 文件IO
+
+标准文件描述符
+
+* `0` stdin
+* `1` stdout
+* `2` stderr
+
+## 深入文件IO
+
+### 原子操作
+
+syscall是原子操作，不会被其他进程打断。
+
+
+
+
+
+# SELinux 系统管理
+
+## SELinux基本概念
+
+Security Enhanced Linux(SELinux) 为了加强Linux的安全性能
+
+原始Linux使用DAC (discretionary access control) 基于用户和组来管理访问控制。在SE Linux里，在DAC上层提供了MAC(mandatory access control) , 它是系统强制的访问控制。他的Policy是被security manager管理的，而不是被用户管理。
+
+在特定设置下，甚至root也不能修改shadow文件（比如说）
+
+通过 LSM (Linux Security Modules) SELinux可以轻易的集成到Linux内核里。
+
+LSM在Linux kernel 2.6 之后有，他是一个框架framework, 在Linux 内核里提供hooks，使得安全函数可以通过hooks被调用。LSM本身不提供安全功能。除了SELinux使用LSM外，还有 AppArmor, Smack, TOMOYO Linux, Yama之类的
+
+### 用SELinux扩展DAC
+
+SELinux不能覆盖 Linux DAC的permission deny. 因为它是在DAC决定之后进行决定的。
+
+`setfacl` 可以设置权限
+
+``` shell
+setfacl -m u:lisa:rw /path/to/file
+```
+
 
 
