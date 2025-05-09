@@ -557,6 +557,12 @@ fn main() {
     }
     println!("LIFTOFF!!!");
 }
+
+for (i, &item) in bytes.iter().enumerate() {
+    if item == b' ' {
+        return i;
+    }
+}
 ```
 
 ### Exercise 温度转换FC
@@ -738,6 +744,158 @@ fn takes_and_gives_back(a_string: String) -> String { // a_string 进入作用�
   a_string  // 返回 a_string 并移出给调用的函数
 }
 ```
+
+### 引用与借用
+
+有这样一个问题：我们必须将 `String` 返回给调用函数，以便在调用 `calculate_length` 后仍能使用 `String`，因为 `String` 被移动到了 `calculate_length` 内。相反我们可以提供一个 `String` 值的引用（reference）。**引用**（*reference*）像一个指针，因为它是一个地址，我们可以由此访问储存于该地址的属于其他变量的数据。 与指针不同，引用确保指向某个特定类型的有效值。
+
+```rust
+fn main() {
+    let s1 = String::from("hello");
+
+    let len = calculate_length(&s1);
+
+    println!("The length of '{s1}' is {len}.");
+}
+
+fn calculate_length(s: &String) -> usize { // s 是 String 的引用
+    s.len()
+} // 这里，s 离开了作用域。但因为它并不拥有引用值的所有权，
+  // 所以什么也不会发生
+```
+
+这些 & 符号就是 **引用**，它们允许你使用值但不获取其所有权。图 4-6 展示了一张示意图。
+
+![Three tables: the table for s contains only a pointer to the table for s1. The table for s1 contains the stack data for s1 and points to the string data on the heap.](https://kaisery.github.io/trpl-zh-cn/img/trpl04-06.svg)
+
+我们将创建一个引用的行为称为 **借用**（*borrowing*）。正如现实生活中，如果一个人拥有某样东西，你可以从他那里借来。当你使用完后，必须还回去。因为我们并不拥有它的所有权。
+
+那如果我们尝试修改借用的变量呢？尝试示例 4-6 中的代码。剧透：这行不通！
+
+#### 可变引用
+
+我们通过一个小调整就能修复示例 4-6 代码中的错误，允许我们修改一个借用的值，这就是 **可变引用**（*mutable reference*）：
+
+```rust
+fn main() {
+    let mut s = String::from("hello");
+
+    change(&mut s);
+}
+
+fn change(some_string: &mut String) {
+    some_string.push_str(", world");
+}
+```
+
+首先，我们必须将 `s` 改为 `mut`。然后在调用 `change` 函数的地方创建一个可变引用 `&mut s`，并更新函数签名以接受一个可变引用 `some_string: &mut String`。
+
+可变引用有一个很大的限制：如果你有一个对该变量的可变引用，你就不能再创建对该变量的引用。这些尝试创建两个 `s` 的可变引用的代码会失败：
+
+```rust
+    let mut s = String::from("hello");
+
+    let r1 = &mut s;
+    let r2 = &mut s;
+
+    println!("{}, {}", r1, r2);
+```
+
+这个限制的好处是 Rust 可以在编译时就避免数据竞争。**数据竞争**（*data race*）类似于竞态条件，它可由这三个行为造成：
+
+- 两个或更多指针同时访问同一数据。
+- 至少有一个指针被用来写入数据。
+- 没有同步数据访问的机制。
+
+Rust 在同时使用可变与不可变引用时也采用的类似的规则。这些代码会导致一个错误：
+
+```rust
+    let mut s = String::from("hello");
+
+    let r1 = &s; // 没问题
+    let r2 = &s; // 没问题
+    let r3 = &mut s; // 大问题
+
+    println!("{}, {}, and {}", r1, r2, r3);
+```
+
+哇哦！我们 **也** 不能在拥有不可变引用的同时拥有可变引用。
+
+注意一个引用的作用域从声明的地方开始一直持续到最后一次使用为止。例如，因为最后一次使用不可变引用（`println!`)，发生在声明可变引用之前，所以如下代码是可以编译的：
+
+```rust
+    let mut s = String::from("hello");
+
+    let r1 = &s; // 没问题
+    let r2 = &s; // 没问题
+    println!("{r1} and {r2}");
+    // 此位置之后 r1 和 r2 不再使用
+
+    let r3 = &mut s; // 没问题
+    println!("{r3}");
+```
+
+### 悬垂引用（Dangling References
+
+在具有指针的语言中，很容易通过释放内存时保留指向它的指针而错误地生成一个 **悬垂指针**（*dangling pointer*），所谓悬垂指针是其指向的内存可能已经被分配给其它持有者。相比之下，在 Rust 中编译器确保引用永远也不会变成悬垂状态：当你拥有一些数据的引用，编译器确保数据不会在其引用之前离开作用域。
+
+``` rust
+fn dangle() -> &String { // dangle 返回一个字符串的引用
+
+    let s = String::from("hello"); // s 是一个新字符串
+
+    &s // 返回字符串 s 的引用
+} // 这里 s 离开作用域并被丢弃。其内存被释放。
+  // 危险！
+```
+
+让我们概括一下之前对引用的讨论：
+
+- 在任意给定时间，**要么** 只能有一个可变引用，**要么** 只能有多个不可变引用。
+- 引用必须总是有效的。
+
+## Slice 类型
+
+*slice* 允许你引用集合中一段连续的元素序列，而不用引用整个集合。slice 是一种引用，所以它没有所有权。
+
+#### string slice
+
+``` rust
+    let s = String::from("hello world");
+
+    let hello = &s[0..5];
+    let world = &s[6..11];
+```
+
+#### 字符串字面值就是 slice
+
+还记得我们讲到过字符串字面值被储存在二进制文件中吗？现在知道 slice 了，我们就可以正确地理解字符串字面值了：
+
+```rust
+let s = "Hello, world!";
+```
+
+这里 `s` 的类型是 `&str`：它是一个指向二进制程序特定位置的 slice。这也就是为什么字符串字面值是不可变的；`&str` 是一个不可变引用。
+
+#### 其他类型的 slice
+
+字符串 slice，正如你想象的那样，是针对字符串的。不过也有更通用的 slice 类型。考虑一下这个数组：
+
+```rust
+let a = [1, 2, 3, 4, 5];
+```
+
+就跟我们想要获取字符串的一部分那样，我们也会想要引用数组的一部分。我们可以这样做：
+
+```rust
+let a = [1, 2, 3, 4, 5];
+
+let slice = &a[1..3];
+
+assert_eq!(slice, &[2, 3]);
+```
+
+
 
 
 
