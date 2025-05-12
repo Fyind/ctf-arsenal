@@ -632,6 +632,38 @@ let s = String::from("hello");
     println!("{}", s); // 将打印 `hello, world!`
 ```
 
+#### 遍历
+
+``` rust
+for c in s.chars() {
+   match c ...
+}
+for (i,c) in s.chars().enumerate() {
+    ...
+}
+```
+
+字符转换
+
+``` rust
+let ascii = c as u8; 
+let ch = ascii as char;
+```
+
+#### 和int转换, rev, eq
+
+``` rust
+impl Solution {
+    pub fn is_palindrome(x: i32) -> bool {
+        x.to_string().chars().rev().eq(x.to_string().chars())
+    }
+}
+```
+
+
+
+
+
 #### 变量与数据交互的方式（一）：移动
 
 现在看看这个 `String` 拷贝版本：
@@ -895,11 +927,378 @@ let slice = &a[1..3];
 assert_eq!(slice, &[2, 3]);
 ```
 
+## 定义并实例化结构体
 
+需要使用 `struct` 关键字并为整个结构体提供一个名字。结构体的名字需要描述它所组合的数据的意义。接着，在大括号中，定义每一部分数据的名字和类型，我们称为 **字段**（*field*）。
+
+```rust
+struct User {
+    active: bool,
+    username: String,
+    email: String,
+    sign_in_count: u64,
+}
+```
+
+我们可以通过为每个字段指定具体值的方式来创建该结构体的**实例**。
+
+```rust
+fn main() {
+    let user1 = User {
+        email: String::from("someone@example.com"),
+        username: String::from("someusername123"),
+        active: true,
+        sign_in_count: 1,
+    };
+    user1.email = String::from("anotheremail@example.com");
+}
+
+fn build_user(email: String, username: String) -> User {
+    User {
+        email,
+        username,
+        active: true,
+        sign_in_count: 1,
+    }
+}
+```
+
+参数名与字段名都完全相同，我们可以使用**字段初始化简写语法**（*field init shorthand*）
+
+### 元组结构体
+
+``` rust
+struct Color(i32, i32, i32);
+struct Point(i32, i32, i32);
+
+fn main() {
+    let black = Color(0, 0, 0);
+    let origin = Point(0, 0, 0);
+}
+```
+
+我们也可以定义一个没有任何字段的结构体！它们被称为**类单元结构体**（*unit-like structs*）
+
+``` rust
+struct AlwaysEqual;
+
+fn main() {
+    let subject = AlwaysEqual;
+}
+```
+
+使用结构体例子
+
+``` rust
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+
+    println!(
+        "The area of the rectangle is {} square pixels.",
+        area(&rect1)
+    );
+}
+
+fn area(rectangle: &Rectangle) -> u32 {
+    rectangle.width * rectangle.height
+}
+```
+
+### 直接打印结构体
+
+在开头加上一行
+
+``` rust
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+
+    println!("rect1 is {:?}", rect1);
+}
+
+```
+
+### 方法语法
+
+``` rust
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+
+    println!(
+        "The area of the rectangle is {} square pixels.",
+        rect1.area()
+    );
+}
+
+```
+
+## 枚举和模式匹配
+
+### 枚举
+
+使用枚举甚至还有更多优势。进一步考虑一下我们的 IP 地址类型，目前没有一个存储实际 IP 地址 **数据** 的方法；只知道它是什么 **类型** 的。考虑到已经在第 5 章学习过结构体了，你可能会像示例 6-1 那样处理这个问题：
+
+```rust
+enum IpAddrKind {
+    V4,
+    V6,
+}
+
+struct IpAddr {
+    kind: IpAddrKind,
+    address: String,
+}
+
+let home = IpAddr {
+    kind: IpAddrKind::V4,
+    address: String::from("127.0.0.1"),
+};
+
+let loopback = IpAddr {
+    kind: IpAddrKind::V6,
+    address: String::from("::1"),
+};
+```
+
+为此，Rust 并没有空值，不过它确实拥有一个可以编码存在或不存在概念的枚举。这个枚举是 `Option<T>`，而且它[定义于标准库中](https://rustwiki.org/zh-CN/std/option/enum.Option.html)，如下:
+
+```rust
+enum Option<T> {
+    Some(T),
+    None,
+}
+```
+
+这里是一些包含数字类型和字符串类型 `Option` 值的例子：
+
+```rust
+let some_number = Some(5);
+let some_string = Some("a string");
+
+let absent_number: Option<i32> = None;
+```
+
+### match
+
+``` rust
+    let dice_roll = 9;
+    match dice_roll {
+        3 => add_fancy_hat(),
+        7 => remove_fancy_hat(),
+        _ => reroll(),
+    }
+
+    fn add_fancy_hat() {}
+    fn remove_fancy_hat() {}
+    fn reroll() {}
+```
+
+还有 
+
+``` rust
+enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter,
+}
+
+fn value_in_cents(coin: Coin) -> u8 {
+    match coin {
+        Coin::Penny => 1,
+        Coin::Nickel => 5,
+        Coin::Dime => 10,
+        Coin::Quarter => 25,
+    }
+}
+```
+
+### if let
+
+`if let` 语法让我们以一种不那么冗长的方式结合 `if` 和 `let`，来处理只匹配一个模式的值而忽略其他模式的情况。考虑示例 6-6 中的程序，它匹配一个 `Option<u8>` 值并只希望当值为 3 时执行代码：
+
+```rust
+let some_u8_value = Some(0u8);
+match some_u8_value {
+    Some(3) => println!("three"),
+    _ => (),
+}
+```
+
+简化：
+
+```rust
+if let Some(3) = some_u8_value {
+    println!("three");
+}
+```
+
+### Option
+
+* `is_some()` 判断是不是有值
+* `as_ref()` **将 `Option<T>`（或 `Result<T, E>`）转换成 `Option<&T>`（或 `Result<&T, &E>`）**，即不获取所有权，而是获取其中值的**引用**。
+
+#### swap
+
+``` rust
+impl Solution {
+    pub fn merge_two_lists(mut list1: Option<Box<ListNode>>, mut list2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+        let mut r = &mut list1;
+        while list2.is_some() {
+            if r.is_none() || list2.as_ref()?.val < r.as_ref()?.val {
+                std::mem::swap(r, &mut list2);
+            }
+            r = &mut r.as_mut()?.next;
+        }
+        list1
+    }
+}
+```
+
+
+
+
+
+## 常见集合
+
+### Vector
+
+#### 新建 vector
+
+为了创建一个新的空 vector，可以调用 `Vec::new` 函数，如示例 8-1 所示：
+
+```rust
+let v: Vec<i32> = Vec::new();
+```
+
+ Rust 提供了 `vec!` 宏。这个宏会根据我们提供的值来创建一个新的 `Vec`。示例 8-2 新建一个拥有值 `1`、`2` 和 `3` 的 `Vec<i32>`：
+
+```rust
+let v = vec![1, 2, 3];
+let v = vec![i as i32,j as i32];
+```
+
+#### 更新vector
+
+对于新建一个 vector 并向其增加元素，可以使用 `push` 方法，如示例 8-3 所示：
+
+```rust
+let mut v = Vec::new();
+
+v.push(5);
+v.push(6);
+v.push(7);
+v.push(8);
+```
+
+#### 读取 vector 的元素
+
+示例 8-5 展示了访问 vector 中一个值的两种方式，索引语法或者 `get` 方法：
+
+```rust
+let v = vec![1, 2, 3, 4, 5];
+
+let third: &i32 = &v[2];
+println!("The third element is {}", third);
+
+match v.get(2) {
+    Some(third) => println!("The third element is {}", third),
+    None => println!("There is no third element."),
+}
+```
+
+#### 遍历 vector 中的元素
+
+如果想要依次访问 vector 中的每一个元素，我们可以遍历其所有的元素而无需通过索引一次一个的访问。示例 8-8 展示了如何使用 `for` 循环来获取 `i32` 值的 vector 中的每一个元素的不可变引用并将其打印：
+
+```rust
+let v = vec![100, 32, 57];
+for i in &v {
+    println!("{}", i);
+}
+```
+
+示例 8-8：通过 `for` 循环遍历 vector 的元素并打印
+
+我们也可以遍历可变 vector 的每一个元素的可变引用以便能改变他们。示例 8-9 中的 `for` 循环会给每一个元素加 `50`：
+
+```rust
+let mut v = vec![100, 32, 57];
+for i in &mut v {
+    *i += 50;
+}
+```
+
+### HashMap
+
+``` rust
+use std::collections::HashMap;
+
+let mut map: HashMap<i32, usize> = HashMap::new();
+if let Some(&index) = map.get(&complement) {
+    return vec![index as i32, i as i32];
+}
+map.insert(nums[i],i);
+```
+
+
+
+
+
+### Box
+
+新建Box节点
+
+```rust
+// impl ListNode {
+//   #[inline]
+//   fn new(val: i32) -> Self {
+//     ListNode {
+//       next: None,
+//       val
+//     }
+//   }
+// }
+
+let mut head = Box::new(ListNode::new(0));
+```
 
 
 
 # 计划
+
+https://rustwiki.org/zh-CN/book/ch03-02-data-types.html
 
 ## 🗓️ 第1周：打好基础（Rust 核心语法 + 所有权系统）
 
