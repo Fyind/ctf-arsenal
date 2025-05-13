@@ -1188,6 +1188,213 @@ impl Solution {
 
 
 
+## 使用包、Crate和模块管理不断增长的项目
+
+### 包和 crate
+
+crate 是一个二进制项或者库。*crate root* 是一个源文件，Rust 编译器以它为起始点，并构成你的 crate 的根模块
+
+一个包中至多 **只能** 包含一个库 crate（library crate）；包中可以包含任意多个二进制 crate（binary crate）；包中至少包含一个 crate，无论是库的还是二进制的。
+
+``` shell
+cargo new my-project
+```
+
+当我们输入了这条命令，Cargo 会给我们的包创建一个 *Cargo.toml* 文件。查看 *Cargo.toml* 的内容，会发现并没有提到 *src/main.rs*，因为 Cargo 遵循的一个约定：*src/main.rs* 就是一个与包同名的二进制 crate 的 crate 根。
+
+Cargo 知道如果包目录中包含 *src/lib.rs*，则包带有与其同名的库 crate，且 *src/lib.rs* 是 crate 根。crate 根文件将由 Cargo 传递给 `rustc` 来实际构建库或者二进制项目。
+
+通过将文件放在 *src/bin* 目录下，一个包可以拥有多个二进制 crate：每个 *src/bin* 下的文件都会被编译成一个独立的二进制 crate。
+
+### 定义模块来控制作用域与私有性
+
+通过执行 `cargo new --lib restaurant`，来创建一个新的名为 `restaurant` 的库。然后将示例 7-1 中所罗列出来的代码放入 *src/lib.rs* 中，来定义一些模块和函数。
+
+文件名: src/lib.rs
+
+```rust
+mod front_of_house {
+    mod hosting {
+        fn add_to_waitlist() {}
+
+        fn seat_at_table() {}
+    }
+
+    mod serving {
+        fn take_order() {}
+
+        fn serve_order() {}
+
+        fn take_payment() {}
+    }
+}
+```
+
+示例 7-2 展示了示例 7-1 所对应的模块树。
+
+```text
+crate
+ └── front_of_house
+     ├── hosting
+     │   ├── add_to_waitlist
+     │   └── seat_at_table
+     └── serving
+         ├── take_order
+         ├── serve_order
+         └── take_payment
+```
+
+模块树或许让你想起了电脑上文件系统的目录树。这是一个非常恰当的比喻！就像文件系统中的目录那样，你应使用模块来组织你的代码。而且就像一个目录中的文件那样，我们需要一个找到我们的模块的方式。
+
+
+
+### 路径
+
+有两种形式：
+
+- **绝对路径**（*absolute path*）从 crate 根部开始，以 crate 名或者字面量 `crate` 开头。
+- **相对路径**（*relative path*）从当前模块开始，以 `self`、`super` 或当前模块的标识符开头。
+
+文件名: src/lib.rs
+
+```rust
+mod front_of_house {
+    pub mod hosting {
+        pub fn add_to_waitlist() {}
+    }
+}
+
+pub fn eat_at_restaurant() {
+    // 绝对路径
+    crate::front_of_house::hosting::add_to_waitlist();
+
+    // 相对路径
+    front_of_house::hosting::add_to_waitlist();
+}
+```
+
+Rust 中默认所有项（函数、方法、结构体、枚举、模块和常量）都是私有的。父模块中的项不能使用子模块中的私有项，但是子模块中的项可以使用他们父模块中的项。这是因为子模块封装并隐藏了他们的实现详情，但是子模块可以看到他们定义的上下文。继续拿餐馆作比喻，把私有性规则想象成餐馆的后台办公室：餐馆内的事务对餐厅顾客来说是不可知的，但办公室经理可以洞悉其经营的餐厅并在其中做任何事情。
+
+想让父模块中的 `eat_at_restaurant` 函数可以访问子模块中的 `add_to_waitlist` 函数，因此我们使用 `pub` 关键字来标记 `hosting` 模块
+
+#### 使用 `super` 起始的相对路径
+
+我们还可以使用 `super` 开头来构建从父模块开始的相对路径。这么做类似于文件系统中以 `..` 开头的语法。我们为什么要这样做呢？
+
+考虑一下示例 7-8 中的代码，它模拟了厨师更正了一个错误订单，并亲自将其提供给客户的情况。`fix_incorrect_order` 函数通过指定的 `super` 起始的 `serve_order` 路径，来调用 `serve_order` 函数：
+
+文件名: src/lib.rs
+
+```rust
+fn serve_order() {}
+
+mod back_of_house {
+    fn fix_incorrect_order() {
+        cook_order();
+        super::serve_order();
+    }
+
+    fn cook_order() {}
+}
+```
+
+#### 创建公有的结构体和枚举
+
+我们还可以使用 `pub` 来设计公有的结构体和枚举，不过有一些额外的细节需要注意。如果我们在一个结构体定义的前面使用了 `pub` ，这个结构体会变成公有的，但是这个结构体的字段仍然是私有的。我们可以根据情况决定每个字段是否公有。在示例 7-9 中，我们定义了一个公有结构体 `back_of_house::Breakfast`，其中有一个公有字段 `toast` 和私有字段 `seasonal_fruit`。这个例子模拟的情况是，在一家餐馆中，顾客可以选择随餐附赠的面包类型，但是厨师会根据季节和库存情况来决定随餐搭配的水果。餐馆可用的水果变化是很快的，所以顾客不能选择水果，甚至无法看到他们将会得到什么水果。
+
+文件名: src/lib.rs
+
+```rust
+mod back_of_house {
+    pub struct Breakfast {
+        pub toast: String,
+        seasonal_fruit: String,
+    }
+
+    impl Breakfast {
+        pub fn summer(toast: &str) -> Breakfast {
+            Breakfast {
+                toast: String::from(toast),
+                seasonal_fruit: String::from("peaches"),
+            }
+        }
+    }
+}
+
+pub fn eat_at_restaurant() {
+    // 在夏天点一份黑麦面包作为早餐
+    let mut meal = back_of_house::Breakfast::summer("Rye");
+    // 更改我们想要的面包
+    meal.toast = String::from("Wheat");
+    println!("I'd like {} toast please", meal.toast);
+
+    // 如果取消下一行的注释，将会导致编译失败；我们不被允许
+    // 看到或更改随餐搭配的季节水果
+    // meal.seasonal_fruit = String::from("blueberries");
+}
+```
+
+
+
+### 使用 use关键字将名称引入作用域
+
+文件名: src/lib.rs
+
+```rust
+mod front_of_house {
+    pub mod hosting {
+        pub fn add_to_waitlist() {}
+    }
+}
+
+use crate::front_of_house::hosting;
+
+pub fn eat_at_restaurant() {
+    hosting::add_to_waitlist();
+}
+```
+
+#### 使用 as关键字提供新的名称
+
+使用 `use` 将两个同名类型引入同一作用域这个问题还有另一个解决办法：在这个类型的路径后面，我们使用 `as` 指定一个新的本地名称或者别名。示例 7-16 展示了另一个编写示例 7-15 中代码的方法，通过 `as` 重命名其中一个 `Result` 类型。
+
+文件名: src/lib.rs
+
+```rust
+use std::fmt::Result;
+use std::io::Result as IoResult;
+
+fn function1() -> Result {
+    // --snip--
+}
+
+fn function2() -> IoResult<()> {
+    // --snip--
+}
+```
+
+#### 使用 pub use重导出名称
+
+当使用 `use` 关键字将名称导入作用域时，在新作用域中可用的名称是私有的。如果为了让调用你编写的代码的代码能够像在自己的作用域内引用这些类型，可以结合 `pub` 和 `use`。这个技术被称为 “*重导出*（*re-exporting*）”，因为这样做将项引入作用域并同时使其可供其他代码引入自己的作用域。
+
+示例 7-17 展示了将示例 7-11 中使用 `use` 的根模块变为 `pub use` 的版本的代码。
+
+文件名: src/lib.rs
+
+```rust
+mod front_of_house {
+    pub mod hosting {
+        pub fn add_to_waitlist() {}
+    }
+}
+
+pub use crate::front_of_house::hosting;
+
+pub fn eat_at_restaurant() {
+    hosting::add_to_waitlist();
+}
+```
+
 
 
 ## 常见集合
@@ -1272,9 +1479,18 @@ if let Some(&index) = map.get(&complement) {
 map.insert(nums[i],i);
 ```
 
+### Map
 
+The `map` method offers a way to apply a function (or a closure) on each element from a list.
 
-
+``` rust
+let numbers = vec![3, 6, 9, 12];
+let result: Vec<i32> = numbers
+    .iter()
+    .map(|n| n * 10)
+    .collect();
+// result is now [30, 60, 90, 120]
+```
 
 ### Box
 
@@ -1293,6 +1509,211 @@ map.insert(nums[i],i);
 
 let mut head = Box::new(ListNode::new(0));
 ```
+
+## 错误处理
+
+Rust 将错误组合成两个主要类别：**可恢复错误**（*recoverable*）和 **不可恢复错误**（*unrecoverable*）。
+
+### `panic!` 与不可恢复的错误
+
+让我们在一个简单的程序中调用 `panic!`：
+
+文件名: src/main.rs
+
+```rust
+fn main() {
+    panic!("crash and burn");
+}
+```
+
+### `Result` 与可恢复的错误
+
+ `Result` 枚举，它定义有如下两个成员，`Ok` 和 `Err`：
+
+```rust
+enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
+```
+
+`T` 和 `E` 是泛型类型参数；第 10 章会详细介绍泛型。现在你需要知道的就是 `T` 代表成功时返回的 `Ok` 成员中的数据的类型，而 `E` 代表失败时返回的 `Err` 成员中的错误的类型。
+
+#### 失败时 panic 的简写：`unwrap` 和 `expect`
+
+`match` 能够胜任它的工作，不过它可能有点冗长并且不总是能很好地表明其意图。`Result<T, E>` 类型定义了很多辅助方法来处理各种情况。其中之一叫做 `unwrap`，它的实现就类似于示例 9-4 中的 `match` 语句。如果 `Result` 值是成员 `Ok`，`unwrap` 会返回 `Ok` 中的值。如果 `Result` 是成员 `Err`，`unwrap` 会为我们调用 `panic!`。这里是一个实践 `unwrap` 的例子：
+
+文件名: src/main.rs
+
+```rust
+use std::fs::File;
+
+fn main() {
+    let f = File::open("hello.txt").unwrap();
+}
+```
+
+文件名: src/main.rs
+
+```rust
+use std::fs::File;
+
+fn main() {
+    let f = File::open("hello.txt").expect("Failed to open hello.txt");
+}
+```
+
+`expect` 与 `unwrap` 的使用方式一样：返回文件句柄或调用 `panic!` 宏。`expect` 在调用 `panic!` 时使用的错误信息将是我们传递给 `expect` 的参数，而不像 `unwrap` 那样使用默认的 `panic!` 信息。
+
+### 传播错误
+
+当编写一个需要先调用一些可能会失败的操作的函数时，除了在这个函数中处理错误外，还可以选择让调用者知道这个错误并决定该如何处理。这被称为 **传播**（*propagating*）错误
+
+文件名: src/main.rs
+
+```rust
+use std::io;
+use std::io::Read;
+use std::fs::File;
+
+fn read_username_from_file() -> Result<String, io::Error> {
+    let f = File::open("hello.txt");
+
+    let mut f = match f {
+        Ok(file) => file,
+        Err(e) => return Err(e),
+    };
+
+    let mut s = String::new();
+
+    match f.read_to_string(&mut s) {
+        Ok(_) => Ok(s),
+        Err(e) => Err(e),
+    }
+}
+```
+
+示例 9-7 展示了一个 `read_username_from_file` 的实现，它实现了与示例 9-6 中的代码相同的功能，不过这个实现使用了 `?` 运算符：
+
+文件名: src/main.rs
+
+```rust
+use std::io;
+use std::io::Read;
+use std::fs::File;
+
+fn read_username_from_file() -> Result<String, io::Error> {
+    let mut f = File::open("hello.txt")?;
+    let mut s = String::new();
+    f.read_to_string(&mut s)?;
+    Ok(s)
+}
+```
+
+`Result` 值之后的 `?` 被定义为与示例 9-6 中定义的处理 `Result` 值的 `match` 表达式有着完全相同的工作方式。如果 `Result` 的值是 `Ok`，这个表达式将会返回 `Ok` 中的值而程序将继续执行。如果值是 `Err`，`Err` 将作为整个函数的返回值，就好像使用了 `return` 关键字一样，这样错误值就被传播给了调用者。
+
+
+
+
+
+# Rust 代码片段
+
+## 输入
+
+``` rust
+/*
+This template is made by Naman Garg <naman.rustp@gmail.com>
+GitHub : https://github.com/namanlp
+GitLab : https://gitlab.com/namanlp
+Website : https://rustp.org
+
+You can visit https://rustp.org/basic-programs/basic-template/
+for understanding the template
+
+Feel free to copy the template, but not the solutions :D
+Thank You
+ */
+
+#![allow(unused)]
+
+use std::io::stdin;
+
+fn take_int() -> usize {
+    let mut input = String::new();
+    stdin().read_line(&mut input).unwrap();
+    input.trim().parse().unwrap()
+}
+
+fn take_vector() -> Vec<usize> {
+    let mut input = String::new();
+    stdin().read_line(&mut input).unwrap();
+    input
+        .trim()
+        .split_whitespace()
+        .map(|x| x.parse().unwrap())
+        .collect();
+}
+
+fn take_string() -> String {
+    let mut input = String::new();
+    stdin().read_line(&mut input).unwrap();
+    input
+}
+fn to_chars(x: String) -> Vec<char> {
+    x.chars().collect()
+}
+
+fn solve() {
+    // ======================= Code Here =========================
+}
+
+pub fn main() {
+    let t = take_int();
+    for _ in 0..t {
+        solve();
+    }
+}
+```
+
+## Misc
+
+### min,max
+
+``` rust
+use std::cmp::max;
+
+ans = max(ans, r-l);
+ans.max(r-l);
+```
+
+### type convet
+
+``` rust
+ans.try_into().unwrap()
+ans as i32
+'x' as usize
+```
+
+
+
+## Array and Vector
+
+### array
+
+``` rust
+let mut cnt = [false;256];
+```
+
+### vector
+
+``` rust
+let mut vec = Vec::new();
+let vec = vec![0; 5]; // [0, 0, 0, 0, 0]
+```
+
+
+
+
 
 
 
