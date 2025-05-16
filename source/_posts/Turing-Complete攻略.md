@@ -466,3 +466,14 @@ JMP_R0
 
 ```
 
+# Godot 游戏开发
+
+``` shell
+sudo add-apt-repository ppa:alexlarsson/flatpak
+sudo apt update
+sudo apt install flatpak
+flatpak install flathub org.godotengine.Godot
+```
+
+
+

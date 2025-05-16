@@ -1694,7 +1694,12 @@ ans as i32
 'x' as usize
 ```
 
+### constants
 
+``` rust
+u32::MAX
+i32::MAX
+```
 
 ## Array and Vector
 
@@ -1709,9 +1714,32 @@ let mut cnt = [false;256];
 ``` rust
 let mut vec = Vec::new();
 let vec = vec![0; 5]; // [0, 0, 0, 0, 0]
+vec.sort(); // from small to big
+let mut xs : Vec<i32> = points.iter().map(|p| p[0]).collect(); // get x vals
 ```
 
+#### enumerate
 
+```  rust
+for (i,x) in points.iter().enumerate() {
+    
+}
+for p in &points {
+    let (x,y) = (p[0],p[1]);
+}
+```
+
+## Hashset
+
+``` rust
+use std::collections::HashSet;
+let mut books = HashSet::new();
+books.insert("A Dance With Dragons".to_string());
+if !s.contains(&(x1,y1)) {
+    continue;
+}
+books.remove("The Odyssey");
+```
 
 
 
