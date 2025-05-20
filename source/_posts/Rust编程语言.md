@@ -1715,7 +1715,17 @@ let mut cnt = [false;256];
 let mut vec = Vec::new();
 let vec = vec![0; 5]; // [0, 0, 0, 0, 0]
 vec.sort(); // from small to big
+vec.sort_unstable() // faster than sort
 let mut xs : Vec<i32> = points.iter().map(|p| p[0]).collect(); // get x vals
+```
+
+#### chunkby
+
+``` rust
+vec.chunk_by(|a,b| a == b)
+//vec![3, 3, 4, 5, 5, 5]
+//↓
+//[[3, 3], [4], [5, 5, 5]] 返回迭代器
 ```
 
 #### enumerate
@@ -1728,6 +1738,54 @@ for p in &points {
     let (x,y) = (p[0],p[1]);
 }
 ```
+
+#### print
+
+``` rust
+use itertools::Itertools;
+println!("{}", nums.iter().format(" "));
+```
+
+
+
+## 函数式编程
+
+可以激发编译器优化，有时候可以过 `1e10`
+
+### fold
+
+把遍历query的i作用在nums上， 返回nums这个ector
+
+``` rust 
+(0..queries.len()).fold(nums, |mut nums, x| {
+    (queries[x][0]..=queries[x][1]).for_each(|i| nums[i as usize] -= 1);
+    nums
+})
+```
+
+### for_each
+
+加上`=`是闭区间
+
+``` rust
+(queries[x][0]..=queries[x][1]).for_each(|i| nums[i as usize] -= 1);
+```
+
+### count
+
+``` rust
+iter.count() // 统计个数
+```
+
+### all
+
+所有都符合才返回true, iter 要用 `*` 解引用
+
+``` rust
+nums.iter().all(|n| *n <= 0)
+```
+
+
 
 ## Hashset
 
