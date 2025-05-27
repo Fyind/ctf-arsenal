@@ -648,6 +648,8 @@ for (i,c) in s.chars().enumerate() {
 ``` rust
 let ascii = c as u8; 
 let ch = ascii as char;
+let string1 = String::from("abcd");
+string1.as_str();
 ```
 
 #### 和int转换, rev, eq
@@ -1614,7 +1616,203 @@ fn read_username_from_file() -> Result<String, io::Error> {
 
 
 
+## 泛型、trait 和生命周期
 
+### 泛型
+
+``` rust
+n largest<T>(list: &[T]) -> T {
+    let mut largest = list[0];
+
+    for &item in list.iter() {
+        if item > largest {
+            largest = item;
+        }
+    }
+
+    largest
+}
+
+fn main() {
+    let number_list = vec![34, 50, 25, 100, 65];
+
+    let result = largest(&number_list);
+    println!("The largest number is {}", result);
+
+    let char_list = vec!['y', 'm', 'a', 'q'];
+
+    let result = largest(&char_list);
+    println!("The largest char is {}", result);
+}
+
+```
+
+#### 结构体定义中的泛型
+
+``` rust
+struct Point<T> {
+    x: T,
+    y: T,
+}
+
+impl<T> Point<T> {
+    fn x(&self) -> &T {
+        &self.x
+    }
+}
+
+fn main() {
+    let p = Point { x: 5, y: 10 };
+
+    println!("p.x = {}", p.x());
+}
+
+```
+
+### trait：定义共享的行为
+
+文件名: src/lib.rs
+
+```rust
+pub trait Summary {
+    fn summarize(&self) -> String;
+}
+```
+
+现在我们定义了 `Summary` trait，接着就可以在多媒体聚合库中需要拥有这个行为的类型上实现它了。
+
+文件名: src/lib.rs
+
+```rust
+pub struct NewsArticle {
+    pub headline: String,
+    pub location: String,
+    pub author: String,
+    pub content: String,
+}
+
+impl Summary for NewsArticle {
+    fn summarize(&self) -> String {
+        format!("{}, by {} ({})", self.headline, self.author, self.location)
+    }
+}
+
+pub struct Tweet {
+    pub username: String,
+    pub content: String,
+    pub reply: bool,
+    pub retweet: bool,
+}
+
+impl Summary for Tweet {
+    fn summarize(&self) -> String {
+        format!("{}: {}", self.username, self.content)
+    }
+}
+```
+
+#### 默认trait
+
+展示了如何为 `Summary` trait 的 `summarize` 方法指定一个默认的字符串值，而不是像示例 10-12 中那样只是定义方法签名：
+
+文件名: src/lib.rs
+
+```rust
+pub trait Summary {
+    fn summarize(&self) -> String {
+        String::from("(Read more...)")
+    }
+}
+```
+
+#### trait 作为参数
+
+知道了如何定义 trait 和在类型上实现这些 trait 之后，我们可以探索一下如何使用 trait 来接受多种不同类型的参数。
+
+例如在示例 10-13 中为 `NewsArticle` 和 `Tweet` 类型实现了 `Summary` trait。我们可以定义一个函数 `notify` 来调用其参数 `item` 上的 `summarize` 方法，该参数是实现了 `Summary` trait 的某种类型。为此可以使用 `impl Trait` 语法，像这样：
+
+```rust
+pub fn notify(item: impl Summary) {
+    println!("Breaking news! {}", item.summarize());
+}
+```
+
+#### trait bound
+
+使用多个trait
+
+在名称和参数列表之间会有很长的 trait bound 信息，这使得函数签名难以阅读。为此，Rust 有另一个在函数签名之后的 `where` 从句中指定 trait bound 的语法。所以除了这么写：
+
+```rust
+fn some_function<T: Display + Clone, U: Clone + Debug>(t: T, u: U) -> i32 {
+```
+
+还可以像这样使用 `where` 从句：
+
+```rust
+fn some_function<T, U>(t: T, u: U) -> i32
+    where T: Display + Clone,
+          U: Clone + Debug
+{
+```
+
+也可以在返回值中使用 `impl Trait` 语法，来返回实现了某个 trait 的类型：
+
+```rust
+fn returns_summarizable() -> impl Summary {
+    Tweet {
+        username: String::from("horse_ebooks"),
+        content: String::from("of course, as you probably already know, people"),
+        reply: false,
+        retweet: false,
+    }
+}
+```
+
+### 生命周期
+
+生命周期的主要目标是避免悬垂引用，它会导致程序引用了非预期引用的数据。
+
+Rust 编译器有一个 **借用检查器**（*borrow checker*），它比较作用域来确保所有的借用都是有效的。示例 10-18 展示了与示例 10-17 相同的例子，不过带有变量生命周期的注释：
+
+```rust
+{
+    let r;                // ---------+-- 'a
+                          //          |
+    {                     //          |
+        let x = 5;        // -+-- 'b  |
+        r = &x;           //  |       |
+    }                     // -+       |
+                          //          |
+    println!("r: {}", r); //          |
+}                         // ---------+
+```
+
+#### 生命周期标注语法
+
+生命周期标注并不改变任何引用的生命周期的长短。生命周期标注有着一个不太常见的语法：生命周期参数名称必须以撇号（`'`）开头，其名称通常全是小写，类似于泛型其名称非常短。`'a` 是大多数人默认使用的名称。生命周期参数标注位于引用的 `&` 之后，并有一个空格来将引用类型与生命周期标注分隔开。
+
+这里有一些例子：我们有一个没有生命周期参数的 `i32` 的引用，一个有叫做 `'a` 的生命周期参数的 `i32` 的引用，和一个生命周期也是 `'a` 的 `i32` 的可变引用：
+
+```rust
+&i32        // 引用
+&'a i32     // 带有显式生命周期的引用
+&'a mut i32 // 带有显式生命周期的可变引用
+```
+
+现在来看看 `longest` 函数的上下文中的生命周期。就像泛型类型参数，泛型生命周期参数需要声明在函数名和参数列表间的尖括号中。这里我们想要告诉 Rust 关于参数中的引用和返回值之间的限制是他们都必须拥有相同的生命周期，就像示例 10-22 中在每个引用中都加上了 `'a` 那样：
+
+文件名: src/main.rs
+
+```rust
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
+```
 
 # Rust 代码片段
 
@@ -1746,6 +1944,15 @@ use itertools::Itertools;
 println!("{}", nums.iter().format(" "));
 ```
 
+## String
+
+### as bytes
+
+``` rust
+let color_bytes = colors.as_bytes(); // colors: String
+let color = (color_bytes[x] - b'a') as usize;
+```
+
 
 
 ## 函数式编程
@@ -1761,6 +1968,21 @@ println!("{}", nums.iter().format(" "));
     (queries[x][0]..=queries[x][1]).for_each(|i| nums[i as usize] -= 1);
     nums
 })
+```
+
+### position
+
+``` rust
+let cycle_start = s.iter().position(|&u| u == v).unwrap();
+return Err(s[cycle_start..].to_vec());
+```
+
+### filter
+
+``` rust
+shoes.into_iter()
+        .filter(|s| s.size == shoe_size)
+        .collect()
 ```
 
 ### for_each
@@ -1785,8 +2007,6 @@ iter.count() // 统计个数
 nums.iter().all(|n| *n <= 0)
 ```
 
-
-
 ## Hashset
 
 ``` rust
@@ -1797,6 +2017,87 @@ if !s.contains(&(x1,y1)) {
     continue;
 }
 books.remove("The Odyssey");
+```
+
+
+
+# CP Templates
+
+## Graph
+
+``` rust
+
+struct Graph {
+    pub adj : Vec<Vec<usize>>
+}
+
+impl Graph {
+    pub fn new() -> Self {
+        Graph { 
+            adj: Vec::new() 
+        }
+    }
+
+    pub fn len(&self) -> usize {
+        self.adj.len()
+    }
+
+    pub fn new_withsize(n : usize) -> Self {
+        Graph {
+            adj : vec![Vec::new(); n]
+        }
+    }
+
+    pub fn addedge(&mut self, a: usize, b : usize) {
+        while self.len() <= a.max(b) {
+            self.adj.push(Vec::new());
+        }
+        self.adj[a].push(b);
+    }
+
+    pub fn new_withedges(edges: Vec<Vec<usize>>, min_size: usize) -> Self {
+        let mut ret = Graph::new_withsize(min_size);
+        for e in edges {
+            ret.addedge(e[0], e[1]);
+        }
+        ret
+    }
+
+    pub fn toposort(&self) -> Result<Vec<usize>, Vec<usize>> {
+        let mut c: Vec<i32> = vec![0; self.len()];
+        let mut s: Vec<usize> = Vec::new();
+        let mut order: Vec<usize> = Vec::new();
+        for i in 0..self.len() {
+            if c[i] == 0 {
+                if let Err(cycle) = self.toposort_dfs(&mut c, &mut s, &mut order, i) {
+                    return Err(cycle);
+                }
+            }       
+        }
+        order.reverse();
+        return Ok(order);
+    }
+
+    fn toposort_dfs(&self, c :&mut Vec<i32>,s :&mut Vec<usize>,order : &mut Vec<usize>, x : usize) -> Result<(), Vec<usize>> {
+        c[x] = -1; 
+        s.push(x);
+        for &v in &self.adj[x] {
+            if c[v] < 0 {
+                let cycle_start = s.iter().position(|&u| u == v).unwrap();
+                return Err(s[cycle_start..].to_vec());
+            }
+            else if c[v] == 0 {
+                if let Err(cycle) = self.toposort_dfs(c, s, order, v) {
+                    return Err(cycle);
+                }
+            }
+        }
+        c[x] = 1;
+        s.pop();
+        order.push(x);
+        return Ok(());
+    }
+}
 ```
 
 
@@ -1894,3 +2195,8 @@ https://rustwiki.org/zh-CN/book/ch03-02-data-types.html
 | 周五 | 尝试用 `unsafe` 写一个小例子（如裸指针操作，了解即可） |
 | 周六 | 写一篇总结博客，思考 Rust 和其他语言的最大区别与优势   |
 | 周日 | 自选项目自由创作，尝试发布 crate 或继续迭代现有作品    |
+
+
+
+
+
