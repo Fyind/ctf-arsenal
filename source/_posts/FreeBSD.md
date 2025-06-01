@@ -1,7 +1,7 @@
 ---
 title: FreeBSD
 date: 2025-06-01 21:53:57
-tags:operating system
+tags:[operating system]
 ---
 
 ## 配置FreeBSD 环境
