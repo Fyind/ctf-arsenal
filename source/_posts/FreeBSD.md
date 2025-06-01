@@ -1,6 +1,6 @@
 ---
 title: FreeBSD
-date: 2025-06-01 21:53:57
+date: 2025-06-02 01:02:46
 tags:[operating system]
 ---
 
@@ -780,3 +780,4 @@ https://man.freebsd.org/cgi/man.cgi?query=mac&apropos=0&sektion=9&manpath=FreeBS
 - 🧵 **原子操作（atomic）**
 
 这样可以确保同一时刻**只有一个线程访问关键数据**
+
