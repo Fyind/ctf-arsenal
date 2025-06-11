@@ -19,6 +19,8 @@ categories: 其他
 
 ## 场景
 
+Ctrl+Shift+O: 打开场景快捷键
+
 组织节点，显示简单
 
 可以理解为画布，或者文件夹
@@ -398,3 +400,55 @@ Project Settings 里面的 2D Physics可以对图层命名, 设置好后，鼠�
 * Texture设置纹理
 * Display, Color Curve: 设置颜色， Color Ramp设置渐变(To check)
 
+# 光源
+
+## PointLight2D
+
+点光源
+
+* Texture需要纹理
+* Texture scale, 光照范围
+* energy 光照强度
+* Shadow 启动阴影
+
+## LightOccluder2D
+
+光遮挡器，可以绘制形状
+
+* Filter 过滤器 PCF13 ,可以让阴影边界模糊化
+
+## DirectionalLight2D
+
+平行光
+
+* Blend Mode: 加上模式和减去模式，减去模式可以让场景变暗
+
+# 动画
+
+## AnimatedSprite2D
+
+播放一组图片
+
+选择：载入后自动播放
+
+## Sprite2D
+
+### Animation
+
+设置Hframe和Vframe是这里面有几行几列的图片
+
+## AnimationPlayer
+
+### Animation
+
+点击创建新动画
+
+右边可以设置动画时长
+
+在Sprite2D的frame里面点右边的钥匙可以添加到animation
+
+
+
+### queue\_free
+
+删除节点
