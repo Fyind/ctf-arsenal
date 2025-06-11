@@ -328,3 +328,73 @@ var grenade = grenade_scene.instantiate() as RigidBody2D
 
 Project Setting, Display 里面
 
+# 关卡设计
+
+## Region
+
+选择它刚开始什么都没有
+
+* Edit Region 可以编辑要显示的纹理，也可以选择比较大的区域，但是会拉伸边界像素，可以到Texture里面的Repeat更改Enable就可以复制了
+
+### Visibility
+
+* Modulate 可以改变颜色， 会影响子结点
+* Self Modulate 调节自己的颜色
+
+## Tilemap
+
+可以选择某些各自，防到特定的地方
+
+* TileSet 里面新建一个，在底下可以看到TileSet和TileMap
+  * physical layer 可以设置碰撞图层
+* Tile Shape可以选择瓷砖形状
+* Tile Size 可以设置大小
+
+### TileSet
+
+拖入图片可以加入一个TileSet
+
+* Name 可以改名字
+* Margin可以改边距
+* Paint可以添加属性，
+  * 设置完碰撞图层后，可以在physical layer 绘制碰撞区域
+  * 三个点可以选择水平翻转，R快捷键也可以
+
+### TileMap
+
+选择图块，点到关卡上
+
+# 图层
+
+可以对不同的对象分配不同的图层，在Collision里面设置
+
+## Layer
+
+它在哪个图层
+
+### 图层命名
+
+Project Settings 里面的 2D Physics可以对图层命名, 设置好后，鼠标悬停在Layer上面可以看到注释
+
+## Mask
+
+可以与哪个图层交互
+
+# 粒子
+
+## GPUParticles2D
+
+适用于GPU的粒子发射器
+
+* amount 设置发射粒子数量
+
+* Process Matrial 可以选择ParticalProcessMatrial
+
+### ParticalProcessMatrial
+
+* Spawn, position, emision shape: 可以设置发射粒子形状, direction改变方向
+* accerleration, gravity 可以设置重力
+* Shape, Scale 可以调整粒子大小
+* Texture设置纹理
+* Display, Color Curve: 设置颜色， Color Ramp设置渐变(To check)
+
