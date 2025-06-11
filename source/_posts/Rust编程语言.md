@@ -1946,11 +1946,33 @@ println!("{}", nums.iter().format(" "));
 
 ## String
 
+### index, push
+
+``` rust
+let s : Vec<char> = x.chars().collect(); // x: String
+let mut ans = String::new();
+ans.push('a')
+```
+
 ### as bytes
 
 ``` rust
 let color_bytes = colors.as_bytes(); // colors: String
 let color = (color_bytes[x] - b'a') as usize;
+```
+
+### 取出substr
+
+`&str` 可以比较
+
+``` rust
+let mut ans = &word[0..mx_len]; // word is String, ans 是 &str
+```
+
+返回 String 
+
+``` rust
+ans.to_string()
 ```
 
 
@@ -2026,7 +2048,6 @@ books.remove("The Odyssey");
 ## Graph
 
 ``` rust
-
 struct Graph {
     pub adj : Vec<Vec<usize>>
 }
@@ -2055,10 +2076,19 @@ impl Graph {
         self.adj[a].push(b);
     }
 
-    pub fn new_withedges(edges: Vec<Vec<usize>>, min_size: usize) -> Self {
+    pub fn new_withedges(edges: Vec<Vec<i32>>, min_size: usize) -> Self {
         let mut ret = Graph::new_withsize(min_size);
         for e in edges {
-            ret.addedge(e[0], e[1]);
+            ret.addedge(e[0] as usize, e[1] as usize);
+        }
+        ret
+    }
+    
+    pub fn new_undirected_withedges(edges: Vec<Vec<i32>>, min_size: usize) -> Self {
+        let mut ret = Graph::new_withsize(min_size);
+        for e in edges {
+            ret.addedge(e[0] as usize, e[1] as usize);
+            ret.addedge(e[1] as usize, e[0] as usize);
         }
         ret
     }
@@ -2098,6 +2128,20 @@ impl Graph {
         return Ok(());
     }
 }
+```
+
+## DataStructure
+
+### Queue
+
+``` rust
+use std::collections::VecDeque;
+
+let mut d = VecDeque::new();
+d.push_back(1);
+d.push_back(2);
+assert_eq!(d.pop_front(), Some(1));
+d.push_front(1);
 ```
 
 
