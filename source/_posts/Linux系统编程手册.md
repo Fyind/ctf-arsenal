@@ -9,9 +9,43 @@ tags: Linux
 
 https://zq99299.github.io/linux-tutorial/tutorial-basis/#%E5%86%85%E5%AE%B9%E5%AF%BC%E8%88%AA
 
+# Linux 常用操作
+
+## 用户
+
+### 添加用户
+
+* `-m` 新建home目录
+
+``` shell
+sudo useradd -m username
+```
+
+### 加入sudoer
+
+``` shell
+sudo usermod -aG sudo username
+```
+
+## Docker
+
+### build
+
+在一个有 `Dockerfile` 的目录下
+
+``` shell
+docker build -t my-ctf-bot .
+```
+
+### run
+
+``` shell
+docker run -p 8802:8802 my-ctf-bot
+```
+
+
+
 # Linux系统编程手册
-
-
 
 ### 进程
 
