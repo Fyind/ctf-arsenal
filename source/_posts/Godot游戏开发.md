@@ -452,3 +452,54 @@ Project Settings 里面的 2D Physics可以对图层命名, 设置好后，鼠�
 ### queue\_free
 
 删除节点
+
+# UI
+
+UI主要使用Control节点
+
+## Control
+
+### Label
+
+标签
+
+### TextureRect
+
+纹理矩形，可以放置图片
+
+* Expandmode : 如果图片太大调成fit height
+
+## CanvasLayer
+
+画布层，可以把UI绘制到上面，类似粘在相机上的玻璃。
+
+### 锚点
+
+固定在哪里
+
+* Layout,  Anchors Preset, Custom 自定义位置
+* Anchors point: 区域比例，`0.25` 就是 `25%`
+
+### 容器
+
+确定子结点位置的父节点
+
+#### HBoxContainer
+
+水平布局
+
+### GridContainer
+
+按网格，从左到右摆放
+
+* Column 设置列数
+* Theme Overrides, H Seperation 水平间距
+* Horizontal allignment 水平对齐（居中）
+
+## Theme
+
+在 Theme 里面新建主题，可以设置
+
+### 字体
+
+主题的统一字体

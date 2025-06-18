@@ -27,7 +27,31 @@ sudo useradd -m username
 sudo usermod -aG sudo username
 ```
 
+## APT
+
+### ppa release问题
+
+error text
+
+``` text
+E: The repository 'https://ppa.launchpadcontent.net/alexlarsson/flatpak/ubuntu jammy Release' does not have a Release file.
+```
+
+solution:
+
+``` shell
+sudo add-apt-repository --remove ppa:alexlarsson/flatpak
+```
+
+
+
 ## Docker
+
+### 安装
+
+``` shell
+sudo apt-get install docker.io docker-compose
+```
 
 ### build
 
@@ -43,7 +67,37 @@ docker build -t my-ctf-bot .
 docker run -p 8802:8802 my-ctf-bot
 ```
 
+### 检查容器状态
 
+``` shell
+docker-compose ps
+```
+
+还有
+
+``` shell
+docker ps -a
+```
+
+### 运行容器
+
+在 `docker-compose.yml` 文件目录下
+
+``` shell
+docker-compose up (-d) # -d 运行在后台
+```
+
+### 检查网络
+
+``` shell
+docker network ls
+```
+
+删除自定义网络
+
+``` shell
+docker network prune
+```
 
 # Linux系统编程手册
 
