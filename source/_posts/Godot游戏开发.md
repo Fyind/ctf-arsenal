@@ -496,6 +496,12 @@ UI主要使用Control节点
 * Theme Overrides, H Seperation 水平间距
 * Horizontal allignment 水平对齐（居中）
 
+### MarginContainer
+
+边距容器
+
+* Theme Override, Margin Bottom 底部边距
+
 ## Theme
 
 在 Theme 里面新建主题，可以设置
@@ -503,3 +509,18 @@ UI主要使用Control节点
 ### 字体
 
 主题的统一字体
+
+## 血量条
+
+### Progressbar
+
+* Layout, Custom Minimun Size 进度条大小
+* Show precentage 显示百分比
+
+### TextureProgressbar
+
+带纹理的进度条
+
+* Under是进度条背景
+* Progress 是进度条颜色
+* Over是覆盖层，可以做装饰

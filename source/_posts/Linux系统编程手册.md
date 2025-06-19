@@ -27,6 +27,78 @@ sudo useradd -m username
 sudo usermod -aG sudo username
 ```
 
+### sudo不需要密码
+
+输入 `visudo` 编辑sudo配置文件，加入 
+
+``` shell
+yourname ALL=(ALL) NOPASSWD:ALL
+```
+
+如果 visudo 是nano，可以这样改成vim
+
+在 `.bashrc` 里面加入 
+
+``` shell
+export EDITOR=vim
+```
+
+然后source一下，然后用
+
+``` shell
+sudo -E visudo
+```
+
+继承环境变量
+
+## SSH
+
+### 更改默认shell
+
+有时候默认shell是 `/bin/sh` 很不好用，可以这样改成 `bash`
+
+``` shell
+chsh -s /bin/bash yourname
+```
+
+### window设置ssh alias
+
+打开windows的powershell，编辑 `$PROFILE`
+
+``` shell
+code $PROFILE
+```
+
+然后加入
+
+``` shell
+function sshgermany {
+    ssh fyind@217.154.10.231
+}
+```
+
+这样就可以添加alias
+
+### ssh无密码登录
+
+先创建密钥
+
+``` shell
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+
+在windows里面，可以在powershell里这样打开
+
+``` shell
+Get-Content $env:USERPROFILE\.ssh\id_ed25519.pub
+```
+
+然后登录服务器，在家目录的 `.ssh` 目录里，创建文件 `authorized_keys`
+
+把公钥粘贴进去保存，然后就可以无密码登录了
+
+
+
 ## APT
 
 ### ppa release问题
@@ -98,6 +170,105 @@ docker network ls
 ``` shell
 docker network prune
 ```
+
+## VPN网络配置
+
+### 安装wireguard
+
+``` shell
+sudo apt install wireguard
+```
+
+### 生成服务器密钥
+
+``` shell
+cd ~/.ssh
+wg genkey | tee server_private.key | wg pubkey > server_public.key
+```
+
+### 编辑wireguard服务器配置
+
+``` shell
+sudo vim /etc/wireguard/wg0.conf
+```
+
+加入, `eth0` 要改成在用的网卡
+
+``` config
+[Interface]
+PrivateKey = 服务器私钥
+Address = 10.0.0.1/24
+ListenPort = 51820
+
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+```
+
+启动ip转发
+
+``` shell
+echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
+```
+
+启动wireguard
+
+``` shell
+sudo systemctl enable wg-quick@wg0
+sudo systemctl start wg-quick@wg0
+sudo wg-quick down wg0
+sudo wg-quick up wg0
+sudo wg show # 检查
+```
+
+### 生成客户端公钥
+
+把客户端公钥加入服务器配置文件 `/etc/wireguard/wg0.conf`
+
+``` shell
+[Peer]
+PublicKey = <客户端公钥>
+AllowedIPs = 10.0.0.2/32
+```
+
+然后在客户端配置， windows可以下载wireguard客户端
+
+``` shell
+[Interface]
+PrivateKey = <客户端私钥>
+Address = 10.0.0.2/24
+DNS = 1.1.1.1
+
+[Peer]
+PublicKey = <服务器公钥>
+Endpoint = <你的服务器IP>:51820
+AllowedIPs = 0.0.0.0/0
+PersistentKeepalive = 25
+```
+
+然后在防火墙开发端口 UDP, 51820
+
+### 检查
+
+首先可以连接上服务器
+
+``` shell
+ping 10.0.0.1
+```
+
+然后检查可以dns服务
+
+``` shell
+ping 8.8.8.8
+```
+
+然后看一下返回ip
+
+``` shell
+curl https://icanhazip.com
+```
+
+如果显示服务器ip就成功了
 
 # Linux系统编程手册
 
