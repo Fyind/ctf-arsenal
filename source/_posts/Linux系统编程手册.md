@@ -53,6 +53,16 @@ sudo -E visudo
 
 ## SSH
 
+### 安装
+
+连接虚拟机，先把网络调成桥接模式
+
+``` shell
+sudo apt install openssh-server
+sudo systemctl enable ssh
+sudo systemctl start ssh
+```
+
 ### 更改默认shell
 
 有时候默认shell是 `/bin/sh` 很不好用，可以这样改成 `bash`
@@ -170,6 +180,30 @@ docker network ls
 ``` shell
 docker network prune
 ```
+
+### Errors
+
+``` shell
+Error: short-name "vaultwarden/server:latest" did not resolve to an alias and no unqualified-search registries are defined in "/etc/containers/registries.conf"
+```
+
+解决：
+
+``` shell
+sudo vim /etc/containers/registries.conf
+```
+
+然后修改(21行)
+
+``` shell
+unqualified-search-registries = ["docker.io"]
+```
+
+
+
+
+
+
 
 ## VPN网络配置
 
