@@ -330,6 +330,8 @@ var grenade = grenade_scene.instantiate() as RigidBody2D
 
 Project Setting, Display 里面
 
+* Mode: 设置全屏显示
+
 # 关卡设计
 
 ## Region
@@ -457,6 +459,58 @@ Project Settings 里面的 2D Physics可以对图层命名, 设置好后，鼠�
 
 UI主要使用Control节点
 
+## 快速裁剪图片
+
+参考视频: https://www.youtube.com/watch?v=ORDbtdpxP_E
+
+使用网站: https://www.leshylabs.com/apps/sstool/
+
+把图片拖进去，然后点Remap，<span style="text-decoration:line-through;">然后在Filename里面改成 ImageMagick, 然后Save会有一个sh</span> 目前这个脚本运行不了，
+
+可以选择<span style="text-decoration:line-through;">图片右键手动保存</span> , 保存的不是透明的，寄
+
+![image-20250707130153880](https://fyindex.work/PicGo/image-20250707130153880.png)
+
+### 安装 ImageMagick
+
+推荐Linux  
+
+``` shell
+sudo apt install imagemagick
+```
+
+TODO：怎么运行脚本
+
+### 运行自己写的python
+
+在导出选择 `json-TP-array` , 然后运行下面的python脚本
+
+``` python
+from PIL import Image
+import json
+import os
+import shutil
+# pip install pillow
+# 打开原始图片
+image = Image.open("GUI.png")
+
+with open("sprites.json","r") as file:
+    data = json.load(file)['frames']
+
+output_folder = 'output'
+if os.path.exists(output_folder):
+    shutil.rmtree(output_folder)
+os.makedirs(output_folder)
+
+for frame in data:
+    pos = frame['frame']
+    crop_area = (pos['x'], pos['y'], pos['x']+pos['w'], pos['y']+pos['h'])
+    cropped_image = image.crop(crop_area)
+    cropped_image.save(f"{output_folder}/{frame['filename']}.png")
+```
+
+
+
 ## Control
 
 ### Label
@@ -477,8 +531,28 @@ UI主要使用Control节点
 
 固定在哪里
 
+![image-20250707063958637](https://fyindex.work/PicGo/image-20250707063958637.png)
+
+居中的：
+
+![image-20250707064024867](https://fyindex.work/PicGo/image-20250707064024867.png)
+
 * Layout,  Anchors Preset, Custom 自定义位置
 * Anchors point: 区域比例，`0.25` 就是 `25%`
+
+### NinePatchRect
+
+九宫格
+
+Texture里面添加图片
+
+EditRegion
+
+可以调整边界
+
+* Snap Mode: Auto Slice 可以选择自动裁剪图片
+
+* Axis Stretch：拉伸： Tile fie 比较好
 
 ### 容器
 
@@ -510,6 +584,24 @@ UI主要使用Control节点
 
 主题的统一字体
 
+添加字体：
+
+项目设置，GUI，Themes里面设置
+
+![image-20250707140330045](https://fyindex.work/PicGo/image-20250707140330045.png)
+
+然后保存重启
+
+### 按钮子主题
+
+点击加号添加
+
+![image-20250707140548496](https://fyindex.work/PicGo/image-20250707140548496.png)
+
+* 在彩色图片哪里，点normal的加号，添加StyleBoxFlat，这个可以设置BG Color，改变按钮颜色
+
+  在右边下拉框点另存为，可以保存这个button的style
+
 ## 血量条
 
 ### Progressbar
@@ -524,3 +616,33 @@ UI主要使用Control节点
 * Under是进度条背景
 * Progress 是进度条颜色
 * Over是覆盖层，可以做装饰
+
+## Examples
+
+### 开始菜单
+
+* Normal: 
+
+  * BG Color: 选择蓝色
+  * Border Width, Bottom: 4px
+  * Border
+    * Color: 深蓝色
+    * Blend: On 混合颜色
+  * Corner Radius:
+    * Bottom/Top Left/Right: 4px
+  * Content Margins
+    * Left: 4px
+    * Top: 2px
+    * Right: 4px
+    * Bottom -1px
+  * Shadow
+    * Size: 2px
+
+* Hover: 复制Normal
+
+  * Shadow: 0px
+  * Border Width, Bottom: 2px
+
+* Focus: 空的样式框 StyleBoxEmpty
+
+  
